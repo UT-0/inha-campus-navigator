@@ -1,0 +1,205 @@
+/*
+ * Design tokens.
+ *
+ * Every color, spacing step, radius, shadow, font size and timing used by the
+ * app is defined here as a CSS custom property. Components only reference
+ * these tokens, so the dark theme is simply a second set of values below.
+ * The active theme is chosen by the `data-theme` attribute on <html>, which is
+ * set before first paint by an inline script in index.html.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Brand ---- */
+  --color-primary: #0b2a5b; /* deep navy, inspired by the university colors */
+  --color-primary-hover: #12397a;
+  --color-primary-soft: #e6edf9;
+  --color-on-primary: #ffffff;
+  --color-accent: #1f6fff; /* bright accent for routes and interactive states */
+  --color-accent-hover: #1259d9;
+  --color-accent-soft: #e3edff;
+  --color-on-accent: #ffffff;
+  --color-focus: #1f6fff;
+
+  /* ---- Neutrals ---- */
+  --color-bg: #f3f5fa;
+  --color-surface: #ffffff;
+  --color-surface-2: #f2f4f9;
+  --color-surface-3: #e8ecf4;
+  --color-border: #e0e5ee;
+  --color-border-strong: #c9d1de;
+  --color-text: #101b2d;
+  --color-text-muted: #556175;
+  --color-text-subtle: #6b778b;
+
+  /* ---- Feedback ---- */
+  --color-success: #1d8a4e;
+  --color-danger: #c62f3f;
+  --color-warning-bg: #fff6d6;
+  --color-warning-text: #6b5200;
+
+  /* ---- Map ---- */
+  --map-water: #d4e6f7;
+  --map-ground: #eef1e8;
+  --map-ground-edge: #dfe4d6;
+  --map-green: #cfe5c0;
+  --map-green-edge: #b8d6a6;
+  --map-plaza: #e9e6de;
+  --map-path: #ffffff;
+  --map-path-edge: #d4d9e1;
+  --map-label: #1b2638;
+  --map-label-halo: rgba(255, 255, 255, 0.92);
+  --map-building-shadow: rgba(16, 27, 45, 0.18);
+  --map-route: #1f6fff;
+  --map-route-casing: #ffffff;
+  --map-route-active: #ff8a00;
+  --map-marker-start: #17a35a;
+  --map-marker-end: #e0364a;
+
+  /* ---- Building categories: fill (light tint) + stroke (darker) ---- */
+  --cat-academic: #dbe5ff;
+  --cat-academic-stroke: #3559b8;
+  --cat-library: #ece0ff;
+  --cat-library-stroke: #7445bf;
+  --cat-dormitory: #ffe5cf;
+  --cat-dormitory-stroke: #b9620f;
+  --cat-admin: #e2e6ee;
+  --cat-admin-stroke: #4b5970;
+  --cat-sports: #d1f0ee;
+  --cat-sports-stroke: #157f7a;
+  --cat-food: #ffdfe3;
+  --cat-food-stroke: #bf3249;
+  --cat-other: #fff1bf;
+  --cat-other-stroke: #957300;
+
+  /* ---- Spacing (4 / 8 px scale) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* ---- Radius ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  /* ---- Shadows (soft, layered) ---- */
+  --shadow-xs: 0 1px 2px rgba(16, 27, 45, 0.06);
+  --shadow-sm: 0 1px 2px rgba(16, 27, 45, 0.06), 0 2px 6px rgba(16, 27, 45, 0.06);
+  --shadow-md: 0 2px 4px rgba(16, 27, 45, 0.06), 0 8px 20px rgba(16, 27, 45, 0.1);
+  --shadow-lg: 0 4px 10px rgba(16, 27, 45, 0.08), 0 18px 40px rgba(16, 27, 45, 0.16);
+
+  /* ---- Typography ---- */
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI',
+    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-md: 0.9375rem;
+  --font-size-lg: 1.0625rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height: 1.5;
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+
+  /* ---- Layout ---- */
+  --sidebar-width: 380px;
+  --header-height: 64px;
+  --z-map-ui: 10;
+  --z-sheet: 20;
+  --z-top: 30;
+  --z-toast: 40;
+  --z-overlay: 50;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-primary: #8db4ff;
+  --color-primary-hover: #a9c6ff;
+  --color-primary-soft: #1b2a47;
+  --color-on-primary: #0b1426;
+  --color-accent: #4b8dff;
+  --color-accent-hover: #6aa1ff;
+  --color-accent-soft: #1a2c4f;
+  --color-on-accent: #ffffff;
+  --color-focus: #7aaeff;
+
+  --color-bg: #0a1120;
+  --color-surface: #111a2c;
+  --color-surface-2: #172238;
+  --color-surface-3: #1f2c45;
+  --color-border: #24324c;
+  --color-border-strong: #33435f;
+  --color-text: #e8edf6;
+  --color-text-muted: #a3afc3;
+  --color-text-subtle: #8e9bb2;
+
+  --color-success: #4cc485;
+  --color-danger: #ff6b7a;
+  --color-warning-bg: #3a3112;
+  --color-warning-text: #f3dc8c;
+
+  --map-water: #12243d;
+  --map-ground: #141e2f;
+  --map-ground-edge: #1d2a40;
+  --map-green: #183526;
+  --map-green-edge: #21462f;
+  --map-plaza: #1b2536;
+  --map-path: #2a3850;
+  --map-path-edge: #34445f;
+  --map-label: #e8edf6;
+  --map-label-halo: rgba(10, 17, 32, 0.9);
+  --map-building-shadow: rgba(0, 0, 0, 0.45);
+  --map-route: #4b9bff;
+  --map-route-casing: #0a1120;
+  --map-route-active: #ffa53d;
+  --map-marker-start: #2fc574;
+  --map-marker-end: #ff5266;
+
+  --cat-academic: #213563;
+  --cat-academic-stroke: #8aa8ff;
+  --cat-library: #33265a;
+  --cat-library-stroke: #b896ff;
+  --cat-dormitory: #4a2f17;
+  --cat-dormitory-stroke: #ffaf66;
+  --cat-admin: #2a3446;
+  --cat-admin-stroke: #a9b6cc;
+  --cat-sports: #12403f;
+  --cat-sports-stroke: #5fd6cf;
+  --cat-food: #4b1f2a;
+  --cat-food-stroke: #ff8b9d;
+  --cat-other: #433a12;
+  --cat-other-stroke: #e8c64f;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.35), 0 8px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 10px rgba(0, 0, 0, 0.4), 0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}

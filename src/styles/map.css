@@ -1,0 +1,36 @@
+/*
+ * Map styles: the SVG layers (ground, paths, buildings, labels, POIs, route)
+ * and the widgets floating over the map (controls, compass, scale, legend,
+ * tooltip, sample-data banner).
+ */
+
+.map {
+  width: 100%;
+  height: 100%;
+  touch-action: none; /* pan/zoom gestures are handled in panZoom.js */
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.map.is-panning {
+  cursor: grabbing;
+}
+
+.map-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  background: var(--map-ground);
+  transition: opacity var(--duration-slow) ease;
+}
+
+.map-loading.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}

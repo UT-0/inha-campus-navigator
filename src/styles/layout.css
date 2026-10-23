@@ -1,0 +1,168 @@
+/*
+ * Page layout.
+ *
+ * Desktop (>= 900px): a fixed-width sidebar on the left (header, search and the
+ * panel area) and the map filling the rest.
+ * Mobile (< 900px): the map is full screen, the header and search float at
+ * the top, and the panel area becomes a draggable bottom sheet.
+ */
+
+.app {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+/* ---------- Sidebar parts (desktop) ---------- */
+
+.app-header,
+.search-area,
+.sheet {
+  grid-column: 1;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  position: relative;
+  z-index: var(--z-sheet);
+}
+
+.app-header {
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: var(--header-height);
+  padding: var(--space-3) var(--space-5);
+}
+
+.search-area {
+  grid-row: 2;
+  padding: 0 var(--space-5) var(--space-3);
+}
+
+.sheet {
+  grid-row: 3;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.sheet-handle {
+  display: none;
+}
+
+.sheet-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-2) var(--space-5) var(--space-8);
+  scrollbar-gutter: stable;
+}
+
+.sheet-content:focus {
+  outline: none;
+}
+
+/* ---------- Map area ---------- */
+
+.map-area {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--map-water);
+  /* Space the floating map widgets keep free at each edge. */
+  --map-inset-top: var(--space-4);
+  --map-inset-bottom: var(--space-4);
+  --map-inset-side: var(--space-4);
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 899.98px) {
+  .app {
+    display: block;
+    --sheet-top: 64px; /* gap left above the sheet when fully open */
+    --sheet-peek: 156px; /* visible height of the sheet in its lowest position */
+  }
+
+  .map-area {
+    position: fixed;
+    inset: 0;
+    --map-inset-top: 128px;
+    --map-inset-bottom: calc(var(--sheet-peek) + var(--space-3));
+    --map-inset-side: var(--space-3);
+  }
+
+  .app-header,
+  .search-area {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: var(--z-top);
+    border: 0;
+    background: transparent;
+    pointer-events: none; /* let the map receive gestures between widgets */
+  }
+
+  .app-header > *,
+  .search-area > * {
+    pointer-events: auto;
+  }
+
+  .app-header {
+    top: 0;
+    min-height: 0;
+    padding: max(var(--space-2), env(safe-area-inset-top)) var(--space-3) 0;
+  }
+
+  .search-area {
+    top: 60px;
+    padding: var(--space-2) var(--space-3) 0;
+  }
+
+  .sheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(100dvh - var(--sheet-top));
+    border: 0;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(calc(100dvh - var(--sheet-top) - var(--sheet-peek)));
+    transition: transform var(--duration-slow) var(--ease-out);
+    will-change: transform;
+  }
+
+  .sheet.is-dragging {
+    transition: none;
+  }
+
+  .sheet-handle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    height: 28px;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .sheet-grabber {
+    width: 40px;
+    height: 5px;
+    border-radius: var(--radius-pill);
+    background: var(--color-border-strong);
+  }
+
+  .sheet-content {
+    padding: 0 var(--space-4) calc(var(--space-8) + env(safe-area-inset-bottom));
+    touch-action: pan-y;
+  }
+}
