@@ -1,0 +1,146 @@
+[
+  {
+    "code": "ISE3231",
+    "name": {
+      "en": "Sensor Engineering",
+      "ko": "센서공학"
+    },
+    "building": "b-eng-a",
+    "room": "201"
+  },
+  {
+    "code": "ME2101",
+    "name": {
+      "en": "Thermodynamics",
+      "ko": "열역학"
+    },
+    "building": "b-eng-a",
+    "room": "301"
+  },
+  {
+    "code": "EE2201",
+    "name": {
+      "en": "Circuit Theory",
+      "ko": "회로이론"
+    },
+    "building": "b-eng-a",
+    "room": "401"
+  },
+  {
+    "code": "CHE3101",
+    "name": {
+      "en": "Reaction Engineering",
+      "ko": "반응공학"
+    },
+    "building": "b-eng-b",
+    "room": "210"
+  },
+  {
+    "code": "MSE2301",
+    "name": {
+      "en": "Introduction to Materials",
+      "ko": "재료과학개론"
+    },
+    "building": "b-eng-b",
+    "room": "101"
+  },
+  {
+    "code": "MTH1001",
+    "name": {
+      "en": "Calculus I",
+      "ko": "미적분학 1"
+    },
+    "building": "b-sci",
+    "room": "120"
+  },
+  {
+    "code": "PHY1101",
+    "name": {
+      "en": "General Physics",
+      "ko": "일반물리학"
+    },
+    "building": "b-sci",
+    "room": "220"
+  },
+  {
+    "code": "KOR1001",
+    "name": {
+      "en": "Academic Writing",
+      "ko": "학술적 글쓰기"
+    },
+    "building": "b-hum",
+    "room": "101"
+  },
+  {
+    "code": "HIS2001",
+    "name": {
+      "en": "Modern World History",
+      "ko": "세계 근현대사"
+    },
+    "building": "b-hum",
+    "room": "305"
+  },
+  {
+    "code": "BUS2001",
+    "name": {
+      "en": "Principles of Marketing",
+      "ko": "마케팅원론"
+    },
+    "building": "b-biz",
+    "room": "201"
+  },
+  {
+    "code": "ECO1001",
+    "name": {
+      "en": "Principles of Economics",
+      "ko": "경제원론"
+    },
+    "building": "b-biz",
+    "room": "301"
+  },
+  {
+    "code": "CSE2101",
+    "name": {
+      "en": "Data Structures",
+      "ko": "자료구조"
+    },
+    "building": "b-it",
+    "room": "201"
+  },
+  {
+    "code": "CSE3201",
+    "name": {
+      "en": "Operating Systems",
+      "ko": "운영체제"
+    },
+    "building": "b-it",
+    "room": "501"
+  },
+  {
+    "code": "AI3001",
+    "name": {
+      "en": "Machine Learning",
+      "ko": "기계학습"
+    },
+    "building": "b-it",
+    "room": "601"
+  },
+  {
+    "code": "KLI1001",
+    "name": {
+      "en": "Korean for Beginners",
+      "ko": "초급 한국어"
+    },
+    "building": "b-intl",
+    "room": "102"
+  },
+  {
+    "code": "SPS1001",
+    "name": {
+      "en": "Fitness and Wellness",
+      "ko": "건강과 체력"
+    },
+    "building": "b-gym",
+    "room": "201"
+  }
+]

@@ -1,0 +1,1627 @@
+{
+  "_placeholder": true,
+  "meta": {
+    "campusName": {
+      "en": "Inha University",
+      "ko": "인하대학교"
+    },
+    "viewBox": [0, 0, 1600, 1000],
+    "metersPerUnit": 0.5,
+    "walkingSpeedMetersPerMin": 75,
+    "backgroundImage": null
+  },
+  "buildings": [
+    {
+      "id": "b-admin",
+      "number": "1",
+      "name": {
+        "en": "Administration Building",
+        "ko": "행정관"
+      },
+      "shortName": {
+        "en": "Admin",
+        "ko": "행정관"
+      },
+      "category": "admin",
+      "polygon": [
+        [600, 290],
+        [800, 290],
+        [800, 470],
+        [600, 470]
+      ],
+      "labelPosition": [700, 380],
+      "entrances": ["e-admin-s", "e-admin-w", "e-admin-e"],
+      "floors": 6,
+      "description": {
+        "en": "Central offices for admissions, academic affairs and student services. Visit here for certificates, ID cards and registration help.",
+        "ko": "입학, 학사, 학생 지원 업무를 담당하는 중앙 행정 건물입니다. 증명서 발급, 학생증, 수강 신청 관련 도움을 받을 수 있습니다."
+      },
+      "departments": [
+        {
+          "en": "Office of Academic Affairs",
+          "ko": "교무처"
+        },
+        {
+          "en": "Admissions Office",
+          "ko": "입학처"
+        },
+        {
+          "en": "Office of Student Services",
+          "ko": "학생지원처"
+        }
+      ],
+      "facilities": ["atm", "printer", "restroom", "elevator"],
+      "rooms": ["101", "102", "201", "301"],
+      "openingHours": {
+        "en": "Mon–Fri 09:00–18:00",
+        "ko": "월–금 09:00–18:00"
+      }
+    },
+    {
+      "id": "b-lib",
+      "number": "2",
+      "name": {
+        "en": "Central Library",
+        "ko": "중앙도서관"
+      },
+      "shortName": {
+        "en": "Library",
+        "ko": "도서관"
+      },
+      "category": "library",
+      "polygon": [
+        [885, 275],
+        [1075, 275],
+        [1075, 480],
+        [885, 480]
+      ],
+      "labelPosition": [980, 378],
+      "entrances": ["e-lib-n", "e-lib-w", "e-lib-s"],
+      "floors": 5,
+      "description": {
+        "en": "The main library with quiet reading rooms, group study rooms, a digital archive and a café on the ground floor.",
+        "ko": "열람실, 그룹 스터디룸, 디지털 자료실을 갖춘 중앙도서관입니다. 1층에 카페가 있습니다."
+      },
+      "departments": [
+        {
+          "en": "Learning Commons",
+          "ko": "러닝 커먼스"
+        },
+        {
+          "en": "Digital Archive",
+          "ko": "디지털 자료실"
+        }
+      ],
+      "facilities": ["study_room", "printer", "cafe", "wifi", "restroom", "elevator"],
+      "rooms": ["B101", "201", "301", "401"],
+      "openingHours": {
+        "en": "Daily 07:00–23:00",
+        "ko": "매일 07:00–23:00"
+      }
+    },
+    {
+      "id": "b-eng-a",
+      "number": "3",
+      "name": {
+        "en": "Engineering Hall A",
+        "ko": "공학관 A"
+      },
+      "shortName": {
+        "en": "Eng. A",
+        "ko": "공학 A"
+      },
+      "category": "academic",
+      "polygon": [
+        [260, 560],
+        [520, 560],
+        [520, 650],
+        [260, 650]
+      ],
+      "labelPosition": [390, 605],
+      "entrances": ["e-enga-n", "e-enga-e"],
+      "floors": 7,
+      "description": {
+        "en": "Lecture halls and laboratories for mechanical, electrical and industrial engineering.",
+        "ko": "기계, 전기, 산업공학 분야의 강의실과 실험실이 있는 건물입니다."
+      },
+      "departments": [
+        {
+          "en": "Department of Mechanical Engineering",
+          "ko": "기계공학과"
+        },
+        {
+          "en": "Department of Electrical Engineering",
+          "ko": "전기공학과"
+        },
+        {
+          "en": "Department of Industrial Engineering",
+          "ko": "산업공학과"
+        }
+      ],
+      "facilities": ["printer", "restroom", "elevator", "lounge", "wifi"],
+      "rooms": ["101", "102", "201", "202", "301", "302", "401"],
+      "openingHours": {
+        "en": "Mon–Fri 08:00–22:00, Sat 09:00–17:00",
+        "ko": "월–금 08:00–22:00, 토 09:00–17:00"
+      }
+    },
+    {
+      "id": "b-eng-b",
+      "number": "4",
+      "name": {
+        "en": "Engineering Hall B",
+        "ko": "공학관 B"
+      },
+      "shortName": {
+        "en": "Eng. B",
+        "ko": "공학 B"
+      },
+      "category": "academic",
+      "polygon": [
+        [260, 680],
+        [450, 680],
+        [450, 765],
+        [260, 765]
+      ],
+      "labelPosition": [355, 723],
+      "entrances": ["e-engb-s", "e-engb-w"],
+      "floors": 6,
+      "description": {
+        "en": "Home of the chemical, civil and materials engineering departments, with large teaching labs.",
+        "ko": "화학, 토목, 신소재공학과가 있으며 대형 실습실을 갖추고 있습니다."
+      },
+      "departments": [
+        {
+          "en": "Department of Chemical Engineering",
+          "ko": "화학공학과"
+        },
+        {
+          "en": "Department of Civil Engineering",
+          "ko": "토목공학과"
+        },
+        {
+          "en": "Department of Materials Science",
+          "ko": "신소재공학과"
+        }
+      ],
+      "facilities": ["convenience_store", "restroom", "elevator", "wifi"],
+      "rooms": ["101", "105", "201", "210", "301"],
+      "openingHours": {
+        "en": "Mon–Fri 08:00–22:00, Sat 09:00–17:00",
+        "ko": "월–금 08:00–22:00, 토 09:00–17:00"
+      }
+    },
+    {
+      "id": "b-sci",
+      "number": "5",
+      "name": {
+        "en": "Natural Sciences Hall",
+        "ko": "자연과학관"
+      },
+      "shortName": {
+        "en": "Science",
+        "ko": "자연과학"
+      },
+      "category": "academic",
+      "polygon": [
+        [1160, 270],
+        [1340, 270],
+        [1340, 360],
+        [1160, 360]
+      ],
+      "labelPosition": [1250, 315],
+      "entrances": ["e-sci-n", "e-sci-w"],
+      "floors": 5,
+      "description": {
+        "en": "Classrooms and research labs for mathematics, physics and chemistry.",
+        "ko": "수학, 물리학, 화학 강의실과 연구실이 있습니다."
+      },
+      "departments": [
+        {
+          "en": "Department of Mathematics",
+          "ko": "수학과"
+        },
+        {
+          "en": "Department of Physics",
+          "ko": "물리학과"
+        },
+        {
+          "en": "Department of Chemistry",
+          "ko": "화학과"
+        }
+      ],
+      "facilities": ["printer", "restroom", "elevator"],
+      "rooms": ["101", "120", "201", "220", "301"],
+      "openingHours": {
+        "en": "Mon–Fri 08:00–22:00, Sat 09:00–17:00",
+        "ko": "월–금 08:00–22:00, 토 09:00–17:00"
+      }
+    },
+    {
+      "id": "b-hum",
+      "number": "6",
+      "name": {
+        "en": "Humanities Hall",
+        "ko": "인문관"
+      },
+      "shortName": {
+        "en": "Humanities",
+        "ko": "인문관"
+      },
+      "category": "academic",
+      "polygon": [
+        [260, 260],
+        [520, 260],
+        [520, 365],
+        [260, 365]
+      ],
+      "labelPosition": [390, 313],
+      "entrances": ["e-hum-n", "e-hum-e"],
+      "floors": 5,
+      "description": {
+        "en": "Seminar rooms and offices for language, literature and history programs.",
+        "ko": "어문학과 역사 전공의 세미나실과 연구실이 있습니다."
+      },
+      "departments": [
+        {
+          "en": "Department of Korean Language and Literature",
+          "ko": "국어국문학과"
+        },
+        {
+          "en": "Department of English Language and Literature",
+          "ko": "영어영문학과"
+        },
+        {
+          "en": "Department of History",
+          "ko": "사학과"
+        }
+      ],
+      "facilities": ["lounge", "printer", "restroom"],
+      "rooms": ["101", "102", "201", "202", "305"],
+      "openingHours": {
+        "en": "Mon–Fri 08:00–22:00, Sat 09:00–17:00",
+        "ko": "월–금 08:00–22:00, 토 09:00–17:00"
+      }
+    },
+    {
+      "id": "b-biz",
+      "number": "7",
+      "name": {
+        "en": "Business Hall",
+        "ko": "경영관"
+      },
+      "shortName": {
+        "en": "Business",
+        "ko": "경영관"
+      },
+      "category": "academic",
+      "polygon": [
+        [260, 395],
+        [520, 395],
+        [520, 490],
+        [260, 490]
+      ],
+      "labelPosition": [390, 443],
+      "entrances": ["e-biz-s", "e-biz-w"],
+      "floors": 6,
+      "description": {
+        "en": "Case-study classrooms, a trading lab and a café for business and economics students.",
+        "ko": "사례 연구 강의실, 트레이딩 실습실, 카페가 있는 경영·경제 계열 건물입니다."
+      },
+      "departments": [
+        {
+          "en": "Department of Business Administration",
+          "ko": "경영학과"
+        },
+        {
+          "en": "Department of Economics",
+          "ko": "경제학과"
+        },
+        {
+          "en": "Department of International Trade",
+          "ko": "국제통상학과"
+        }
+      ],
+      "facilities": ["cafe", "atm", "restroom", "elevator"],
+      "rooms": ["101", "201", "301", "401"],
+      "openingHours": {
+        "en": "Mon–Fri 08:00–22:00, Sat 09:00–17:00",
+        "ko": "월–금 08:00–22:00, 토 09:00–17:00"
+      }
+    },
+    {
+      "id": "b-it",
+      "number": "8",
+      "name": {
+        "en": "IT Center",
+        "ko": "IT 센터"
+      },
+      "shortName": {
+        "en": "IT",
+        "ko": "IT 센터"
+      },
+      "category": "academic",
+      "polygon": [
+        [1160, 395],
+        [1340, 395],
+        [1340, 485],
+        [1160, 485]
+      ],
+      "labelPosition": [1250, 440],
+      "entrances": ["e-it-s", "e-it-e"],
+      "floors": 8,
+      "description": {
+        "en": "Computer labs and classrooms for computer science, communications and AI programs. Open late during exam periods.",
+        "ko": "컴퓨터공학, 정보통신, 인공지능 전공의 실습실과 강의실이 있습니다. 시험 기간에는 늦게까지 개방합니다."
+      },
+      "departments": [
+        {
+          "en": "Department of Computer Science",
+          "ko": "컴퓨터공학과"
+        },
+        {
+          "en": "Department of Information and Communication Engineering",
+          "ko": "정보통신공학과"
+        },
+        {
+          "en": "Department of Artificial Intelligence",
+          "ko": "인공지능학과"
+        }
+      ],
+      "facilities": ["printer", "wifi", "study_room", "restroom", "elevator"],
+      "rooms": ["101", "102", "201", "301", "501", "601"],
+      "openingHours": {
+        "en": "Mon–Sun 07:00–24:00",
+        "ko": "월–일 07:00–24:00"
+      }
+    },
+    {
+      "id": "b-student",
+      "number": "9",
+      "name": {
+        "en": "Student Center",
+        "ko": "학생회관"
+      },
+      "shortName": {
+        "en": "Student Ctr.",
+        "ko": "학생회관"
+      },
+      "category": "other",
+      "polygon": [
+        [880, 560],
+        [1080, 560],
+        [1080, 660],
+        [880, 660]
+      ],
+      "labelPosition": [980, 610],
+      "entrances": ["e-stu-n", "e-stu-w"],
+      "floors": 4,
+      "description": {
+        "en": "The heart of student life: union offices, club rooms, a counseling center, a convenience store and a café.",
+        "ko": "총학생회, 동아리방, 상담센터, 편의점과 카페가 있는 학생 생활의 중심입니다."
+      },
+      "departments": [
+        {
+          "en": "Student Union",
+          "ko": "총학생회"
+        },
+        {
+          "en": "Club Association",
+          "ko": "동아리연합회"
+        },
+        {
+          "en": "Student Counseling Center",
+          "ko": "학생상담센터"
+        }
+      ],
+      "facilities": ["convenience_store", "cafe", "atm", "printer", "lounge", "restroom"],
+      "rooms": ["101", "201", "301"],
+      "openingHours": {
+        "en": "Daily 08:00–22:00",
+        "ko": "매일 08:00–22:00"
+      }
+    },
+    {
+      "id": "b-cafeteria",
+      "number": "10",
+      "name": {
+        "en": "Student Cafeteria",
+        "ko": "학생식당"
+      },
+      "shortName": {
+        "en": "Cafeteria",
+        "ko": "학생식당"
+      },
+      "category": "food",
+      "polygon": [
+        [880, 690],
+        [1080, 690],
+        [1080, 765],
+        [880, 765]
+      ],
+      "labelPosition": [980, 728],
+      "entrances": ["e-caf-s", "e-caf-e"],
+      "floors": 2,
+      "description": {
+        "en": "Affordable set meals, a noodle bar and a bakery corner. The busiest time is 12:00–13:00.",
+        "ko": "저렴한 정식, 면 코너, 베이커리 코너가 있습니다. 12:00–13:00이 가장 붐빕니다."
+      },
+      "departments": [],
+      "facilities": ["restaurant", "cafe", "restroom"],
+      "rooms": ["101", "201"],
+      "openingHours": {
+        "en": "Mon–Sat 08:00–19:30",
+        "ko": "월–토 08:00–19:30"
+      }
+    },
+    {
+      "id": "b-gym",
+      "number": "11",
+      "name": {
+        "en": "Gymnasium",
+        "ko": "체육관"
+      },
+      "shortName": {
+        "en": "Gym",
+        "ko": "체육관"
+      },
+      "category": "sports",
+      "polygon": [
+        [1160, 560],
+        [1340, 560],
+        [1340, 680],
+        [1160, 680]
+      ],
+      "labelPosition": [1250, 620],
+      "entrances": ["e-gym-n", "e-gym-w"],
+      "floors": 3,
+      "description": {
+        "en": "Indoor courts, a fitness room and changing rooms. Student ID required at the entrance.",
+        "ko": "실내 코트, 체력단련실, 탈의실이 있습니다. 입장 시 학생증이 필요합니다."
+      },
+      "departments": [
+        {
+          "en": "Department of Sport Science",
+          "ko": "스포츠과학과"
+        }
+      ],
+      "facilities": ["lockers", "restroom"],
+      "rooms": ["101", "201"],
+      "openingHours": {
+        "en": "Mon–Sat 06:00–22:00",
+        "ko": "월–토 06:00–22:00"
+      }
+    },
+    {
+      "id": "b-stadium",
+      "number": "12",
+      "name": {
+        "en": "Track & Field Stadium",
+        "ko": "대운동장"
+      },
+      "shortName": {
+        "en": "Stadium",
+        "ko": "운동장"
+      },
+      "category": "sports",
+      "polygon": [
+        [1160, 830],
+        [1500, 830],
+        [1500, 935],
+        [1160, 935]
+      ],
+      "labelPosition": [1330, 883],
+      "entrances": ["e-stad-n"],
+      "floors": 1,
+      "description": {
+        "en": "Outdoor running track and football field used for classes, club games and festivals.",
+        "ko": "수업, 동아리 경기, 축제에 사용되는 육상 트랙과 축구장입니다."
+      },
+      "departments": [],
+      "facilities": ["restroom"],
+      "rooms": [],
+      "openingHours": {
+        "en": "Daily 06:00–21:00",
+        "ko": "매일 06:00–21:00"
+      }
+    },
+    {
+      "id": "b-dorm1",
+      "number": "13",
+      "name": {
+        "en": "Dormitory 1",
+        "ko": "기숙사 1동"
+      },
+      "shortName": {
+        "en": "Dorm 1",
+        "ko": "기숙사 1"
+      },
+      "category": "dormitory",
+      "polygon": [
+        [250, 90],
+        [400, 90],
+        [400, 195],
+        [250, 195]
+      ],
+      "labelPosition": [325, 143],
+      "entrances": ["e-dorm1-s"],
+      "floors": 10,
+      "description": {
+        "en": "Residence hall with double rooms, shared lounges and a laundry room. Residents only after 23:00.",
+        "ko": "2인실, 공용 라운지, 세탁실이 있는 기숙사입니다. 23:00 이후에는 입주생만 출입할 수 있습니다."
+      },
+      "departments": [
+        {
+          "en": "Housing Office",
+          "ko": "생활관 행정실"
+        }
+      ],
+      "facilities": ["convenience_store", "laundry", "lounge", "wifi", "restroom"],
+      "rooms": ["101", "102"],
+      "openingHours": {
+        "en": "Residents 24 h, visitors 09:00–23:00",
+        "ko": "입주생 24시간, 방문객 09:00–23:00"
+      }
+    },
+    {
+      "id": "b-dorm2",
+      "number": "14",
+      "name": {
+        "en": "Dormitory 2",
+        "ko": "기숙사 2동"
+      },
+      "shortName": {
+        "en": "Dorm 2",
+        "ko": "기숙사 2"
+      },
+      "category": "dormitory",
+      "polygon": [
+        [420, 90],
+        [530, 90],
+        [530, 195],
+        [420, 195]
+      ],
+      "labelPosition": [475, 143],
+      "entrances": ["e-dorm2-s"],
+      "floors": 12,
+      "description": {
+        "en": "Residence hall with single rooms and a dining hall on the first floor.",
+        "ko": "1인실과 1층 식당이 있는 기숙사입니다."
+      },
+      "departments": [],
+      "facilities": ["restaurant", "laundry", "wifi", "lounge"],
+      "rooms": ["101"],
+      "openingHours": {
+        "en": "Residents 24 h, visitors 09:00–23:00",
+        "ko": "입주생 24시간, 방문객 09:00–23:00"
+      }
+    },
+    {
+      "id": "b-intl",
+      "number": "15",
+      "name": {
+        "en": "International Center",
+        "ko": "국제교류센터"
+      },
+      "shortName": {
+        "en": "Intl. Ctr.",
+        "ko": "국제센터"
+      },
+      "category": "other",
+      "polygon": [
+        [620, 100],
+        [800, 100],
+        [800, 195],
+        [620, 195]
+      ],
+      "labelPosition": [710, 148],
+      "entrances": ["e-intl-s"],
+      "floors": 4,
+      "description": {
+        "en": "Support for international and exchange students: visas, buddy programs and Korean language courses.",
+        "ko": "외국인 유학생과 교환학생을 위한 비자 상담, 버디 프로그램, 한국어 강좌를 지원합니다."
+      },
+      "departments": [
+        {
+          "en": "Office of International Affairs",
+          "ko": "국제처"
+        },
+        {
+          "en": "Korean Language Institute",
+          "ko": "한국어교육원"
+        }
+      ],
+      "facilities": ["lounge", "wifi", "printer", "restroom"],
+      "rooms": ["101", "102", "201"],
+      "openingHours": {
+        "en": "Mon–Fri 09:00–18:00",
+        "ko": "월–금 09:00–18:00"
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "id": "j-nw",
+      "x": 220,
+      "y": 230,
+      "type": "junction"
+    },
+    {
+      "id": "j-n-main",
+      "x": 560,
+      "y": 230,
+      "type": "junction",
+      "name": {
+        "en": "North Crossroads",
+        "ko": "북쪽 사거리"
+      }
+    },
+    {
+      "id": "j-lib-sq",
+      "x": 840,
+      "y": 230,
+      "type": "junction",
+      "name": {
+        "en": "Library Square",
+        "ko": "도서관 광장"
+      }
+    },
+    {
+      "id": "j-ne1",
+      "x": 1120,
+      "y": 230,
+      "type": "junction"
+    },
+    {
+      "id": "j-ne2",
+      "x": 1380,
+      "y": 230,
+      "type": "junction"
+    },
+    {
+      "id": "j-w-mid",
+      "x": 220,
+      "y": 520,
+      "type": "junction"
+    },
+    {
+      "id": "j-central",
+      "x": 560,
+      "y": 520,
+      "type": "junction",
+      "name": {
+        "en": "Central Crossroads",
+        "ko": "중앙 사거리"
+      }
+    },
+    {
+      "id": "j-plaza",
+      "x": 840,
+      "y": 520,
+      "type": "junction",
+      "name": {
+        "en": "Central Plaza",
+        "ko": "중앙 광장"
+      }
+    },
+    {
+      "id": "j-east",
+      "x": 1120,
+      "y": 520,
+      "type": "junction",
+      "name": {
+        "en": "East Crossroads",
+        "ko": "동쪽 사거리"
+      }
+    },
+    {
+      "id": "j-e2",
+      "x": 1380,
+      "y": 520,
+      "type": "junction"
+    },
+    {
+      "id": "j-sw",
+      "x": 220,
+      "y": 800,
+      "type": "junction"
+    },
+    {
+      "id": "j-gate-sq",
+      "x": 560,
+      "y": 800,
+      "type": "junction",
+      "name": {
+        "en": "Gate Square",
+        "ko": "정문 광장"
+      }
+    },
+    {
+      "id": "j-fountain",
+      "x": 700,
+      "y": 660,
+      "type": "junction",
+      "name": {
+        "en": "the Fountain",
+        "ko": "분수대"
+      }
+    },
+    {
+      "id": "j-s-mid",
+      "x": 840,
+      "y": 800,
+      "type": "junction"
+    },
+    {
+      "id": "j-se1",
+      "x": 1120,
+      "y": 800,
+      "type": "junction"
+    },
+    {
+      "id": "j-se2",
+      "x": 1380,
+      "y": 800,
+      "type": "junction"
+    },
+    {
+      "id": "g-main",
+      "x": 560,
+      "y": 955,
+      "type": "gate",
+      "name": {
+        "en": "Main Gate",
+        "ko": "정문"
+      }
+    },
+    {
+      "id": "g-north",
+      "x": 1120,
+      "y": 45,
+      "type": "gate",
+      "name": {
+        "en": "North Gate",
+        "ko": "북문"
+      }
+    },
+    {
+      "id": "g-east",
+      "x": 1545,
+      "y": 520,
+      "type": "gate",
+      "name": {
+        "en": "East Gate",
+        "ko": "동문"
+      }
+    },
+    {
+      "id": "e-admin-s",
+      "x": 700,
+      "y": 520,
+      "type": "entrance",
+      "building": "b-admin"
+    },
+    {
+      "id": "e-admin-w",
+      "x": 560,
+      "y": 380,
+      "type": "entrance",
+      "building": "b-admin"
+    },
+    {
+      "id": "e-admin-e",
+      "x": 840,
+      "y": 350,
+      "type": "entrance",
+      "building": "b-admin"
+    },
+    {
+      "id": "e-lib-n",
+      "x": 980,
+      "y": 230,
+      "type": "entrance",
+      "building": "b-lib"
+    },
+    {
+      "id": "e-lib-w",
+      "x": 840,
+      "y": 410,
+      "type": "entrance",
+      "building": "b-lib"
+    },
+    {
+      "id": "e-lib-s",
+      "x": 940,
+      "y": 520,
+      "type": "entrance",
+      "building": "b-lib"
+    },
+    {
+      "id": "e-enga-n",
+      "x": 450,
+      "y": 520,
+      "type": "entrance",
+      "building": "b-eng-a"
+    },
+    {
+      "id": "e-enga-e",
+      "x": 560,
+      "y": 605,
+      "type": "entrance",
+      "building": "b-eng-a"
+    },
+    {
+      "id": "e-engb-s",
+      "x": 355,
+      "y": 800,
+      "type": "entrance",
+      "building": "b-eng-b"
+    },
+    {
+      "id": "e-engb-w",
+      "x": 220,
+      "y": 722,
+      "type": "entrance",
+      "building": "b-eng-b"
+    },
+    {
+      "id": "e-sci-n",
+      "x": 1250,
+      "y": 230,
+      "type": "entrance",
+      "building": "b-sci"
+    },
+    {
+      "id": "e-sci-w",
+      "x": 1120,
+      "y": 315,
+      "type": "entrance",
+      "building": "b-sci"
+    },
+    {
+      "id": "e-hum-n",
+      "x": 390,
+      "y": 230,
+      "type": "entrance",
+      "building": "b-hum"
+    },
+    {
+      "id": "e-hum-e",
+      "x": 560,
+      "y": 312,
+      "type": "entrance",
+      "building": "b-hum"
+    },
+    {
+      "id": "e-biz-s",
+      "x": 330,
+      "y": 520,
+      "type": "entrance",
+      "building": "b-biz"
+    },
+    {
+      "id": "e-biz-w",
+      "x": 220,
+      "y": 442,
+      "type": "entrance",
+      "building": "b-biz"
+    },
+    {
+      "id": "e-it-s",
+      "x": 1210,
+      "y": 520,
+      "type": "entrance",
+      "building": "b-it"
+    },
+    {
+      "id": "e-it-e",
+      "x": 1380,
+      "y": 440,
+      "type": "entrance",
+      "building": "b-it"
+    },
+    {
+      "id": "e-stu-n",
+      "x": 1020,
+      "y": 520,
+      "type": "entrance",
+      "building": "b-student"
+    },
+    {
+      "id": "e-stu-w",
+      "x": 840,
+      "y": 610,
+      "type": "entrance",
+      "building": "b-student"
+    },
+    {
+      "id": "e-caf-s",
+      "x": 980,
+      "y": 800,
+      "type": "entrance",
+      "building": "b-cafeteria"
+    },
+    {
+      "id": "e-caf-e",
+      "x": 1120,
+      "y": 728,
+      "type": "entrance",
+      "building": "b-cafeteria"
+    },
+    {
+      "id": "e-gym-n",
+      "x": 1300,
+      "y": 520,
+      "type": "entrance",
+      "building": "b-gym"
+    },
+    {
+      "id": "e-gym-w",
+      "x": 1120,
+      "y": 620,
+      "type": "entrance",
+      "building": "b-gym"
+    },
+    {
+      "id": "e-stad-n",
+      "x": 1330,
+      "y": 800,
+      "type": "entrance",
+      "building": "b-stadium"
+    },
+    {
+      "id": "e-dorm1-s",
+      "x": 325,
+      "y": 230,
+      "type": "entrance",
+      "building": "b-dorm1"
+    },
+    {
+      "id": "e-dorm2-s",
+      "x": 475,
+      "y": 230,
+      "type": "entrance",
+      "building": "b-dorm2"
+    },
+    {
+      "id": "e-intl-s",
+      "x": 710,
+      "y": 230,
+      "type": "entrance",
+      "building": "b-intl"
+    }
+  ],
+  "edges": [
+    {
+      "from": "j-nw",
+      "to": "e-dorm1-s",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-dorm1-s",
+      "to": "e-hum-n",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-hum-n",
+      "to": "e-dorm2-s",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-dorm2-s",
+      "to": "j-n-main",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-n-main",
+      "to": "e-intl-s",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-intl-s",
+      "to": "j-lib-sq",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-lib-sq",
+      "to": "e-lib-n",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-lib-n",
+      "to": "j-ne1",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-ne1",
+      "to": "e-sci-n",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-sci-n",
+      "to": "j-ne2",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-n-main",
+      "to": "e-hum-e",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-hum-e",
+      "to": "e-admin-w",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-admin-w",
+      "to": "j-central",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-central",
+      "to": "e-enga-e",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-enga-e",
+      "to": "j-gate-sq",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-gate-sq",
+      "to": "g-main",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-lib-sq",
+      "to": "e-admin-e",
+      "distance": null,
+      "stairs": false,
+      "covered": true
+    },
+    {
+      "from": "e-admin-e",
+      "to": "e-lib-w",
+      "distance": null,
+      "stairs": false,
+      "covered": true
+    },
+    {
+      "from": "e-lib-w",
+      "to": "j-plaza",
+      "distance": null,
+      "stairs": false,
+      "covered": true
+    },
+    {
+      "from": "j-plaza",
+      "to": "e-stu-w",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-stu-w",
+      "to": "j-s-mid",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-w-mid",
+      "to": "e-biz-s",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-biz-s",
+      "to": "e-enga-n",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-enga-n",
+      "to": "j-central",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-central",
+      "to": "e-admin-s",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-admin-s",
+      "to": "j-plaza",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-plaza",
+      "to": "e-lib-s",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-lib-s",
+      "to": "e-stu-n",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-stu-n",
+      "to": "j-east",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-east",
+      "to": "e-it-s",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-it-s",
+      "to": "e-gym-n",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-gym-n",
+      "to": "j-e2",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-e2",
+      "to": "g-east",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-nw",
+      "to": "e-biz-w",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-biz-w",
+      "to": "j-w-mid",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-w-mid",
+      "to": "e-engb-w",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-engb-w",
+      "to": "j-sw",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "g-north",
+      "to": "j-ne1",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-ne1",
+      "to": "e-sci-w",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-sci-w",
+      "to": "j-east",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-east",
+      "to": "e-gym-w",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-gym-w",
+      "to": "e-caf-e",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-caf-e",
+      "to": "j-se1",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-ne2",
+      "to": "e-it-e",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-it-e",
+      "to": "j-e2",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-e2",
+      "to": "j-se2",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-sw",
+      "to": "e-engb-s",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-engb-s",
+      "to": "j-gate-sq",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-gate-sq",
+      "to": "j-s-mid",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-s-mid",
+      "to": "e-caf-s",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-caf-s",
+      "to": "j-se1",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-se1",
+      "to": "e-stad-n",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "e-stad-n",
+      "to": "j-se2",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-gate-sq",
+      "to": "j-fountain",
+      "distance": null,
+      "stairs": false,
+      "covered": false
+    },
+    {
+      "from": "j-fountain",
+      "to": "j-plaza",
+      "distance": null,
+      "stairs": true,
+      "covered": false
+    }
+  ],
+  "pois": [
+    {
+      "id": "p-bus-main",
+      "type": "bus_stop",
+      "x": 625,
+      "y": 925,
+      "name": {
+        "en": "Main Gate Bus Stop",
+        "ko": "정문 버스정류장"
+      }
+    },
+    {
+      "id": "p-bus-east",
+      "type": "bus_stop",
+      "x": 1510,
+      "y": 490,
+      "name": {
+        "en": "East Gate Bus Stop",
+        "ko": "동문 버스정류장"
+      }
+    },
+    {
+      "id": "p-parking-west",
+      "type": "parking",
+      "x": 300,
+      "y": 880,
+      "name": {
+        "en": "Visitor Parking",
+        "ko": "방문자 주차장"
+      }
+    },
+    {
+      "id": "p-parking-east",
+      "type": "parking",
+      "x": 1465,
+      "y": 665,
+      "name": {
+        "en": "East Parking",
+        "ko": "동쪽 주차장"
+      }
+    },
+    {
+      "id": "p-cafe-lawn",
+      "type": "cafe",
+      "x": 645,
+      "y": 600,
+      "name": {
+        "en": "Lawn Café",
+        "ko": "잔디밭 카페"
+      }
+    },
+    {
+      "id": "p-mart",
+      "type": "convenience_store",
+      "x": 1205,
+      "y": 740,
+      "name": {
+        "en": "Campus Mart",
+        "ko": "캠퍼스 편의점"
+      }
+    },
+    {
+      "id": "p-bistro",
+      "type": "restaurant",
+      "x": 1295,
+      "y": 740,
+      "name": {
+        "en": "Campus Bistro",
+        "ko": "캠퍼스 비스트로"
+      }
+    },
+    {
+      "id": "p-atm-central",
+      "type": "atm",
+      "x": 605,
+      "y": 565,
+      "name": {
+        "en": "ATM",
+        "ko": "ATM"
+      }
+    },
+    {
+      "id": "p-restroom-garden",
+      "type": "restroom",
+      "x": 785,
+      "y": 745,
+      "name": {
+        "en": "Public Restroom",
+        "ko": "공중화장실"
+      }
+    },
+    {
+      "id": "p-print-kiosk",
+      "type": "printer",
+      "x": 860,
+      "y": 690,
+      "name": {
+        "en": "Print Kiosk",
+        "ko": "프린트 키오스크"
+      }
+    }
+  ],
+  "areas": [
+    {
+      "id": "a-ground",
+      "type": "ground",
+      "polygon": [
+        [50, 40],
+        [1550, 40],
+        [1550, 960],
+        [50, 960]
+      ]
+    },
+    {
+      "id": "a-west-woods",
+      "type": "green",
+      "name": {
+        "en": "West Woods",
+        "ko": "서쪽 숲"
+      },
+      "polygon": [
+        [75, 250],
+        [195, 250],
+        [195, 780],
+        [75, 780]
+      ]
+    },
+    {
+      "id": "a-lawn",
+      "type": "green",
+      "name": {
+        "en": "Central Lawn",
+        "ko": "중앙 잔디밭"
+      },
+      "polygon": [
+        [585, 545],
+        [800, 545],
+        [585, 760]
+      ]
+    },
+    {
+      "id": "a-garden",
+      "type": "green",
+      "name": {
+        "en": "Sculpture Garden",
+        "ko": "조각 정원"
+      },
+      "polygon": [
+        [625, 778],
+        [815, 778],
+        [815, 588]
+      ]
+    },
+    {
+      "id": "a-lib-garden",
+      "type": "green",
+      "name": {
+        "en": "Library Garden",
+        "ko": "도서관 정원"
+      },
+      "polygon": [
+        [860, 70],
+        [1095, 70],
+        [1095, 205],
+        [860, 205]
+      ]
+    },
+    {
+      "id": "a-east-garden",
+      "type": "green",
+      "name": {
+        "en": "East Garden",
+        "ko": "동쪽 정원"
+      },
+      "polygon": [
+        [1405, 250],
+        [1525, 250],
+        [1525, 495],
+        [1405, 495]
+      ]
+    },
+    {
+      "id": "a-pond",
+      "type": "water",
+      "name": {
+        "en": "Pond",
+        "ko": "연못"
+      },
+      "polygon": [
+        [1180, 80],
+        [1340, 80],
+        [1360, 140],
+        [1330, 200],
+        [1190, 200],
+        [1165, 140]
+      ]
+    },
+    {
+      "id": "a-plaza",
+      "type": "plaza",
+      "polygon": [
+        [805, 485],
+        [875, 485],
+        [875, 555],
+        [805, 555]
+      ]
+    },
+    {
+      "id": "a-gate-plaza",
+      "type": "plaza",
+      "polygon": [
+        [520, 770],
+        [600, 770],
+        [600, 840],
+        [520, 840]
+      ]
+    },
+    {
+      "id": "a-parking-west",
+      "type": "plaza",
+      "name": {
+        "en": "Visitor Parking",
+        "ko": "방문자 주차장"
+      },
+      "polygon": [
+        [90, 825],
+        [500, 825],
+        [500, 935],
+        [90, 935]
+      ]
+    },
+    {
+      "id": "a-parking-east",
+      "type": "plaza",
+      "name": {
+        "en": "East Parking",
+        "ko": "동쪽 주차장"
+      },
+      "polygon": [
+        [1405, 545],
+        [1525, 545],
+        [1525, 780],
+        [1405, 780]
+      ]
+    }
+  ]
+}
