@@ -8,8 +8,10 @@
  */
 import { defineConfig } from 'vite';
 
-export default defineConfig(({ command }) => ({
-  base: process.env.BASE_PATH ?? (command === 'build' ? '/inha-campus-navigator/' : '/'),
+export default defineConfig(({ command, isPreview }) => ({
+  // `vite preview` serves the production build, so it needs the same base.
+  base:
+    process.env.BASE_PATH ?? (command === 'build' || isPreview ? '/inha-campus-navigator/' : '/'),
   build: {
     target: 'es2020',
     sourcemap: false,

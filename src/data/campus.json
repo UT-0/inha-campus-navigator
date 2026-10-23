@@ -1402,7 +1402,7 @@
     {
       "id": "p-parking-west",
       "type": "parking",
-      "x": 300,
+      "x": 440,
       "y": 880,
       "name": {
         "en": "Visitor Parking",
@@ -1413,7 +1413,7 @@
       "id": "p-parking-east",
       "type": "parking",
       "x": 1465,
-      "y": 665,
+      "y": 600,
       "name": {
         "en": "East Parking",
         "ko": "동쪽 주차장"

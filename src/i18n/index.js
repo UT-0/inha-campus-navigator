@@ -89,6 +89,7 @@ export function setLanguage(lang) {
   current = lang;
   if (typeof document !== 'undefined') {
     document.documentElement.lang = lang;
+    document.title = translate(lang, 'app.title');
     applyStaticTranslations();
   }
   try {
