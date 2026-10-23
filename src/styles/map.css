@@ -724,3 +724,92 @@
     display: none;
   }
 }
+
+/* ---------- Route ---------- */
+
+.route-casing,
+.route-line,
+.route-highlight {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.route-casing {
+  stroke: var(--map-route-casing);
+}
+
+.route-line {
+  stroke: var(--map-route);
+  transition: opacity var(--duration-base) ease;
+}
+
+.layer-route.has-highlight .route-line {
+  opacity: 0.45;
+}
+
+.route-highlight {
+  stroke: var(--map-route-active);
+  animation: fade-in var(--duration-base) ease;
+}
+
+/* "Draw-on" animation: pathLength="1" makes the whole line one dash. */
+.is-drawing {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  animation-name: route-draw;
+  animation-timing-function: var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+@keyframes route-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.route-marker {
+  pointer-events: none;
+}
+
+.route-marker-body {
+  animation: marker-drop 420ms var(--ease-out) both;
+}
+
+.route-marker-pin {
+  stroke: #fff;
+  stroke-width: 2;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+}
+
+.route-marker.is-start .route-marker-pin {
+  fill: var(--map-marker-start);
+}
+
+.route-marker.is-end .route-marker-pin {
+  fill: var(--map-marker-end);
+}
+
+.route-marker-letter {
+  fill: #fff;
+  font-size: 13px;
+  font-weight: var(--font-weight-bold);
+  text-anchor: middle;
+}
+
+.route-marker-shadow {
+  fill: rgba(0, 0, 0, 0.25);
+}
+
+@keyframes marker-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+}

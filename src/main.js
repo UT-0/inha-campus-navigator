@@ -11,18 +11,25 @@ import './styles/layout.css';
 import './styles/components.css';
 import './styles/map.css';
 
-import { setState } from './state.js';
-import { buildGraph, logProblems, validateCampus } from './routing/graph.js';
+import { getState, setState, subscribe } from './state.js';
+import { logProblems, validateCampus } from './routing/graph.js';
+import { createRouter } from './routing/router.js';
 import {
   applyStaticTranslations,
   detectLanguage,
   getLanguage,
+  localize,
   setLanguage,
   t,
 } from './i18n/index.js';
 import { createMapController } from './map/mapController.js';
+import { createRouteLayer } from './map/routeLayer.js';
+import { createRoutePanel } from './ui/routePanel.js';
 import { createIcon } from './ui/icons.js';
+import { showToast } from './ui/toast.js';
 import { el } from './utils/dom.js';
+import { formatDistance } from './routing/directions.js';
+import { buildRouteUrl, copyToClipboard, writeRouteParams } from './utils/url.js';
 
 /**
  * Loads campus.json and courses.json. Dynamic imports let us catch a missing
@@ -72,8 +79,11 @@ async function start() {
   const errors = problems.filter((p) => p.level === 'error');
   if (errors.length > 0) throw new Error(errors.map((p) => p.message).join('\n'));
 
-  const graph = buildGraph(campus);
   setState({ campus, courses, lang: getLanguage() });
+  const router = createRouter(campus);
+  const buildingsById = new Map(campus.buildings.map((b) => [b.id, b]));
+
+  // ---------- Map ----------
 
   const map = createMapController({
     campus,
@@ -83,11 +93,132 @@ async function start() {
       map.flyToBuilding(id);
     },
   });
+  const routeLayer = createRouteLayer({
+    routeLayer: map.view.layers.route,
+    markerLayer: map.view.layers.markers,
+  });
+  map.onCamera((k) => routeLayer.setScale(k));
+  routeLayer.setScale(map.panZoom.getTransform().k);
+
+  /** Route nodes plus the outlines of both end buildings, for framing the camera. */
+  function routeExtent(route) {
+    const outline = (id) => (buildingsById.get(id)?.polygon ?? []).map(([x, y]) => ({ x, y }));
+    return [...router.pointsOf(route.path), ...outline(route.fromId), ...outline(route.toId)];
+  }
+
+  // ---------- Actions shared by the UI modules ----------
+
+  const actions = {
+    /** Computes the route for the current From/To selection and shows it. */
+    findRoute() {
+      const { from, to } = getState();
+      if (!from || !to) return;
+      const { status, route } = router.findRoute(from, to);
+      if (status === 'ok') {
+        setState({ route, routeStatus: 'ok', activeStep: null });
+        map.flyToPoints(routeExtent(route), { margin: 56, maxScale: 2.5 });
+        writeRouteParams(from, to);
+        const directions = router.directionsFor(route, getState().lang, t);
+        announce(
+          t('result.announce', {
+            from: localizeName(buildingsById.get(from)),
+            to: localizeName(buildingsById.get(to)),
+            distance: formatDistance(directions.totalMeters, t),
+            minutes: directions.minutes,
+            steps: directions.steps.length,
+          }),
+        );
+      } else if (status === 'same') {
+        setState({ route: null, routeStatus: 'same', activeStep: null });
+        writeRouteParams(null, null);
+        map.flyToBuilding(from);
+      } else {
+        setState({ route: null, routeStatus: 'none', activeStep: null });
+        writeRouteParams(null, null);
+        showToast(t('toast.noRoute'), { type: 'error' });
+      }
+    },
+    clearRoute() {
+      setState({ route: null, routeStatus: 'idle', activeStep: null });
+      writeRouteParams(null, null);
+      map.panZoom.reset();
+    },
+    swap() {
+      const { from, to, route } = getState();
+      setState({ from: to, to: from });
+      if (route && from && to) actions.findRoute();
+    },
+    async shareRoute() {
+      const { route } = getState();
+      if (!route) return;
+      const ok = await copyToClipboard(buildRouteUrl(route.fromId, route.toId));
+      showToast(t(ok ? 'toast.linkCopied' : 'toast.copyFailed'), {
+        type: ok ? 'success' : 'error',
+      });
+    },
+    openRecent(from, to) {
+      setState({ from, to });
+      actions.findRoute();
+    },
+  };
+
+  // ---------- Panels ----------
+
+  createRoutePanel({
+    panelContainer: document.getElementById('route-panel'),
+    resultContainer: document.getElementById('route-result'),
+    campus,
+    router,
+    actions,
+    getRecent: () => [],
+  });
+
+  // ---------- Reactions to state changes ----------
+
+  subscribe((state, changed) => {
+    // Changing From/To makes a shown route (or status message) out of date.
+    if ((changed.includes('from') || changed.includes('to')) && state.routeStatus !== 'idle') {
+      const current = state.route;
+      if (!current || current.fromId !== state.from || current.toId !== state.to) {
+        setState({ route: null, routeStatus: 'idle', activeStep: null });
+        writeRouteParams(null, null);
+      }
+    }
+    if (changed.includes('route')) {
+      if (state.route) routeLayer.draw(router.pointsOf(state.route.path));
+      else routeLayer.clear();
+    }
+    if (changed.includes('activeStep') || changed.includes('route')) {
+      const step =
+        state.route && state.activeStep !== null
+          ? router.directionsFor(state.route, state.lang, t).steps[state.activeStep]
+          : null;
+      const points = step ? router.pointsOf(step.nodeIds) : null;
+      routeLayer.highlight(points);
+      if (points) map.flyToPoints(points, { margin: 80, maxScale: 3 });
+    }
+  });
 
   showSampleBanner(campus);
-  document.getElementById('route-panel').textContent =
-    `${campus.buildings.length} buildings, ${graph.nodes.size} nodes loaded.`;
   document.getElementById('map-loading').classList.add('is-hidden');
+}
+
+/** Localized building name. */
+function localizeName(building) {
+  return building ? localize(building.name) : '';
+}
+
+/**
+ * Announces a message to screen readers through the aria-live region.
+ * @param {string} message
+ */
+function announce(message) {
+  const region = document.getElementById('announcer');
+  region.textContent = '';
+  // A short delay makes screen readers notice the change even for repeated text.
+  setTimeout(() => {
+    region.textContent = message;
+  }, 50);
 }
 
 const mobileQuery = window.matchMedia('(max-width: 899.98px)');
