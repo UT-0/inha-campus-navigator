@@ -10,10 +10,11 @@
 
 /**
  * @typedef {Object} RouteResult
- * @property {string} fromId   Start building id.
- * @property {string} toId     Destination building id.
+ * @property {string} fromId   Start building (or place) id.
+ * @property {string} toId     Destination building or place (POI) id.
  * @property {string[]} path   Node ids along the route (real nodes only).
  * @property {number} distance Total length in meters.
+ * @property {boolean} [accessible] Found with the step-free option.
  */
 
 /**
@@ -25,12 +26,15 @@
  * @property {string|null} from             Selected start building id.
  * @property {string|null} to               Selected destination building id.
  * @property {RouteResult|null} route       Current route, if one is shown.
- * @property {'idle'|'ok'|'same'|'none'} routeStatus Outcome of the last route request.
+ * @property {'idle'|'ok'|'same'|'inside'|'none'|'noAccessible'|'noCandidates'} routeStatus
+ *           Outcome of the last route request.
  * @property {number|null} activeStep       Index of the highlighted direction step.
  * @property {string|null} selectedBuilding Building whose panel is open.
  * @property {{type: string, value: string}|null} highlight Item to highlight in the building panel.
  * @property {string|null} hoveredBuilding  Building under the pointer.
  * @property {string[]} poiFilters          Amenity groups shown on the map.
+ * @property {boolean} accessible           Step-free routes only (no stairs, step-free entrances).
+ * @property {string|null} routeTarget      Place found by "nearest" (or the kind searched).
  * @property {boolean} infoOpen             Whether the campus Info panel is open.
  */
 
@@ -49,6 +53,8 @@ const state = {
   highlight: null,
   hoveredBuilding: null,
   poiFilters: [],
+  accessible: false,
+  routeTarget: null,
   infoOpen: false,
 };
 

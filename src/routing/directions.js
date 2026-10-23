@@ -121,36 +121,60 @@ export function walkingMinutes(meters, speedMetersPerMin = 75) {
  * @param {string[]} options.path         Node ids from start entrance to destination entrance.
  * @param {import('./graph.js').Graph} options.graph
  * @param {object} options.campus         Parsed campus.json (for landmarks and walking speed).
- * @param {object} options.fromBuilding   Start building.
- * @param {object} options.toBuilding     Destination building.
+ * @param {import('./endpoints.js').Endpoint} [options.from] Start (building or place).
+ * @param {import('./endpoints.js').Endpoint} [options.to]   Destination (building or place).
+ * @param {object} [options.fromBuilding] Start building (when `from` is not given).
+ * @param {object} [options.toBuilding]   Destination building (when `to` is not given).
  * @param {(key:string, params?:object)=>string} options.t Translator.
  * @param {'en'|'ko'} options.lang        Language used for names from the data.
  * @returns {Directions}
  */
-export function buildDirections({ path, graph, campus, fromBuilding, toBuilding, t, lang }) {
+export function buildDirections({
+  path,
+  graph,
+  campus,
+  from: fromEndpoint,
+  to: toEndpoint,
+  fromBuilding,
+  toBuilding,
+  t,
+  lang,
+}) {
+  const from = fromEndpoint ?? asEndpoint(fromBuilding);
+  const to = toEndpoint ?? asEndpoint(toBuilding);
   const name = (value) => (value ? (value[lang] ?? value.en ?? value.ko ?? '') : '');
   const segments = buildSegments(path, graph);
   const legs = foldShortFirstLeg(mergeIntoLegs(segments, graph));
-  const excluded = new Set([fromBuilding.id, toBuilding.id]);
+  const excluded = new Set([from.building?.id, to.building?.id, from.id, to.id].filter(Boolean));
   const first = graph.nodes.get(path[0]);
   const last = graph.nodes.get(path[path.length - 1]);
 
   const steps = [];
 
-  // 1. Leave the start building.
+  // 1. Leave the start building (or start at a place outdoors).
   steps.push(
-    makeStep(
-      t,
-      'exit',
-      'dir.exit',
-      {
-        building: name(fromBuilding.name),
-        side: t(`side.${sideOfBuilding(fromBuilding, first)}`),
-      },
-      0,
-      [path[0]],
-      [first],
-    ),
+    from.building
+      ? makeStep(
+          t,
+          'exit',
+          'dir.exit',
+          {
+            building: name(from.name),
+            side: t(`side.${sideOfBuilding(from.building, first)}`),
+          },
+          0,
+          [path[0]],
+          [first],
+        )
+      : makeStep(
+          t,
+          'exit',
+          'dir.startPlace',
+          { place: name(from.name) },
+          from.offMeters ?? 0,
+          [path[0]],
+          [first],
+        ),
   );
 
   // 2. One step per leg.
@@ -200,21 +224,32 @@ export function buildDirections({ path, graph, campus, fromBuilding, toBuilding,
 
   // 3. Arrive at the destination.
   steps.push(
-    makeStep(
-      t,
-      'arrive',
-      'dir.arrive',
-      {
-        building: name(toBuilding.name),
-        side: t(`side.${sideOfBuilding(toBuilding, last)}`),
-      },
-      0,
-      [path[path.length - 1]],
-      [last],
-    ),
+    to.building
+      ? makeStep(
+          t,
+          'arrive',
+          'dir.arrive',
+          {
+            building: name(to.name),
+            side: t(`side.${sideOfBuilding(to.building, last)}`),
+          },
+          0,
+          [path[path.length - 1]],
+          [last],
+        )
+      : makeStep(
+          t,
+          'arrive',
+          'dir.arrivePlace',
+          { place: name(to.name) },
+          to.offMeters ?? 0,
+          [path[path.length - 1]],
+          [last],
+        ),
   );
 
-  const totalMeters = segments.reduce((sum, s) => sum + s.meters, 0);
+  const totalMeters =
+    segments.reduce((sum, s) => sum + s.meters, 0) + (from.offMeters ?? 0) + (to.offMeters ?? 0);
   return {
     steps,
     totalMeters,
@@ -327,6 +362,11 @@ function foldShortFirstLeg(legs) {
 }
 
 /** Which side of a building (north/east/south/west) an entrance node is on. */
+/** Wraps a plain building as a route endpoint (older callers and tests). */
+function asEndpoint(building) {
+  return { id: building.id, kind: 'building', name: building.name, building, offMeters: 0 };
+}
+
 function sideOfBuilding(building, node) {
   const center = shapeCentroid(building);
   return cardinalSide(bearing(center, node));

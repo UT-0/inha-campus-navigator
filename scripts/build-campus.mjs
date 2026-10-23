@@ -426,6 +426,23 @@ const walk = buildWalkGraph({
 });
 for (const b of buildings) b.entrances = walk.entrances[b.id] ?? [];
 
+// Step-free entrances, where OSM maps them (wheelchair=yes/limited/no).
+const nodeById = new Map(walk.nodes.map((n) => [n.id, n]));
+for (const b of buildings) {
+  const entrances = b.entrances.map((id) => nodeById.get(id)).filter(Boolean);
+  const tagged = entrances.filter((n) => n.wheelchair);
+  if (tagged.length === 0) continue;
+  const yes = tagged.filter((n) => n.wheelchair === 'yes' || n.wheelchair === 'limited');
+  b.amenities.accessibleEntrance = {
+    available: yes.length > 0 ? true : tagged.length === entrances.length ? false : null,
+    status: yes.length > 0 || tagged.length === entrances.length ? 'osm' : 'unknown',
+    locations: yes.map((n) => ({
+      ko: `${n.label ?? '출입구'}${n.wheelchair === 'limited' ? ' (일부 가능)' : ''}`,
+      en: `${n.label ?? 'Entrance'}${n.wheelchair === 'limited' ? ' (limited)' : ''}`,
+    })),
+  };
+}
+
 // ---------------------------------------------------------------------------
 // 5. Official details (departments, offices, amenities, descriptions)
 // ---------------------------------------------------------------------------

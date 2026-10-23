@@ -10,7 +10,9 @@ import {
   matchScore,
   normalize,
   search,
+  roomCodeEntry,
 } from '../src/utils/search.js';
+import { buildPrefixTable } from '../src/utils/roomCode.js';
 import { translate } from '../src/i18n/index.js';
 import campus from '../src/data/campus.json';
 
@@ -174,5 +176,27 @@ describe('search: real departments and offices', () => {
     const hit = search(index, '보건센터').find((r) => r.entry.type === 'facility');
     expect(hit.entry.buildingId).toBe('b-7');
     expect(hit.entry.highlight.type).toBe('directory');
+  });
+});
+
+describe('search: room codes', () => {
+  const table = buildPrefixTable(campus.buildings);
+
+  it('turns a room code into building, wing and floor', () => {
+    const entry = roomCodeEntry('2남 212호', campus, table);
+    expect(entry.buildingId).toBe('b-2');
+    expect(entry.subtitle.en).toContain('South wing');
+    expect(entry.subtitle.en).toContain('2F');
+    expect(JSON.parse(entry.highlight.value).room).toBe('212');
+  });
+
+  it('handles tall buildings and spacing variants', () => {
+    expect(roomCodeEntry('하이테크 1012', campus, table).subtitle.en).toContain('10F');
+    expect(roomCodeEntry('60주년기념관901A호', campus, table).buildingId).toBe('b-60th');
+  });
+
+  it('ignores a building name without a room number', () => {
+    expect(roomCodeEntry('2호관', campus, table)).toBeNull();
+    expect(roomCodeEntry('hello', campus, table)).toBeNull();
   });
 });

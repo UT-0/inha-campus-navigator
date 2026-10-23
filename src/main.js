@@ -37,10 +37,18 @@ import { createIcon } from './ui/icons.js';
 import { showToast } from './ui/toast.js';
 import { el, readStorage, writeStorage } from './utils/dom.js';
 import { outerRings } from './utils/geometry.js';
+import {
+  getPosition,
+  GOOD_ACCURACY_METERS,
+  nearestBuilding,
+  OFF_CAMPUS_METERS,
+  toMapPoint,
+} from './utils/location.js';
 import { buildRouteUrl, copyToClipboard, readRouteParams, writeRouteParams } from './utils/url.js';
 import { DRAFT_KEY } from './editor/draft.js';
 
 const RECENT_KEY = 'icn.recentRoutes';
+const ACCESSIBLE_KEY = 'icn.accessible';
 const RECENT_LIMIT = 5;
 const mobileQuery = window.matchMedia('(max-width: 899.98px)');
 
@@ -94,7 +102,8 @@ async function start() {
   setState({ campus, courses, lang: getLanguage() });
   const router = createRouter(campus);
   const buildingsById = new Map(campus.buildings.map((b) => [b.id, b]));
-  const nameOf = (id) => localize(buildingsById.get(id)?.name);
+  const nameOf = (id) => localize(router.endpoints.get(id)?.name);
+  setState({ accessible: readStorage(ACCESSIBLE_KEY, false) === true });
 
   let infoPanel = null;
   createSettings(document.getElementById('settings'), {
@@ -147,11 +156,16 @@ async function start() {
 
   /** Route nodes plus the outlines of both end buildings, for framing the camera. */
   function routeExtent(route) {
-    const outline = (id) =>
-      outerRings(buildingsById.get(id))
-        .flat()
-        .map(([x, y]) => ({ x, y }));
-    return [...router.geometryOf(route.path), ...outline(route.fromId), ...outline(route.toId)];
+    const outline = (id) => {
+      const endpoint = router.endpoints.get(id);
+      if (endpoint?.building) {
+        return outerRings(endpoint.building)
+          .flat()
+          .map(([x, y]) => ({ x, y }));
+      }
+      return endpoint?.place ? [{ x: endpoint.place.x, y: endpoint.place.y }] : [];
+    };
+    return [...router.routeGeometry(route), ...outline(route.fromId), ...outline(route.toId)];
   }
 
   /**
@@ -187,45 +201,112 @@ async function start() {
     writeStorage(RECENT_KEY, list.slice(0, RECENT_LIMIT));
   }
 
+  /** Shows a router outcome: draws the route, or explains why there is none. */
+  function showOutcome({ status, route, targetId }, from, to) {
+    setState({ selectedBuilding: null, highlight: null, routeTarget: targetId ?? null });
+    if (status === 'ok') {
+      setState({ route, routeStatus: 'ok', activeStep: null });
+      sheet.snapTo('half');
+      map.flyToPoints(routeExtent(route), { margin: 40, maxScale: 2.5 });
+      writeRouteParams(from, to);
+      if (buildingsById.has(from) && buildingsById.has(to)) {
+        rememberRoute(from, to);
+        routePanel.renderRecent();
+      }
+      revealResult();
+      const directions = router.directionsFor(route, getState().lang, t);
+      announce(
+        t('result.announce', {
+          from: nameOf(from),
+          to: nameOf(to),
+          distance: formatDistance(directions.totalMeters, t),
+          minutes: directions.minutes,
+          steps: directions.steps.length,
+        }),
+      );
+      return;
+    }
+    setState({ route: null, activeStep: null });
+    writeRouteParams(null, null);
+    if (status === 'same' || status === 'inside') {
+      setState({ routeStatus: status });
+      revealResult();
+      announce(t(status === 'same' ? 'result.sameTitle' : 'result.insideTitle'));
+      const building = router.endpoints.get(from)?.building;
+      if (building) map.flyToBuilding(building.id);
+    } else if (status === 'noAccessible') {
+      setState({ routeStatus: 'noAccessible' });
+      revealResult();
+      announce(t('result.noAccessibleTitle'));
+    } else {
+      setState({ routeStatus: 'none' });
+      showToast(t('toast.noRoute'), { type: 'error' });
+    }
+  }
+
   // ---------- Actions shared by the UI modules ----------
 
   const actions = {
     /** Computes the route for the current From/To selection and shows it. */
     findRoute() {
-      const { from, to } = getState();
+      const { from, to, accessible } = getState();
       if (!from || !to) return;
-      const { status, route } = router.findRoute(from, to);
-      setState({ selectedBuilding: null, highlight: null });
-
-      if (status === 'ok') {
-        setState({ route, routeStatus: 'ok', activeStep: null });
-        sheet.snapTo('half');
-        map.flyToPoints(routeExtent(route), { margin: 40, maxScale: 2.5 });
-        writeRouteParams(from, to);
-        rememberRoute(from, to);
-        routePanel.renderRecent();
-        revealResult();
-        const directions = router.directionsFor(route, getState().lang, t);
-        announce(
-          t('result.announce', {
-            from: nameOf(from),
-            to: nameOf(to),
-            distance: formatDistance(directions.totalMeters, t),
-            minutes: directions.minutes,
-            steps: directions.steps.length,
-          }),
-        );
-      } else if (status === 'same') {
-        setState({ route: null, routeStatus: 'same', activeStep: null });
-        revealResult();
-        writeRouteParams(null, null);
-        announce(t('result.sameTitle'));
-        map.flyToBuilding(from);
-      } else {
-        setState({ route: null, routeStatus: 'none', activeStep: null });
-        writeRouteParams(null, null);
-        showToast(t('toast.noRoute'), { type: 'error' });
+      showOutcome(router.findRoute(from, to, { accessible }), from, to);
+    },
+    /** Route to the nearest place of a kind (café, ATM…) from the start building. */
+    findNearest(kind) {
+      const { from, accessible } = getState();
+      if (!from) {
+        showToast(t('nearest.needStart'));
+        routePanel.focusFrom();
+        return;
       }
+      const outcome = router.findNearest(from, kind, { accessible });
+      if (outcome.status === 'noCandidates') {
+        setState({ route: null, routeStatus: 'noCandidates', routeTarget: kind, activeStep: null });
+        revealResult();
+        return;
+      }
+      if (outcome.targetId) setState({ to: outcome.targetId });
+      showOutcome(outcome, from, outcome.targetId);
+    },
+    /** "Use my location": sets the start to the building you are at. */
+    async locate() {
+      showToast(t('locate.finding'));
+      let position;
+      try {
+        position = await getPosition();
+      } catch (error) {
+        const reason =
+          error.code === 1 ? 'denied' : error.code === 'unsupported' ? 'unsupported' : 'failed';
+        showToast(t(`locate.${reason}`), { type: 'error' });
+        return;
+      }
+      const { latitude, longitude, accuracy } = position.coords;
+      const point = toMapPoint(campus, latitude, longitude);
+      const nearest = point && nearestBuilding(campus, point);
+      if (!nearest) return;
+      map.showLocation(point, accuracy);
+      if (nearest.meters > OFF_CAMPUS_METERS) {
+        showToast(t('locate.offCampus'), { type: 'error' });
+        map.flyToPoints([point], { margin: 120, maxScale: 1 });
+        return;
+      }
+      const id = nearest.building.id;
+      if (accuracy > GOOD_ACCURACY_METERS) {
+        // Not precise enough to be sure: ask before using it.
+        const ok = window.confirm(
+          t('locate.confirm', { meters: Math.round(accuracy), name: nameOf(id) }),
+        );
+        if (!ok) {
+          routePanel.focusFrom();
+          return;
+        }
+      }
+      setState({ from: id });
+      map.flyToPoints([point], { margin: 160, maxScale: 2 });
+      showToast(t('locate.fromSet', { name: nameOf(id) }), { type: 'success' });
+      if (getState().to) actions.findRoute();
     },
     clearRoute() {
       setState({ route: null, routeStatus: 'idle', activeStep: null });
@@ -333,7 +414,7 @@ async function start() {
       }
     }
     if (changed.includes('route')) {
-      if (state.route) routeLayer.draw(router.geometryOf(state.route.path));
+      if (state.route) routeLayer.draw(router.routeGeometry(state.route));
       else routeLayer.clear();
     }
     if (changed.includes('activeStep') || changed.includes('route')) {
@@ -346,6 +427,7 @@ async function start() {
       if (points) map.flyToPoints(points, { margin: 80, maxScale: points.length > 1 ? 3 : 2 });
     }
     if (changed.includes('lang')) showSampleBanner(campus);
+    if (changed.includes('accessible')) writeStorage(ACCESSIBLE_KEY, state.accessible);
   });
 
   showSampleBanner(campus);
@@ -355,8 +437,8 @@ async function start() {
 
   const params = readRouteParams();
   if (params.from || params.to) {
-    const from = buildingsById.has(params.from) ? params.from : null;
-    const to = buildingsById.has(params.to) ? params.to : null;
+    const from = router.endpoints.get(params.from) ? params.from : null;
+    const to = router.endpoints.get(params.to) ? params.to : null;
     if ((params.from && !from) || (params.to && !to)) {
       showToast(t('toast.invalidLink'), { type: 'error' });
       writeRouteParams(null, null);

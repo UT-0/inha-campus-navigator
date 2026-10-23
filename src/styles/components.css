@@ -1652,3 +1652,118 @@ a.item-title:hover {
   border-radius: var(--radius-sm);
   background: var(--color-surface-2);
 }
+
+/* ---------- Route options: location, step-free switch, nearest ---------- */
+
+.route-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 var(--space-1);
+}
+
+.route-locate {
+  margin-left: calc(-1 * var(--space-2));
+}
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.switch-track {
+  position: relative;
+  flex-shrink: 0;
+  width: 34px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  background: var(--color-border-strong);
+  transition: background var(--duration-fast, 150ms);
+}
+
+.switch-track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: transform var(--duration-fast, 150ms);
+}
+
+.switch input:checked + .switch-track {
+  background: var(--color-accent);
+}
+
+.switch input:checked + .switch-track::after {
+  transform: translateX(14px);
+}
+
+.switch input:focus-visible + .switch-track {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.switch-label {
+  display: grid;
+  line-height: 1.25;
+}
+
+.switch-hint {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular, 400);
+  color: var(--color-text-muted);
+}
+
+.nearest {
+  margin-top: var(--space-3);
+}
+
+.nearest-chip svg {
+  color: var(--color-text-muted);
+}
+
+.nearest-chip:disabled,
+.nearest-chip[aria-disabled='true'] {
+  opacity: 0.5;
+}
+
+.nearest-chip:disabled {
+  cursor: not-allowed;
+}
+
+.room-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.room-card > svg {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+.room-card.is-highlighted {
+  background: var(--color-accent-soft);
+  box-shadow: inset 3px 0 0 var(--color-accent);
+}

@@ -73,6 +73,7 @@ export function renderMap(svg, campus) {
     'labels',
     'route',
     'markers',
+    'location',
   ]) {
     layers[name] = svgEl('g', { class: `layer layer-${name}` });
     camera.append(layers[name]);

@@ -12,6 +12,8 @@
  * Pure module (no DOM) so it can be unit tested.
  */
 
+import { parseRoomCode } from './roomCode.js';
+
 const CHOSEONG = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
 const HANGUL_START = 0xac00;
 const HANGUL_END = 0xd7a3;
@@ -346,4 +348,42 @@ export function search(index, query, { perGroup = 5, minScore = 40 } = {}) {
     .filter((list) => list.length > 0)
     .sort((a, b) => b[0].score - a[0].score);
   return ranked.flatMap((list) => list.slice(0, perGroup));
+}
+
+const WING_NAMES = {
+  east: { en: 'East wing', ko: '동관' },
+  west: { en: 'West wing', ko: '서관' },
+  south: { en: 'South wing', ko: '남관' },
+  north: { en: 'North wing', ko: '북관' },
+};
+
+/**
+ * A search result for a room code such as "2남 212호" or "하이테크 1012":
+ * the building, wing and floor, ready to open with a route.
+ * @param {string} query
+ * @param {object} campus
+ * @param {ReturnType<import('./roomCode.js').buildPrefixTable>} prefixTable
+ * @returns {SearchEntry|null}
+ */
+export function roomCodeEntry(query, campus, prefixTable) {
+  const parsed = parseRoomCode(query, prefixTable);
+  if (!parsed?.room) return null;
+  const building = campus.buildings.find((b) => b.id === parsed.buildingId);
+  if (!building) return null;
+  const wing = parsed.wing ? WING_NAMES[parsed.wing] : null;
+  const parts = (lang) =>
+    [building.name[lang], wing?.[lang], parsed.floorLabel].filter(Boolean).join(' · ');
+  return {
+    type: 'room',
+    id: `roomcode:${building.id}:${parsed.wingKo ?? ''}${parsed.room}`,
+    buildingId: building.id,
+    title: {
+      en: `Room ${parsed.room}${wing ? ` (${wing.en})` : ''}`,
+      ko: `${parsed.wingKo ? `${building.number ?? ''}${parsed.wingKo} ` : ''}${parsed.room}호`,
+    },
+    subtitle: { en: parts('en'), ko: parts('ko') },
+    terms: [],
+    highlight: { type: 'roomCode', value: JSON.stringify(parsed) },
+    icon: 'door',
+  };
 }

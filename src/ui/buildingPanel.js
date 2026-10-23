@@ -126,6 +126,7 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
       ),
     );
 
+    const roomCard = roomCodeCard(building);
     const floors = floorsAbove(building);
     const hours = hoursText(building);
     const facts = el(
@@ -298,6 +299,7 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
         ),
         photo,
         header,
+        roomCard,
         buttons,
         facts.childElementCount ? facts : null,
         ...sections,
@@ -312,6 +314,35 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
         .querySelector('.is-highlighted')
         ?.scrollIntoView({ block: 'center', behavior: 'smooth' });
     });
+  }
+
+  /** A room found by its code ("2남 212호"): wing, floor and how to find it. */
+  function roomCodeCard(building) {
+    const { highlight } = getState();
+    if (highlight?.type !== 'roomCode') return null;
+    let room;
+    try {
+      room = JSON.parse(highlight.value);
+    } catch {
+      return null;
+    }
+    if (room.buildingId !== building.id) return null;
+    const facts = [
+      room.wing ? t(`room.wing.${room.wing}`) : null,
+      room.floorLabel ? t('room.floor', { floor: room.floorLabel }) : null,
+    ].filter(Boolean);
+    return el(
+      'div',
+      { class: 'room-card is-highlighted', role: 'status' },
+      createIcon('door', { size: 20 }),
+      el(
+        'div',
+        { class: 'item-body' },
+        el('span', { class: 'item-title', text: t('room.title', { room: room.room }) }),
+        facts.length ? el('span', { class: 'item-meta', text: facts.join(' · ') }) : null,
+        el('span', { class: 'item-meta', text: t('room.howTo') }),
+      ),
+    );
   }
 
   function fact(icon, label, value, status) {

@@ -1,14 +1,16 @@
 /**
- * Route panel: the From / To building pickers, the swap button, the
- * "Find route" button with a hint while selections are missing, recent
- * route chips, and the result area below it (welcome message, the route
- * result card with numbered directions, or a friendly status message).
+ * Route panel: the From / To building pickers, the swap button, "Use my
+ * location", the step-free option, the "Find route" button with a hint while
+ * selections are missing, "nearest …" chips, recent route chips, and the
+ * result area below it (welcome message, the route result card with numbered
+ * directions, or a friendly status message).
  */
 import { getState, setState, subscribe } from '../state.js';
 import { localize, t } from '../i18n/index.js';
 import { el, richText, plainText } from '../utils/dom.js';
 import { bestScore } from '../utils/search.js';
 import { formatDistance } from '../routing/directions.js';
+import { NEAREST_KINDS } from '../routing/router.js';
 import { createCombobox } from './combobox.js';
 import { createIcon } from './icons.js';
 
@@ -19,6 +21,8 @@ import { createIcon } from './icons.js';
  * @property {() => void} swap
  * @property {() => void} shareRoute
  * @property {(from: string, to: string) => void} openRecent
+ * @property {(kind: string) => void} findNearest
+ * @property {() => void} locate
  */
 
 /**
@@ -45,8 +49,23 @@ export function createRoutePanel({
   let findButton;
   let hint;
   let recentEl;
+  let nearestEl;
 
   // ---------- Building options for the pickers ----------
+
+  /** Picker option for a building, or for a place picked via "nearest". */
+  function optionFor(id) {
+    if (buildings.has(id)) return toOption(buildings.get(id));
+    const endpoint = router.endpoints.get(id);
+    if (!endpoint) return null;
+    return {
+      id,
+      label: localize(endpoint.name),
+      sublabel: t(`facility.${endpoint.place.type}`),
+      number: '',
+      category: endpoint.building?.category ?? 'other',
+    };
+  }
 
   function toOption(building) {
     return {
@@ -127,6 +146,34 @@ export function createRoutePanel({
     );
     recentEl = el('div', { class: 'recent-routes' });
 
+    const locateButton = el(
+      'button',
+      { class: 'btn btn-ghost btn-sm route-locate', type: 'button', onClick: actions.locate },
+      createIcon('target', { size: 16 }),
+      t('route.useLocation'),
+    );
+    const accessibleToggle = el(
+      'label',
+      { class: 'switch' },
+      el('input', {
+        type: 'checkbox',
+        role: 'switch',
+        checked: getState().accessible ? '' : null,
+        onChange: (event) => {
+          setState({ accessible: event.target.checked });
+          if (getState().route) actions.findRoute();
+        },
+      }),
+      el('span', { class: 'switch-track', 'aria-hidden': 'true' }),
+      el(
+        'span',
+        { class: 'switch-label' },
+        t('route.accessible'),
+        el('span', { class: 'switch-hint', text: t('route.accessibleHint') }),
+      ),
+    );
+    nearestEl = el('div', { class: 'nearest' });
+
     panelContainer.replaceChildren(
       el(
         'section',
@@ -145,20 +192,65 @@ export function createRoutePanel({
           el('div', { class: 'route-inputs' }, fromCombo.element, toCombo.element),
           swapButton,
         ),
+        el('div', { class: 'route-options' }, locateButton, accessibleToggle),
         hint,
         findButton,
+        nearestEl,
         recentEl,
       ),
     );
     syncSelections();
     renderRecent();
+    renderNearest();
+  }
+
+  /** "Nearest …" chips: walking distance from the start building. */
+  function renderNearest() {
+    const { from } = getState();
+    const counts = Object.fromEntries(
+      Object.entries(NEAREST_KINDS).map(([kind, rule]) => [
+        kind,
+        (campus.pois ?? []).filter(rule.poi).length,
+      ]),
+    );
+    nearestEl.replaceChildren(
+      el(
+        'h3',
+        { class: 'recent-title' },
+        createIcon('compass', { size: 14 }),
+        from ? t('nearest.title') : t('nearest.titleNoStart'),
+      ),
+      el(
+        'ul',
+        { class: 'chip-list' },
+        NEAREST_CHIPS.map(([kind, icon]) =>
+          el(
+            'li',
+            {},
+            el(
+              'button',
+              {
+                class: 'chip nearest-chip',
+                type: 'button',
+                disabled: !from ? '' : null,
+                'aria-disabled': counts[kind] === 0 ? 'true' : null,
+                title: counts[kind] === 0 ? t('filters.none') : null,
+                onClick: () => actions.findNearest(kind),
+              },
+              createIcon(icon, { size: 14 }),
+              t(`nearest.${kind}`),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   /** Mirrors From/To state into the pickers, the hint and the button. */
   function syncSelections() {
     const { from, to } = getState();
-    fromCombo.setSelected(from && buildings.has(from) ? toOption(buildings.get(from)) : null);
-    toCombo.setSelected(to && buildings.has(to) ? toOption(buildings.get(to)) : null);
+    fromCombo.setSelected(from ? optionFor(from) : null);
+    toCombo.setSelected(to ? optionFor(to) : null);
     const missing = !from
       ? !to
         ? 'route.hintBoth'
@@ -169,11 +261,13 @@ export function createRoutePanel({
     findButton.disabled = Boolean(missing);
     hint.textContent = missing ? t(missing) : '';
     hint.hidden = !missing;
+    renderNearest();
   }
 
   /** Recent routes as quick chips. */
   function renderRecent() {
     const recent = getRecent().filter((r) => buildings.has(r.from) && buildings.has(r.to));
+    // (Routes to places found with "nearest" are not kept as recent routes.)
     recentEl.hidden = recent.length === 0;
     if (recent.length === 0) {
       recentEl.replaceChildren();
@@ -209,11 +303,51 @@ export function createRoutePanel({
   // ---------- Result area ----------
 
   function renderResult() {
-    const { route, routeStatus, activeStep, lang } = getState();
+    const { route, routeStatus, routeTarget, activeStep, lang } = getState();
+    const nameOf = (id) => localize(router.endpoints.get(id)?.name);
 
     if (routeStatus === 'same') {
       resultContainer.replaceChildren(
         statusCard('pin', 'is-success', t('result.sameTitle'), t('result.sameText')),
+      );
+      return;
+    }
+    if (routeStatus === 'inside') {
+      const target = router.endpoints.get(routeTarget);
+      resultContainer.replaceChildren(
+        statusCard(
+          'pin',
+          'is-success',
+          t('result.insideTitle'),
+          t('result.insideText', {
+            place: localize(target?.place?.name) || t(`facility.${target?.place?.type ?? 'info'}`),
+            building: localize(target?.building?.name),
+          }),
+        ),
+      );
+      return;
+    }
+    if (routeStatus === 'noAccessible') {
+      resultContainer.replaceChildren(
+        statusCard(
+          'warning',
+          'is-error',
+          t('result.noAccessibleTitle'),
+          t('result.noAccessibleText'),
+        ),
+      );
+      return;
+    }
+    if (routeStatus === 'noCandidates') {
+      resultContainer.replaceChildren(
+        statusCard(
+          'info',
+          'is-error',
+          t('result.noCandidatesTitle'),
+          t('result.noCandidatesText', {
+            kind: t(`nearest.${routeTarget}`),
+          }),
+        ),
       );
       return;
     }
@@ -229,10 +363,8 @@ export function createRoutePanel({
     }
 
     const directions = router.directionsFor(route, lang, t);
-    const from = buildings.get(route.fromId);
-    const to = buildings.get(route.toId);
-
     const tags = [];
+    if (route.accessible) tags.push(tagChip('check', t('result.stepFree')));
     if (directions.hasStairs) tags.push(tagChip('stairs', t('result.stairs')));
     if (directions.hasCovered) tags.push(tagChip('umbrella', t('result.covered')));
 
@@ -293,14 +425,14 @@ export function createRoutePanel({
             {},
             el('span', { class: 'route-dot is-start', 'aria-hidden': 'true', text: 'A' }),
             el('span', { class: 'sr-only', text: `${t('route.from')}: ` }),
-            localize(from.name),
+            nameOf(route.fromId),
           ),
           el(
             'li',
             {},
             el('span', { class: 'route-dot is-end', 'aria-hidden': 'true', text: 'B' }),
             el('span', { class: 'sr-only', text: `${t('route.to')}: ` }),
-            localize(to.name),
+            nameOf(route.toId),
           ),
         ),
         tags.length ? el('div', { class: 'tag-list' }, tags) : null,
@@ -368,6 +500,10 @@ export function createRoutePanel({
     }
     if (changed.includes('from') || changed.includes('to')) syncSelections();
     if (['route', 'routeStatus', 'activeStep'].some((k) => changed.includes(k))) renderResult();
+    if (changed.includes('accessible')) {
+      const input = panelContainer.querySelector('.switch input');
+      if (input) input.checked = state.accessible;
+    }
   });
 
   render();
@@ -378,6 +514,18 @@ export function createRoutePanel({
     focusFrom: () => fromCombo.focus(),
   };
 }
+
+/** Quick "nearest" chips, in display order, with their icons. */
+const NEAREST_CHIPS = [
+  ['restroom', 'restroom'],
+  ['printer', 'printer'],
+  ['food', 'restaurant'],
+  ['cafe', 'cafe'],
+  ['convenience_store', 'convenience_store'],
+  ['cafeteria', 'restaurant'],
+  ['atm', 'atm'],
+  ['bus_stop', 'bus_stop'],
+];
 
 function byNumber(a, b) {
   return (parseInt(a.number, 10) || 0) - (parseInt(b.number, 10) || 0);

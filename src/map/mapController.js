@@ -8,7 +8,7 @@
  */
 import { getState, setState, subscribe } from '../state.js';
 import { localize, t } from '../i18n/index.js';
-import { el, readStorage, writeStorage } from '../utils/dom.js';
+import { el, readStorage, svgEl, writeStorage } from '../utils/dom.js';
 import { boundsOf } from '../utils/geometry.js';
 import { buildingBounds, renderMap, updateScaledElements } from './renderMap.js';
 import { createPanZoom } from './panZoom.js';
@@ -315,6 +315,32 @@ export function createMapController({ campus, onBuildingActivate, getPadding }) 
     },
     refreshLayout() {
       panZoom.refresh();
+    },
+    /**
+     * Shows the "you are here" dot with its accuracy circle.
+     * @param {{x: number, y: number}} point
+     * @param {number} accuracyMeters
+     */
+    showLocation(point, accuracyMeters) {
+      const layer = view.layers.location;
+      layer.replaceChildren();
+      const radius = accuracyMeters / (campus.meta.metersPerUnit ?? 1);
+      layer.append(
+        svgEl('circle', { class: 'location-accuracy', cx: point.x, cy: point.y, r: radius }),
+      );
+      const dot = svgEl(
+        'g',
+        { class: 'location-dot', 'data-x': point.x, 'data-y': point.y },
+        svgEl('circle', { class: 'location-halo', r: 14 }),
+        svgEl('circle', { class: 'location-core', r: 7 }),
+      );
+      layer.append(dot);
+      view.scaledEls = view.scaledEls.filter((e) => e.isConnected);
+      view.scaledEls.push(dot);
+      updateScaledElements([dot], panZoom.getTransform().k);
+    },
+    hideLocation() {
+      view.layers.location.replaceChildren();
     },
     /** Briefly pulses a POI or gate icon so it is easy to spot. */
     pulsePlace(id) {
