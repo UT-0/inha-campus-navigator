@@ -109,6 +109,10 @@ A GitHub Pages project site is served from `https://<user>.github.io/<repository
 
 **Manual deployment.** Run `npm run build` and publish the contents of `dist/` (for example to a `gh-pages` branch).
 
+### Deploying to Vercel
+
+`vercel.json` builds the site with `BASE_PATH=/` (Vercel serves from the domain root) and publishes `dist/`. Import the repository in Vercel (or run `vercel --prod`); no other settings are needed.
+
 ---
 
 ## Replacing the placeholder data with the real campus
