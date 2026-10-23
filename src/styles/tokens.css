@@ -49,6 +49,18 @@
   --map-plaza: #e9e6de;
   --map-path: #ffffff;
   --map-path-edge: #d4d9e1;
+  --map-urban: #e6e8ec;
+  --map-other-campus: #e9eaee;
+  --map-context: #d9dde4;
+  --map-context-edge: #c6ccd5;
+  --map-wood: #c5ddb5;
+  --map-pitch: #bfe0b6;
+  --map-pitch-edge: #9fcb94;
+  --map-parking: #e4e5ea;
+  --map-road: #ffffff;
+  --map-road-edge: #c9cfd9;
+  --map-footway: #fbf8f1;
+  --map-footway-edge: #ddd6c6;
   --map-label: #1b2638;
   --map-label-halo: rgba(255, 255, 255, 0.92);
   --map-building-shadow: rgba(16, 27, 45, 0.18);
@@ -73,6 +85,10 @@
   --cat-food-stroke: #bf3249;
   --cat-other: #fff1bf;
   --cat-other-stroke: #8a6a00;
+  --cat-student_services: #fbe1f0;
+  --cat-student_services-stroke: #a32d72;
+  --cat-research: #dcf0fb;
+  --cat-research-stroke: #1d6a96;
 
   /* ---- Spacing (4 / 8 px scale) ---- */
   --space-1: 4px;
@@ -168,6 +184,18 @@
   --map-plaza: #1b2536;
   --map-path: #2a3850;
   --map-path-edge: #34445f;
+  --map-urban: #111a2a;
+  --map-other-campus: #121b2b;
+  --map-context: #1c2638;
+  --map-context-edge: #263247;
+  --map-wood: #173022;
+  --map-pitch: #1a3a2a;
+  --map-pitch-edge: #24503a;
+  --map-parking: #1a2333;
+  --map-road: #2c3a52;
+  --map-road-edge: #1b2639;
+  --map-footway: #253248;
+  --map-footway-edge: #1b2639;
   --map-label: #e8edf6;
   --map-label-halo: rgba(10, 17, 32, 0.9);
   --map-building-shadow: rgba(0, 0, 0, 0.45);
@@ -191,6 +219,10 @@
   --cat-food-stroke: #ff8b9d;
   --cat-other: #433a12;
   --cat-other-stroke: #e8c64f;
+  --cat-student_services: #4a1e38;
+  --cat-student_services-stroke: #f39acb;
+  --cat-research: #123247;
+  --cat-research-stroke: #7cc9f2;
 
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.3);

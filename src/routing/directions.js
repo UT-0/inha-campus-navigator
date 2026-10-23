@@ -21,8 +21,8 @@ import {
   compassDirection,
   distance,
   pointToSegment,
-  polygonCentroid,
-  polygonToSegmentDistance,
+  shapeCentroid,
+  shapeToSegmentDistance,
   turnAngle,
 } from '../utils/geometry.js';
 
@@ -240,7 +240,7 @@ function mergeIntoLegs(segments) {
 
 /** Which side of a building (north/east/south/west) an entrance node is on. */
 function sideOfBuilding(building, node) {
-  const center = polygonCentroid(building.polygon);
+  const center = shapeCentroid(building);
   return cardinalSide(bearing(center, node));
 }
 
@@ -270,12 +270,11 @@ function findLandmark(leg, campus, graph, excluded, name) {
   for (const building of campus.buildings) {
     if (excluded.has(building.id)) continue;
     const meters =
-      Math.min(...leg.segments.map((s) => polygonToSegmentDistance(building.polygon, s.a, s.b))) *
+      Math.min(...leg.segments.map((s) => shapeToSegmentDistance(building, s.a, s.b))) *
       unitsToMeters;
     // Only count it as "passing" if the building lies alongside the leg, not
     // just beyond one of its ends.
-    if (meters > LANDMARK_BUILDING_METERS || !isAlongside(polygonCentroid(building.polygon), leg))
-      continue;
+    if (meters > LANDMARK_BUILDING_METERS || !isAlongside(shapeCentroid(building), leg)) continue;
     if (!best || meters < best.meters) best = { meters, label: name(building.name) };
   }
   if (best) return best.label;

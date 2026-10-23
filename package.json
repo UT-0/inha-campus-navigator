@@ -13,7 +13,9 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "data:fetch-osm": "NODE_USE_ENV_PROXY=1 node scripts/fetch-osm.mjs",
+    "data:build": "node scripts/build-campus.mjs"
   },
   "devDependencies": {
     "prettier": "^3.9.10",

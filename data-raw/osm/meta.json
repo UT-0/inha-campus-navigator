@@ -1,0 +1,23 @@
+{
+  "fetched": "2026-10-23T16:31:13.022Z",
+  "source": "OpenStreetMap API 0.6 (https://api.openstreetmap.org)",
+  "license": "ODbL 1.0 — © OpenStreetMap contributors (https://www.openstreetmap.org/copyright)",
+  "campusWay": "way/472447787",
+  "marginMeters": 150,
+  "bbox": {
+    "minLon": 126.6473094,
+    "minLat": 37.4449572,
+    "maxLon": 126.6615749,
+    "maxLat": 37.4534846
+  },
+  "requests": [
+    "https://api.openstreetmap.org/api/0.6/way/472447787/full.json",
+    "https://api.openstreetmap.org/api/0.6/{feature}/full.json for 30 official buildings",
+    "https://api.openstreetmap.org/api/0.6/map.json?bbox=126.6473094,37.4449572,126.6615749,37.4534846"
+  ],
+  "counts": {
+    "nodes": 3021,
+    "ways": 415,
+    "relations": 54
+  }
+}

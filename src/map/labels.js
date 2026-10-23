@@ -11,7 +11,7 @@
  *  - gate and area names appear once the map is zoomed in far enough.
  */
 import { svgEl } from '../utils/dom.js';
-import { boundsOf, polygonCentroid } from '../utils/geometry.js';
+import { boundsOf, outerRings, polygonCentroid } from '../utils/geometry.js';
 import { markerSize } from './renderMap.js';
 
 const NAME_FONT_SIZE = 12;
@@ -48,9 +48,11 @@ export function createLabels(layer, campus) {
   const otherLabels = [];
 
   for (const building of campus.buildings) {
-    if (!Array.isArray(building.polygon) || building.polygon.length < 3) continue;
-    const bounds = boundsOf(building.polygon);
-    const [x, y] = building.labelPosition ?? centroidPair(building.polygon);
+    const rings = outerRings(building);
+    if (rings.length === 0) continue;
+    // Name room is judged on the part that holds the label (the largest one).
+    const bounds = boundsOf(largestRing(rings));
+    const [x, y] = building.labelPosition ?? centroidPair(largestRing(rings));
     const name = svgEl('text', { class: 'label-name', y: NAME_OFFSET });
     const group = svgEl(
       'g',
@@ -85,9 +87,12 @@ export function createLabels(layer, campus) {
     otherLabels.push({ item: node, group, text, minZoom: 1.6 });
   }
 
-  for (const area of (campus.areas ?? []).filter((a) => a.name && a.polygon?.length >= 3)) {
-    const center = polygonCentroid(area.polygon);
-    const bounds = boundsOf(area.polygon);
+  for (const area of (campus.areas ?? []).filter(
+    (a) => a.name && outerRings(a).length && !a.building,
+  )) {
+    const ring = largestRing(outerRings(area));
+    const center = polygonCentroid(ring);
+    const bounds = boundsOf(ring);
     const text = svgEl('text', { class: `label-area label-area-${area.type}`, dy: '0.35em' });
     const group = svgEl(
       'g',
@@ -174,4 +179,12 @@ function pick(value, lang) {
 function centroidPair(polygon) {
   const c = polygonCentroid(polygon);
   return [c.x, c.y];
+}
+
+function largestRing(rings) {
+  const size = (ring) => {
+    const b = boundsOf(ring);
+    return (b.maxX - b.minX) * (b.maxY - b.minY);
+  };
+  return rings.reduce((best, ring) => (size(ring) > size(best) ? ring : best), rings[0]);
 }

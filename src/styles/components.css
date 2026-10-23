@@ -530,6 +530,12 @@
 [data-category='other'] {
   --badge-color: var(--cat-other-stroke);
 }
+[data-category='student_services'] {
+  --badge-color: var(--cat-student_services-stroke);
+}
+[data-category='research'] {
+  --badge-color: var(--cat-research-stroke);
+}
 
 /* ---------- Route panel ---------- */
 

@@ -66,6 +66,40 @@
   fill: var(--map-plaza);
 }
 
+.area-campus {
+  fill: var(--map-ground);
+  stroke: var(--map-ground-edge);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.area-urban {
+  fill: var(--map-urban);
+}
+
+.area-other-campus {
+  fill: var(--map-other-campus);
+  stroke: var(--map-context-edge);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+
+.area-wood {
+  fill: var(--map-wood);
+}
+
+.area-pitch {
+  fill: var(--map-pitch);
+  stroke: var(--map-pitch-edge);
+  stroke-width: 1;
+}
+
+.area-parking {
+  fill: var(--map-parking);
+  stroke: var(--map-context-edge);
+  stroke-width: 0.8;
+}
+
 .area-water {
   fill: var(--map-water);
   stroke: color-mix(in srgb, var(--map-water) 80%, #000 20%);
@@ -73,6 +107,62 @@
 }
 
 /* ---------- Walkways ---------- */
+
+/* ---------- Roads and footpaths (widths in meters, set per element) ---------- */
+
+.road-casing,
+.road-fill {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.road-casing {
+  stroke: var(--map-road-edge);
+}
+
+.road-fill {
+  stroke: var(--map-road);
+}
+
+.road-casing.road-footway,
+.road-casing.road-steps,
+.road-casing.road-pedestrian {
+  stroke: var(--map-footway-edge);
+}
+
+.road-fill.road-footway,
+.road-fill.road-pedestrian {
+  stroke: var(--map-footway);
+}
+
+.road-fill.road-steps {
+  stroke: var(--map-footway-edge);
+  stroke-linecap: butt;
+  stroke-dasharray: 0.6 0.6;
+}
+
+.road-fill.is-tunnel {
+  stroke-dasharray: 3 2;
+  opacity: 0.6;
+}
+
+/* A link we had to estimate (bridged gap or entrance connection). */
+.path-estimated {
+  fill: none;
+  stroke: var(--map-footway-edge);
+  stroke-width: 1.2;
+  stroke-dasharray: 1.5 1.5;
+  stroke-linecap: round;
+}
+
+/* Neighbourhood and other-school buildings: drawn for orientation only. */
+.context-building {
+  fill: var(--map-context);
+  stroke: var(--map-context-edge);
+  stroke-width: 0.6;
+  pointer-events: none;
+}
 
 .path-casing,
 .path-fill,
@@ -114,7 +204,8 @@
 }
 
 .building-shape,
-.area {
+.area,
+.context-building {
   vector-effect: non-scaling-stroke; /* outlines keep the same pixel width at every zoom */
 }
 
@@ -156,6 +247,14 @@
 .building[data-category='other'] .building-shape {
   fill: var(--cat-other);
   stroke: var(--cat-other-stroke);
+}
+.building[data-category='student_services'] .building-shape {
+  fill: var(--cat-student_services);
+  stroke: var(--cat-student_services-stroke);
+}
+.building[data-category='research'] .building-shape {
+  fill: var(--cat-research);
+  stroke: var(--cat-research-stroke);
 }
 
 /* Hover / keyboard focus: lift the building slightly with a deeper shadow. */
@@ -230,6 +329,12 @@
 }
 .label-badge[data-category='other'] {
   fill: var(--cat-other-stroke);
+}
+.label-badge[data-category='student_services'] {
+  fill: var(--cat-student_services-stroke);
+}
+.label-badge[data-category='research'] {
+  fill: var(--cat-research-stroke);
 }
 
 .label-number {
@@ -583,6 +688,14 @@
   background: var(--cat-other);
   border-color: var(--cat-other-stroke);
 }
+.legend-swatch[data-category='student_services'] {
+  background: var(--cat-student_services);
+  border-color: var(--cat-student_services-stroke);
+}
+.legend-swatch[data-category='research'] {
+  background: var(--cat-research);
+  border-color: var(--cat-research-stroke);
+}
 
 .legend-poi {
   display: grid;
@@ -841,4 +954,33 @@
 
 :root[data-theme='dark'] .legend-marker {
   color: #0a1120;
+}
+
+/* Fields, courts and parking lots listed as "buildings": flatter look. */
+.building.is-area .building-shape {
+  fill-opacity: 0.55;
+  filter: none;
+}
+
+/* Required OpenStreetMap attribution (ODbL). */
+.map-attribution {
+  position: absolute;
+  left: var(--map-inset-side);
+  bottom: calc(var(--map-inset-bottom) - 12px);
+  z-index: var(--z-map-ui);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  font-size: 10px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.map-attribution:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
+.map-scale {
+  bottom: calc(var(--map-inset-bottom) + 10px);
 }

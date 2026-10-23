@@ -7,7 +7,17 @@ import { createIcon, ICON_PATHS } from '../ui/icons.js';
 import { t } from '../i18n/index.js';
 import { formatDistance } from '../routing/directions.js';
 
-export const CATEGORIES = ['academic', 'library', 'dormitory', 'admin', 'sports', 'food', 'other'];
+export const CATEGORIES = [
+  'academic',
+  'research',
+  'library',
+  'student_services',
+  'dormitory',
+  'admin',
+  'sports',
+  'food',
+  'other',
+];
 const LEGEND_POI_TYPES = [
   'bus_stop',
   'parking',

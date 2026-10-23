@@ -35,6 +35,7 @@ import { createBottomSheet } from './ui/bottomSheet.js';
 import { createIcon } from './ui/icons.js';
 import { showToast } from './ui/toast.js';
 import { el, readStorage, writeStorage } from './utils/dom.js';
+import { outerRings } from './utils/geometry.js';
 import { buildRouteUrl, copyToClipboard, readRouteParams, writeRouteParams } from './utils/url.js';
 import { DRAFT_KEY } from './editor/draft.js';
 
@@ -139,7 +140,10 @@ async function start() {
 
   /** Route nodes plus the outlines of both end buildings, for framing the camera. */
   function routeExtent(route) {
-    const outline = (id) => (buildingsById.get(id)?.polygon ?? []).map(([x, y]) => ({ x, y }));
+    const outline = (id) =>
+      outerRings(buildingsById.get(id))
+        .flat()
+        .map(([x, y]) => ({ x, y }));
     return [...router.pointsOf(route.path), ...outline(route.fromId), ...outline(route.toId)];
   }
 

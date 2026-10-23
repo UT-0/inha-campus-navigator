@@ -8,7 +8,7 @@
  *
  * This module is pure (no DOM access) so it can be unit tested.
  */
-import { distance } from '../utils/geometry.js';
+import { distance, outerRings } from '../utils/geometry.js';
 
 /**
  * @typedef {Object} GraphNode
@@ -167,7 +167,7 @@ export function validateCampus(campus) {
   });
 
   for (const building of campus.buildings) {
-    if (!Array.isArray(building.polygon) || building.polygon.length < 3) {
+    if (outerRings(building).length === 0) {
       add(
         'error',
         'bad-polygon',

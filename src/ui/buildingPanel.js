@@ -139,12 +139,14 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
     const facts = el(
       'dl',
       { class: 'facts' },
-      building.floors
-        ? fact('building', t('building.floors'), t('building.floorsValue', { n: building.floors }))
+      floorsAbove(building)
+        ? fact(
+            'building',
+            t('building.floors'),
+            t('building.floorsValue', { n: floorsAbove(building) }),
+          )
         : null,
-      building.openingHours
-        ? fact('clock', t('building.hours'), localize(building.openingHours))
-        : null,
+      hoursText(building) ? fact('clock', t('building.hours'), hoursText(building)) : null,
     );
 
     const sections = [];
@@ -308,4 +310,17 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
   });
 
   return { close };
+}
+
+/** Floors above ground, from the current ({above, …}) or older (number) schema. */
+function floorsAbove(building) {
+  const floors = building.floors;
+  return typeof floors === 'object' && floors !== null ? floors.above : floors;
+}
+
+/** Opening hours text, from the current ({text, status}) or older ({en, ko}) schema. */
+function hoursText(building) {
+  const hours = building.openingHours;
+  if (!hours) return '';
+  return 'text' in hours ? localize(hours.text) : localize(hours);
 }

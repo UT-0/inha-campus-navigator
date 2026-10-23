@@ -3,19 +3,42 @@
  *
  * Everything lives inside one "camera" <g> whose transform is controlled by
  * panZoom.js. Layers are drawn bottom to top:
- *   background (reference image, ground, water, plazas, green areas)
- *   → walkable paths → buildings → POI and gate icons → labels
- *   → route line → route markers.
+ *   background (surrounding land use, campus ground, reference image, green
+ *   areas, water, sports fields, parking)
+ *   → roads and footpaths → buildings (context buildings first)
+ *   → POI and gate icons → labels → route line → route markers.
  *
- * Colors come from CSS custom properties (see map.css), so the map follows
- * the light/dark theme automatically.
+ * Coordinates are meters (meta.metersPerUnit = 1). Colors come from CSS
+ * custom properties (see map.css), so the map follows the light/dark theme.
  */
 import { svgEl } from '../utils/dom.js';
-import { boundsOf } from '../utils/geometry.js';
+import { outerRings, shapeBounds } from '../utils/geometry.js';
 import { ICON_PATHS } from '../ui/icons.js';
 
-/** Order in which area types are painted above the ground (later = on top). */
-const AREA_ORDER = ['water', 'plaza', 'green'];
+/** Order in which area types are painted (later = on top). */
+const AREA_ORDER = [
+  'urban',
+  'other-campus',
+  'campus',
+  'ground',
+  'wood',
+  'green',
+  'water',
+  'pitch',
+  'parking',
+  'plaza',
+];
+
+/** Road classes, drawn bottom to top, with their width in meters. */
+export const ROAD_WIDTHS = {
+  footway: 2.2,
+  steps: 2.2,
+  pedestrian: 4,
+  service: 4.5,
+  minor: 6,
+  medium: 9,
+  major: 13,
+};
 
 /**
  * @typedef {Object} MapView
@@ -29,7 +52,7 @@ const AREA_ORDER = ['water', 'plaza', 'green'];
 
 /**
  * Renders the campus. Calling it again replaces the previous drawing.
- * @param {SVGSVGElement} svg
+ * @param {SVGSVGElement|SVGGElement} svg
  * @param {object} campus Parsed campus.json.
  * @returns {MapView}
  */
@@ -40,35 +63,52 @@ export function renderMap(svg, campus) {
   svg.querySelector('.camera')?.remove();
   const camera = svgEl('g', { class: 'camera' });
   const layers = {};
-  for (const name of ['background', 'paths', 'buildings', 'pois', 'labels', 'route', 'markers']) {
+  for (const name of [
+    'background',
+    'roads',
+    'paths',
+    'context',
+    'buildings',
+    'pois',
+    'labels',
+    'route',
+    'markers',
+  ]) {
     layers[name] = svgEl('g', { class: `layer layer-${name}` });
     camera.append(layers[name]);
   }
   svg.append(camera);
 
   drawBackground(layers.background, campus, worldBounds);
+  drawRoads(layers.roads, campus);
   drawPaths(layers.paths, campus);
+  drawContext(layers.context, campus);
   const buildingEls = drawBuildings(layers.buildings, campus);
   const scaledEls = drawPois(layers.pois, campus);
 
   return { svg, camera, layers, buildingEls, scaledEls, worldBounds };
 }
 
+/** SVG path data for a set of rings (holes cut out with the even-odd rule). */
+export function ringsPath(rings) {
+  return rings
+    .filter((ring) => ring.length >= 3)
+    .map((ring) => `M${ring.map(([x, y]) => `${x},${y}`).join('L')}Z`)
+    .join('');
+}
+
 /**
- * Background: the ground, then the optional reference image (so it is not
- * hidden by the ground), then water, plazas and green areas.
+ * Background: land use around the campus, the campus ground, the optional
+ * reference image, then green areas, water, sports fields and parking.
  */
 function drawBackground(layer, campus, world) {
-  const areas = (campus.areas ?? []).filter(
-    (a) => Array.isArray(a.polygon) && a.polygon.length >= 3,
-  );
-  const ground = areas.filter((a) => a.type === 'ground');
-  const others = areas
-    .filter((a) => a.type !== 'ground')
+  const areas = (campus.areas ?? [])
+    .filter((a) => outerRings(a).length > 0 && !a.building)
     .sort((a, b) => AREA_ORDER.indexOf(a.type) - AREA_ORDER.indexOf(b.type));
+  const groundTypes = new Set(['urban', 'other-campus', 'campus', 'ground']);
 
-  // If the data has no explicit ground, draw one covering the whole map.
-  if (ground.length === 0) {
+  // Older data has no campus outline: treat the whole map as ground.
+  if (!areas.some((a) => a.type === 'campus' || a.type === 'ground')) {
     layer.append(
       svgEl('rect', {
         class: 'area area-ground',
@@ -79,7 +119,7 @@ function drawBackground(layer, campus, world) {
       }),
     );
   }
-  for (const area of ground) layer.append(areaShape(area));
+  for (const area of areas.filter((a) => groundTypes.has(a.type))) layer.append(areaShape(area));
 
   const image = campus.meta.backgroundImage;
   if (image) {
@@ -96,55 +136,126 @@ function drawBackground(layer, campus, world) {
     );
   }
 
-  for (const area of others) layer.append(areaShape(area));
+  for (const area of areas.filter((a) => !groundTypes.has(a.type))) layer.append(areaShape(area));
 }
 
 function areaShape(area) {
-  return svgEl('polygon', {
+  return svgEl('path', {
     class: `area area-${area.type ?? 'green'}`,
-    points: pointsAttr(area.polygon),
+    d: ringsPath([...outerRings(area), ...(area.holes ?? [])]),
+    'fill-rule': 'evenodd',
     'data-id': area.id,
   });
 }
 
 /**
- * Walkways: a wider "casing" line under a lighter fill line gives soft,
- * rounded paths. Stairs get a step pattern overlay; covered walkways a tint.
+ * Roads and footpaths from the map data: a wider casing under a lighter
+ * fill. Widths are real meters, so roads scale naturally with the map.
+ */
+function drawRoads(layer, campus) {
+  const roads = campus.roads ?? [];
+  if (roads.length === 0) return;
+  const kinds = Object.keys(ROAD_WIDTHS);
+  const sorted = [...roads].sort((a, b) => kinds.indexOf(a.kind) - kinds.indexOf(b.kind));
+  const casing = svgEl('g', { class: 'roads-casing' });
+  const fill = svgEl('g', { class: 'roads-fill' });
+  for (const road of sorted) {
+    const width = ROAD_WIDTHS[road.kind] ?? 3;
+    const points = road.points.map(([x, y]) => `${x},${y}`).join(' ');
+    casing.append(
+      svgEl('polyline', {
+        class: `road-casing road-${road.kind}`,
+        points,
+        'stroke-width': width + 1.6,
+      }),
+    );
+    fill.append(
+      svgEl('polyline', {
+        class: `road-fill road-${road.kind}${road.tunnel ? ' is-tunnel' : ''}`,
+        points,
+        'stroke-width': width,
+        'data-id': road.id,
+      }),
+    );
+  }
+  layer.append(casing, fill);
+}
+
+/**
+ * Walkway edges of the routing graph. With real map data the roads layer
+ * already shows every path, so only estimated links (gaps we bridged, or
+ * entrance connections) and stairs are drawn here; older data without a
+ * roads layer draws every edge.
  */
 function drawPaths(layer, campus) {
   const nodes = new Map(campus.nodes.map((n) => [n.id, n]));
+  const hasRoads = (campus.roads ?? []).length > 0;
   const casing = svgEl('g', { class: 'paths-casing' });
   const fill = svgEl('g', { class: 'paths-fill' });
   const extras = svgEl('g', { class: 'paths-extras' });
   for (const edge of campus.edges) {
-    const a = nodes.get(edge.from);
-    const b = nodes.get(edge.to);
-    if (!a || !b) continue;
-    const coords = { x1: a.x, y1: a.y, x2: b.x, y2: b.y };
-    casing.append(svgEl('line', { ...coords, class: 'path-casing' }));
+    const points = edgePoints(edge, nodes);
+    if (points.length < 2) continue;
+    const attr = { points: points.map(([x, y]) => `${x},${y}`).join(' ') };
+    if (edge.stairs) extras.append(svgEl('polyline', { ...attr, class: 'path-stairs' }));
+    if (hasRoads) {
+      if (edge.status === 'estimated') {
+        extras.append(svgEl('polyline', { ...attr, class: 'path-estimated' }));
+      }
+      continue;
+    }
+    casing.append(svgEl('polyline', { ...attr, class: 'path-casing' }));
     fill.append(
-      svgEl('line', { ...coords, class: `path-fill${edge.covered ? ' is-covered' : ''}` }),
+      svgEl('polyline', { ...attr, class: `path-fill${edge.covered ? ' is-covered' : ''}` }),
     );
-    if (edge.stairs) extras.append(svgEl('line', { ...coords, class: 'path-stairs' }));
   }
   layer.append(casing, fill, extras);
 }
 
-/** Buildings: a focusable group per building with its polygon. */
+/**
+ * Full geometry of an edge: its stored polyline, or a straight line.
+ * @param {object} edge
+ * @param {Map<string, {x:number,y:number}>} nodes
+ * @returns {number[][]}
+ */
+export function edgePoints(edge, nodes) {
+  if (Array.isArray(edge.geometry) && edge.geometry.length >= 2) return edge.geometry;
+  const a = nodes.get(edge.from);
+  const b = nodes.get(edge.to);
+  return a && b
+    ? [
+        [a.x, a.y],
+        [b.x, b.y],
+      ]
+    : [];
+}
+
+/** Buildings that are not part of the app (neighbourhood, other schools). */
+function drawContext(layer, campus) {
+  const parts = (campus.context ?? []).map((item) => ringsPath(outerRings(item))).join('');
+  if (parts) layer.append(svgEl('path', { class: 'context-building', d: parts }));
+}
+
+/** Buildings: a focusable group per building with its shape. */
 function drawBuildings(layer, campus) {
   const buildingEls = new Map();
   for (const building of campus.buildings) {
-    if (!Array.isArray(building.polygon) || building.polygon.length < 3) continue;
+    const rings = outerRings(building);
+    if (rings.length === 0) continue;
     const group = svgEl(
       'g',
       {
-        class: 'building',
+        class: `building${building.kind === 'area' ? ' is-area' : ''}`,
         'data-id': building.id,
         'data-category': building.category ?? 'other',
         role: 'button',
         tabindex: '0',
       },
-      svgEl('polygon', { class: 'building-shape', points: pointsAttr(building.polygon) }),
+      svgEl('path', {
+        class: 'building-shape',
+        d: ringsPath([...rings, ...(building.holes ?? [])]),
+        'fill-rule': 'evenodd',
+      }),
     );
     layer.append(group);
     buildingEls.set(building.id, group);
@@ -159,7 +270,9 @@ function drawBuildings(layer, campus) {
 function drawPois(layer, campus) {
   const scaled = [];
   const items = [
-    ...(campus.pois ?? []).map((p) => ({ ...p, kind: 'poi' })),
+    ...(campus.pois ?? [])
+      .filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y))
+      .map((p) => ({ ...p, kind: 'poi' })),
     ...campus.nodes
       .filter((n) => n.type === 'gate')
       .map((n) => ({ ...n, type: 'gate', kind: 'gate' })),
@@ -170,6 +283,7 @@ function drawPois(layer, campus) {
       {
         class: `poi poi-${item.kind}`,
         'data-type': item.type,
+        'data-group': item.group ?? '',
         'data-id': item.id,
         'data-x': item.x,
         'data-y': item.y,
@@ -178,7 +292,7 @@ function drawPois(layer, campus) {
       svgEl('g', {
         class: 'poi-icon',
         transform: 'translate(-7 -7) scale(0.5833)',
-        html: ICON_PATHS[item.type] ?? ICON_PATHS.info,
+        html: ICON_PATHS[item.icon ?? item.type] ?? ICON_PATHS.info,
       }),
     );
     layer.append(group);
@@ -214,17 +328,12 @@ export function updateScaledElements(elements, scale) {
 }
 
 /**
- * Bounding box of one building's polygon.
+ * Bounding box of one building's shape.
  * @param {object} building
  * @returns {{minX:number,minY:number,maxX:number,maxY:number}}
  */
 export function buildingBounds(building) {
-  return boundsOf(building.polygon);
-}
-
-/** Converts [[x, y], ...] into an SVG points attribute. */
-function pointsAttr(polygon) {
-  return polygon.map(([x, y]) => `${x},${y}`).join(' ');
+  return shapeBounds(building);
 }
 
 /**

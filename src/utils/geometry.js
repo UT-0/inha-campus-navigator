@@ -177,3 +177,65 @@ export function pointInPolygon(p, polygon) {
   }
   return inside;
 }
+
+/**
+ * Outer rings of a building or area. Accepts the current schema
+ * (`polygons: [[[x, y], …], …]`) and the older single `polygon`.
+ * @param {{polygons?: number[][][], polygon?: number[][]}} item
+ * @returns {number[][][]}
+ */
+export function outerRings(item) {
+  if (Array.isArray(item?.polygons)) return item.polygons.filter((r) => r.length >= 3);
+  if (Array.isArray(item?.polygon) && item.polygon.length >= 3) return [item.polygon];
+  return [];
+}
+
+/**
+ * Bounding box of all outer rings of a building or area.
+ * @param {object} item
+ * @returns {{minX:number,minY:number,maxX:number,maxY:number}}
+ */
+export function shapeBounds(item) {
+  return boundsOf(outerRings(item).flat());
+}
+
+/**
+ * True if the point lies inside the shape (inside an outer ring and not in a hole).
+ * @param {{x:number,y:number}} p
+ * @param {object} item
+ * @returns {boolean}
+ */
+export function pointInShape(p, item) {
+  if (!outerRings(item).some((ring) => pointInPolygon(p, ring))) return false;
+  return !(item.holes ?? []).some((ring) => pointInPolygon(p, ring));
+}
+
+/**
+ * Shortest distance between the outline of a shape and a segment.
+ * @param {object} item
+ * @param {{x:number,y:number}} a
+ * @param {{x:number,y:number}} b
+ * @returns {number}
+ */
+export function shapeToSegmentDistance(item, a, b) {
+  return Math.min(...outerRings(item).map((ring) => polygonToSegmentDistance(ring, a, b)));
+}
+
+/**
+ * Area-weighted centre of the largest outer ring.
+ * @param {object} item
+ * @returns {{x:number,y:number}}
+ */
+export function shapeCentroid(item) {
+  const rings = outerRings(item);
+  const largest = rings.reduce(
+    (best, ring) => (ringSize(ring) > ringSize(best) ? ring : best),
+    rings[0],
+  );
+  return polygonCentroid(largest);
+}
+
+function ringSize(ring) {
+  const b = boundsOf(ring);
+  return (b.maxX - b.minX) * (b.maxY - b.minY);
+}

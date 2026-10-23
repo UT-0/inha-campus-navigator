@@ -1,0 +1,33 @@
+{
+  "_note": "Every fact taken from an official web page is listed here with its URL and the date it was retrieved. The inha.ac.kr pages were read with a web-fetch tool because the build container's network could not reach inha.ac.kr directly. Facts are stored in data-raw/official/*.json and reference these source ids.",
+  "sources": [
+    {
+      "id": "inha-buildings-kr",
+      "url": "https://www.inha.ac.kr/kr/964/subview.do",
+      "title": "인하소개 > 캠퍼스 안내 > 건물안내",
+      "retrieved": "2026-10-23",
+      "used_for": "Official Korean building names, including the wings of 2호관 (2동, 2남, 2북) and 5호관 (5동, 5서, 5남, 5북)"
+    },
+    {
+      "id": "inha-campusmap-kr",
+      "url": "https://www.inha.ac.kr/kr/1121/subview.do",
+      "title": "인하소개 > 캠퍼스 안내 > 캠퍼스맵 (정문 기준 캠퍼스맵)",
+      "retrieved": "2026-10-23",
+      "used_for": "Campus map legend numbers 1–25 and names; the terms 정문 (main gate) and 후문 (back gate)"
+    },
+    {
+      "id": "inha-buildings-en",
+      "url": "https://www.inha.ac.kr/eng/3784/subview.do",
+      "title": "Campus Guide > Buildings (English site)",
+      "retrieved": "2026-10-23",
+      "used_for": "Official English building names"
+    },
+    {
+      "id": "inha-address",
+      "url": "https://www.inha.ac.kr/campusMap/kr/view.do?layout=unknown&artclSeq=1",
+      "title": "Campus map page footer",
+      "retrieved": "2026-10-23",
+      "used_for": "Address 22212 인천광역시 미추홀구 인하로 100; main phone 032-860-7114; 24-hour emergency phone 032-860-9119; campus-map content contact 총무팀 032-860-7093"
+    }
+  ]
+}

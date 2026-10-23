@@ -116,6 +116,8 @@ export default {
   'category.sports': 'Sports',
   'category.food': 'Food',
   'category.other': 'Other',
+  'category.student_services': 'Student services',
+  'category.research': 'Research',
 
   // Facilities and POI types
   'facility.cafe': 'Café',

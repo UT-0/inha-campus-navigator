@@ -113,6 +113,8 @@ export default {
   'category.sports': '체육',
   'category.food': '식당',
   'category.other': '기타',
+  'category.student_services': '학생 지원',
+  'category.research': '연구',
 
   // Facilities and POI types
   'facility.cafe': '카페',

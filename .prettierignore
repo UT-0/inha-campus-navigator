@@ -3,3 +3,5 @@ node_modules
 package-lock.json
 campus-navigator-prompt.md
 inha-real-data-prompt.md
+data-raw
+src/data/campus.json
