@@ -36,6 +36,7 @@ import { createIcon } from './ui/icons.js';
 import { showToast } from './ui/toast.js';
 import { el, readStorage, writeStorage } from './utils/dom.js';
 import { buildRouteUrl, copyToClipboard, readRouteParams, writeRouteParams } from './utils/url.js';
+import { DRAFT_KEY } from './editor/draft.js';
 
 const RECENT_KEY = 'icn.recentRoutes';
 const RECENT_LIMIT = 5;
@@ -51,7 +52,13 @@ async function loadData() {
     import('./data/campus.json'),
     import('./data/courses.json'),
   ]);
-  return { campus: campusModule.default, courses: coursesModule.default ?? [] };
+  let campus = campusModule.default;
+  // "Preview in app" from the Map Editor: use its saved draft instead.
+  if (readRouteParams().preview) {
+    const draft = readStorage(DRAFT_KEY, null);
+    if (draft && typeof draft === 'object') campus = draft;
+  }
+  return { campus, courses: coursesModule.default ?? [] };
 }
 
 /**
@@ -352,10 +359,11 @@ function announce(message) {
 /** Shows the "sample data" banner while campus.json is flagged as placeholder. */
 function showSampleBanner(campus) {
   const banner = document.getElementById('sample-banner');
-  banner.hidden = campus._placeholder !== true;
+  const preview = readRouteParams().preview;
+  banner.hidden = campus._placeholder !== true && !preview;
   banner.replaceChildren(
     createIcon('info', { size: 14 }),
-    el('span', { text: t('app.sampleData') }),
+    el('span', { text: t(preview ? 'app.previewData' : 'app.sampleData') }),
   );
 }
 

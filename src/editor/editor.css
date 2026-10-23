@@ -1,0 +1,403 @@
+/*
+ * Map Editor styles. Loaded only with ?edit=1, together with the editor code.
+ * Reuses the app's design tokens.
+ */
+
+.editor {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  background: var(--color-bg);
+}
+
+.editor-map {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.editor-svg .map-reference {
+  opacity: var(--reference-opacity, 0.5);
+}
+
+/* Cursor hints per tool */
+.editor-svg[data-mode='add-node'],
+.editor-svg[data-mode='add-poi'],
+.editor-svg[data-mode='draw'],
+.editor-svg[data-mode='calibrate'],
+.editor-svg[data-mode='connect'] {
+  cursor: crosshair;
+}
+
+.editor-svg[data-mode='delete'] .building,
+.editor-svg[data-mode='delete'] .ed-node,
+.editor-svg[data-mode='delete'] .ed-edge,
+.editor-svg[data-mode='delete'] .ed-poi {
+  cursor: not-allowed;
+}
+
+.editor-svg[data-mode='move'] .ed-node,
+.editor-svg[data-mode='move'] .ed-vertex,
+.editor-svg[data-mode='move'] .ed-poi {
+  cursor: move;
+}
+
+/* Turn off app-only building hover effects inside the editor. */
+.editor-svg .building.is-hovered,
+.editor-svg .building:focus-visible {
+  transform: none;
+}
+
+/* ---------- Overlay ---------- */
+
+.ed-edge {
+  stroke: transparent;
+  stroke-linecap: round;
+  cursor: pointer;
+}
+
+.ed-edge:hover {
+  stroke: color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+.ed-edge.is-selected {
+  stroke: color-mix(in srgb, var(--color-accent) 55%, transparent);
+}
+
+.ed-node {
+  stroke: #1b2638;
+  cursor: pointer;
+}
+
+.ed-node-junction {
+  fill: #ffffff;
+}
+
+.ed-node-entrance {
+  fill: var(--color-accent);
+}
+
+.ed-node-gate {
+  fill: #ff8a00;
+}
+
+.ed-node.is-selected {
+  stroke: #ff8a00;
+}
+
+.ed-node.is-flagged,
+.ed-outline.is-flagged {
+  stroke: var(--color-danger);
+}
+
+.ed-outline {
+  fill: none;
+  stroke: var(--color-accent);
+  pointer-events: none;
+}
+
+.ed-vertex {
+  fill: #ffffff;
+  stroke: var(--color-accent);
+  cursor: move;
+}
+
+.ed-poi {
+  fill: transparent;
+  stroke: none;
+  cursor: pointer;
+}
+
+.ed-poi.is-selected {
+  stroke: #ff8a00;
+}
+
+.ed-drawing {
+  fill: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  stroke: var(--color-accent);
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.ed-drawing-point {
+  fill: var(--color-accent);
+  pointer-events: none;
+}
+
+.ed-calibration {
+  stroke: var(--color-danger);
+  pointer-events: none;
+}
+
+.ed-calibration-point {
+  fill: var(--color-danger);
+  pointer-events: none;
+}
+
+/* ---------- Floating toolbar, coordinates and status ---------- */
+
+.editor-toolbar {
+  position: absolute;
+  top: var(--space-3);
+  left: 50%;
+  z-index: var(--z-map-ui);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  max-width: calc(100% - 24px);
+  padding: var(--space-1);
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  transform: translateX(-50%);
+}
+
+.editor-tool {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 64px;
+  padding: 6px 8px;
+  border-radius: var(--radius-md);
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.editor-tool:hover:not(:disabled) {
+  background: var(--color-surface-2);
+  color: var(--color-text);
+}
+
+.editor-tool.is-active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.editor-tool:disabled {
+  opacity: 0.4;
+}
+
+.editor-toolbar-sep {
+  align-self: stretch;
+  width: 1px;
+  margin: 4px;
+  background: var(--color-border);
+}
+
+.editor-coords {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: var(--z-map-ui);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--font-size-xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--font-weight-semibold);
+}
+
+.editor-coords:empty {
+  display: none;
+}
+
+.editor-status {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-3);
+  z-index: var(--z-map-ui);
+  max-width: min(640px, calc(100% - 200px));
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  transform: translateX(-50%);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------- Side panel ---------- */
+
+.editor-panel {
+  min-height: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.ep-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.ep-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.ep-app-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.ep-section {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ep-section.ep-highlight {
+  background: var(--color-accent-soft);
+}
+
+.ep-title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.ep-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ep-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.ep-field {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+}
+
+.ep-input {
+  width: 100%;
+  min-height: 34px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text);
+}
+
+.ep-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+.ep-input[readonly] {
+  background: var(--color-surface-2);
+}
+
+.ep-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+}
+
+.ep-muted {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  overflow-wrap: anywhere;
+}
+
+.ep-note {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-subtle);
+}
+
+.ep-success {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-success);
+}
+
+.ep-problems {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.ep-problem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  text-align: left;
+}
+
+.ep-problem svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ep-problem:hover {
+  background: var(--color-surface-2);
+}
+
+.ep-problem.is-error {
+  color: var(--color-danger);
+}
+
+.ep-problem.is-warning svg {
+  color: #c77700;
+}
+
+.ep-danger {
+  justify-self: start;
+  color: var(--color-danger);
+}
+
+@media (max-width: 899.98px) {
+  .editor {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60vh 1fr;
+  }
+
+  .editor-panel {
+    border-left: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .editor-tool span {
+    display: none;
+  }
+
+  .editor-tool {
+    min-width: 40px;
+  }
+}

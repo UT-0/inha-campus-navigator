@@ -6,7 +6,7 @@
 /**
  * Reads the route parameters from the current URL.
  * @param {string} [search=location.search]
- * @returns {{from: string|null, to: string|null, edit: boolean}}
+ * @returns {{from: string|null, to: string|null, edit: boolean, preview: boolean}}
  */
 export function readRouteParams(search = window.location.search) {
   const params = new URLSearchParams(search);
@@ -14,6 +14,7 @@ export function readRouteParams(search = window.location.search) {
     from: params.get('from'),
     to: params.get('to'),
     edit: params.get('edit') === '1',
+    preview: params.get('preview') === '1',
   };
 }
 

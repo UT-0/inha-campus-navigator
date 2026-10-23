@@ -14,8 +14,8 @@ import { svgEl } from '../utils/dom.js';
 import { boundsOf } from '../utils/geometry.js';
 import { ICON_PATHS } from '../ui/icons.js';
 
-/** Order in which area types are painted (later = on top). */
-const AREA_ORDER = ['ground', 'water', 'plaza', 'green'];
+/** Order in which area types are painted above the ground (later = on top). */
+const AREA_ORDER = ['water', 'plaza', 'green'];
 
 /**
  * @typedef {Object} MapView
@@ -54,8 +54,33 @@ export function renderMap(svg, campus) {
   return { svg, camera, layers, buildingEls, scaledEls, worldBounds };
 }
 
-/** Optional reference image, then ground, water, plazas and green areas. */
+/**
+ * Background: the ground, then the optional reference image (so it is not
+ * hidden by the ground), then water, plazas and green areas.
+ */
 function drawBackground(layer, campus, world) {
+  const areas = (campus.areas ?? []).filter(
+    (a) => Array.isArray(a.polygon) && a.polygon.length >= 3,
+  );
+  const ground = areas.filter((a) => a.type === 'ground');
+  const others = areas
+    .filter((a) => a.type !== 'ground')
+    .sort((a, b) => AREA_ORDER.indexOf(a.type) - AREA_ORDER.indexOf(b.type));
+
+  // If the data has no explicit ground, draw one covering the whole map.
+  if (ground.length === 0) {
+    layer.append(
+      svgEl('rect', {
+        class: 'area area-ground',
+        x: world.minX,
+        y: world.minY,
+        width: world.maxX - world.minX,
+        height: world.maxY - world.minY,
+      }),
+    );
+  }
+  for (const area of ground) layer.append(areaShape(area));
+
   const image = campus.meta.backgroundImage;
   if (image) {
     layer.append(
@@ -71,31 +96,15 @@ function drawBackground(layer, campus, world) {
     );
   }
 
-  const areas = [...(campus.areas ?? [])].sort(
-    (a, b) => AREA_ORDER.indexOf(a.type) - AREA_ORDER.indexOf(b.type),
-  );
-  // If the data has no explicit ground, draw one covering the whole map.
-  if (!areas.some((a) => a.type === 'ground')) {
-    layer.append(
-      svgEl('rect', {
-        class: 'area area-ground',
-        x: world.minX,
-        y: world.minY,
-        width: world.maxX - world.minX,
-        height: world.maxY - world.minY,
-      }),
-    );
-  }
-  for (const area of areas) {
-    if (!Array.isArray(area.polygon) || area.polygon.length < 3) continue;
-    layer.append(
-      svgEl('polygon', {
-        class: `area area-${area.type ?? 'green'}`,
-        points: pointsAttr(area.polygon),
-        'data-id': area.id,
-      }),
-    );
-  }
+  for (const area of others) layer.append(areaShape(area));
+}
+
+function areaShape(area) {
+  return svgEl('polygon', {
+    class: `area area-${area.type ?? 'green'}`,
+    points: pointsAttr(area.polygon),
+    'data-id': area.id,
+  });
 }
 
 /**
