@@ -228,3 +228,55 @@ export function logProblems(problems) {
     log(`[campus data] ${problem.message}`);
   }
 }
+
+/**
+ * The edge used to walk from node `a` to its neighbour `b` (the shortest
+ * one if several walkways connect the same two nodes, as Dijkstra would).
+ * @param {Graph} graph
+ * @param {string} a
+ * @param {string} b
+ * @returns {Neighbor|null}
+ */
+export function linkBetween(graph, a, b) {
+  let best = null;
+  for (const link of graph.adjacency.get(a) ?? []) {
+    if (link.to === b && (!best || link.distance < best.distance)) best = link;
+  }
+  return best;
+}
+
+/**
+ * The drawn shape of the walk from `a` to `b`: the edge's stored polyline in
+ * walking order, or a straight line when the edge has no geometry.
+ * @param {Graph} graph
+ * @param {string} a
+ * @param {string} b
+ * @returns {Array<{x:number, y:number}>}
+ */
+export function walkGeometry(graph, a, b) {
+  const link = linkBetween(graph, a, b);
+  const from = graph.nodes.get(a);
+  const to = graph.nodes.get(b);
+  const geometry = link?.edge?.geometry;
+  if (!Array.isArray(geometry) || geometry.length < 2) return [from, to].filter(Boolean);
+  const points = geometry.map(([x, y]) => ({ x, y }));
+  // Edges are stored in one direction: reverse if we walk it the other way.
+  if (link.edge.from !== a) points.reverse();
+  return points;
+}
+
+/**
+ * Full geometry of a route (all edges joined, without repeated points).
+ * @param {Graph} graph
+ * @param {string[]} path Node ids.
+ * @returns {Array<{x:number, y:number}>}
+ */
+export function pathGeometry(graph, path) {
+  if (path.length === 1) return [graph.nodes.get(path[0])].filter(Boolean);
+  const points = [];
+  for (let i = 0; i + 1 < path.length; i++) {
+    const part = walkGeometry(graph, path[i], path[i + 1]);
+    points.push(...(points.length ? part.slice(1) : part));
+  }
+  return points;
+}

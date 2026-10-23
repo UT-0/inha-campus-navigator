@@ -29,6 +29,7 @@ import {
   simplify,
   simplifyRing,
 } from './lib/geo.mjs';
+import { buildWalkGraph } from './lib/walk-graph.mjs';
 
 const ROOT = new URL('../', import.meta.url);
 const SIMPLIFY_METERS = 0.5;
@@ -382,6 +383,39 @@ for (const relation of osm.relations.values()) {
 }
 
 // ---------------------------------------------------------------------------
+// 4. Walking graph (paths, entrances, gates)
+// ---------------------------------------------------------------------------
+
+/** OSM way ids of a building's outlines (relation members included). */
+function outlineWays(osmRefs) {
+  const ids = new Set();
+  for (const ref of osmRefs) {
+    const [type, id] = ref.split('/');
+    if (type === 'way') ids.add(Number(id));
+    else
+      for (const m of osm.relations.get(Number(id)).members) if (m.type === 'way') ids.add(m.ref);
+  }
+  return ids;
+}
+
+const walk = buildWalkGraph({
+  osm,
+  toXY,
+  buildings: buildings.map((b) => ({
+    id: b.id,
+    polygons: b.polygons,
+    osmWays: outlineWays(b.osmIds),
+  })),
+  gates: official.gates.map((g) => ({
+    id: g.id,
+    osmNode: Number(g.osm.split('/')[1]),
+    name: { ko: g.ko, en: g.en },
+  })),
+  campusRing,
+});
+for (const b of buildings) b.entrances = walk.entrances[b.id] ?? [];
+
+// ---------------------------------------------------------------------------
 // Output
 // ---------------------------------------------------------------------------
 
@@ -409,8 +443,8 @@ const campus = {
     sources: sources.map(({ id, url, title, retrieved }) => ({ id, url, title, retrieved })),
   },
   buildings,
-  nodes: [],
-  edges: [],
+  nodes: walk.nodes,
+  edges: walk.edges,
   pois: [],
   areas,
   roads,
@@ -419,6 +453,11 @@ const campus = {
 
 await writeFile(new URL('src/data/campus.json', ROOT), `${JSON.stringify(campus)}\n`);
 await writeFile(new URL('src/data/courses.json', ROOT), '[]\n');
+// Details for VERIFY.md and DATA-REPORT.md (estimated links, dropped paths…).
+await writeFile(
+  new URL('data-raw/build-report.json', ROOT),
+  `${JSON.stringify({ built: today, graph: walk.report }, null, 2)}\n`,
+);
 console.log(
-  `campus.json: ${buildings.length} buildings, ${areas.length} areas, ${roads.length} roads, ${context.length} context buildings; viewBox ${viewBox.join(' ')}`,
+  `campus.json: ${buildings.length} buildings, ${areas.length} areas, ${roads.length} roads, ${context.length} context buildings, ${walk.nodes.length} nodes, ${walk.edges.length} edges; viewBox ${viewBox.join(' ')}`,
 );

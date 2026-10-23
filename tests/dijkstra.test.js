@@ -1,5 +1,6 @@
 /**
- * Tests for the min-heap, graph building/validation and Dijkstra routing.
+ * Tests for the min-heap, graph building/validation and Dijkstra routing,
+ * on a small hand-built graph and on the real campus data.
  */
 import { describe, expect, it } from 'vitest';
 import { MinHeap } from '../src/routing/minHeap.js';
@@ -194,17 +195,26 @@ describe('validateCampus', () => {
     expect(codes).toContain('disconnected');
   });
 
-  it('accepts the bundled placeholder campus without problems', () => {
+  it('accepts the bundled campus data without problems', () => {
     expect(validateCampus(campusData)).toEqual([]);
     expect(connectedComponents(buildGraph(campusData))).toHaveLength(1);
   });
 
-  it('can route between every pair of buildings in the placeholder campus', () => {
+  it('can route between every pair of buildings on the real campus', () => {
     const graph = buildGraph(campusData);
     for (const a of campusData.buildings) {
       for (const b of campusData.buildings) {
         expect(findBuildingRoute(graph, a, b), `${a.id} → ${b.id}`).not.toBeNull();
       }
     }
+  });
+
+  it('routes along real geometry, never shorter than the straight line', () => {
+    const graph = buildGraph(campusData);
+    const byId = new Map(campusData.buildings.map((b) => [b.id, b]));
+    const route = findBuildingRoute(graph, byId.get('b-library'), byId.get('b-hitech'));
+    const [a, b] = [graph.nodes.get(route.path[0]), graph.nodes.get(route.path.at(-1))];
+    expect(route.distance).toBeGreaterThanOrEqual(Math.hypot(b.x - a.x, b.y - a.y));
+    expect(route.distance).toBeLessThan(1500);
   });
 });

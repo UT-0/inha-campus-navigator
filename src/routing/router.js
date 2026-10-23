@@ -5,7 +5,7 @@
  * with a clear status (ok / same / none / invalid), and caches directions per
  * route and language so re-rendering is cheap. Pure module (no DOM).
  */
-import { buildGraph, connectedComponents } from './graph.js';
+import { buildGraph, connectedComponents, pathGeometry } from './graph.js';
 import { findBuildingRoute } from './dijkstra.js';
 import { buildDirections } from './directions.js';
 
@@ -90,5 +90,14 @@ export function createRouter(campus) {
     return nodeIds.map((id) => graph.nodes.get(id)).filter(Boolean);
   }
 
-  return { graph, findRoute, directionsFor, pointsOf };
+  /**
+   * Geometry of a route along the real walkways.
+   * @param {string[]} path Node ids.
+   * @returns {Array<{x:number, y:number}>}
+   */
+  function geometryOf(path) {
+    return pathGeometry(graph, path);
+  }
+
+  return { graph, findRoute, directionsFor, pointsOf, geometryOf };
 }

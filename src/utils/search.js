@@ -166,7 +166,7 @@ export function buildSearchIndex(campus, courses, labelFor) {
       buildingId: b.id,
       title: b.name,
       subtitle: null,
-      terms: [...both(b.name), ...both(b.shortName), b.number, b.id],
+      terms: [...both(b.name), ...both(b.shortName), ...(b.aliases ?? []), b.number, b.id],
       highlight: null,
       category: b.category,
       number: b.number,

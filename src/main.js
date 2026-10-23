@@ -144,7 +144,7 @@ async function start() {
       outerRings(buildingsById.get(id))
         .flat()
         .map(([x, y]) => ({ x, y }));
-    return [...router.pointsOf(route.path), ...outline(route.fromId), ...outline(route.toId)];
+    return [...router.geometryOf(route.path), ...outline(route.fromId), ...outline(route.toId)];
   }
 
   /**
@@ -314,7 +314,7 @@ async function start() {
       }
     }
     if (changed.includes('route')) {
-      if (state.route) routeLayer.draw(router.pointsOf(state.route.path));
+      if (state.route) routeLayer.draw(router.geometryOf(state.route.path));
       else routeLayer.clear();
     }
     if (changed.includes('activeStep') || changed.includes('route')) {
@@ -322,7 +322,7 @@ async function start() {
         state.route && state.activeStep !== null
           ? router.directionsFor(state.route, state.lang, t).steps[state.activeStep]
           : null;
-      const points = step ? router.pointsOf(step.nodeIds) : null;
+      const points = step ? (step.points ?? router.pointsOf(step.nodeIds)) : null;
       routeLayer.highlight(points);
       if (points) map.flyToPoints(points, { margin: 80, maxScale: points.length > 1 ? 3 : 2 });
     }

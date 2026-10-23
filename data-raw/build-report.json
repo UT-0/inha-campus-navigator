@@ -1,0 +1,267 @@
+{
+  "built": "2026-10-23",
+  "graph": {
+    "droppedComponents": [
+      {
+        "nodes": 4,
+        "insideCampus": false,
+        "gapMeters": 19.2,
+        "osmWays": [
+          1098546960,
+          1098546961,
+          1098546962
+        ],
+        "sample": {
+          "id": "n10058553886",
+          "x": -117.58358968845998,
+          "y": 270.4395709336266,
+          "type": "junction",
+          "osmId": 10058553886
+        }
+      }
+    ],
+    "bridges": [],
+    "snappedEntrances": [
+      {
+        "entrance": "n9767095616",
+        "label": "4호관 북쪽입구",
+        "meters": 8.8
+      },
+      {
+        "entrance": "n9767122970",
+        "label": "비룡플라자 입구2",
+        "meters": 16.9
+      },
+      {
+        "entrance": "n10058101211",
+        "label": "5동 남측 출입구",
+        "meters": 17
+      },
+      {
+        "entrance": "n10058101212",
+        "label": "5남 주출입구",
+        "meters": 7
+      },
+      {
+        "entrance": "n10058101213",
+        "label": "2호관 남쪽 출입구",
+        "meters": 7.9
+      },
+      {
+        "entrance": "n10058101214",
+        "label": "2호관 동쪽 출입구",
+        "meters": 9.8
+      },
+      {
+        "entrance": "n10058101215",
+        "label": "2남관 서쪽 출입구",
+        "meters": 8.4
+      },
+      {
+        "entrance": "n10058120918",
+        "label": "2남관 북쪽 출입구",
+        "meters": 7.4
+      },
+      {
+        "entrance": "e-b-1-1",
+        "label": null,
+        "meters": 8.5
+      },
+      {
+        "entrance": "e-b-6-1",
+        "label": null,
+        "meters": 22.9
+      },
+      {
+        "entrance": "e-b-library-1",
+        "label": null,
+        "meters": 14.2
+      },
+      {
+        "entrance": "e-b-9-1",
+        "label": null,
+        "meters": 20.9
+      },
+      {
+        "entrance": "e-b-seoho-1",
+        "label": null,
+        "meters": 2.9
+      },
+      {
+        "entrance": "e-b-nabille-1",
+        "label": null,
+        "meters": 12.2
+      },
+      {
+        "entrance": "e-b-law-1",
+        "label": null,
+        "meters": 1.7
+      },
+      {
+        "entrance": "e-b-rotc-1",
+        "label": null,
+        "meters": 30.8
+      },
+      {
+        "entrance": "e-b-lifelong-1",
+        "label": null,
+        "meters": 2.9
+      },
+      {
+        "entrance": "e-b-dream-1",
+        "label": null,
+        "meters": 8.9
+      },
+      {
+        "entrance": "e-b-hawaii-1",
+        "label": null,
+        "meters": 29.1
+      },
+      {
+        "entrance": "e-b-dream23-1",
+        "label": null,
+        "meters": 0.7
+      },
+      {
+        "entrance": "e-b-tennis-1",
+        "label": null,
+        "meters": 4.6
+      },
+      {
+        "entrance": "e-b-c-1",
+        "label": null,
+        "meters": 9.6
+      },
+      {
+        "entrance": "e-b-woongbi-1",
+        "label": null,
+        "meters": 5.7
+      },
+      {
+        "entrance": "e-b-biryong-1",
+        "label": null,
+        "meters": 3.8
+      },
+      {
+        "entrance": "e-b-parking-office-1",
+        "label": null,
+        "meters": 7.3
+      },
+      {
+        "entrance": "n4741793208",
+        "label": "정문",
+        "meters": 5.9
+      }
+    ],
+    "estimatedEntrances": [
+      {
+        "building": "b-1",
+        "entrance": "e-b-1-1",
+        "metersToPath": 8.5
+      },
+      {
+        "building": "b-6",
+        "entrance": "e-b-6-1",
+        "metersToPath": 22.9
+      },
+      {
+        "building": "b-library",
+        "entrance": "e-b-library-1",
+        "metersToPath": 14.2
+      },
+      {
+        "building": "b-9",
+        "entrance": "e-b-9-1",
+        "metersToPath": 20.9
+      },
+      {
+        "building": "b-seoho",
+        "entrance": "e-b-seoho-1",
+        "metersToPath": 2.9
+      },
+      {
+        "building": "b-nabille",
+        "entrance": "e-b-nabille-1",
+        "metersToPath": 12.2
+      },
+      {
+        "building": "b-law",
+        "entrance": "e-b-law-1",
+        "metersToPath": 1.7
+      },
+      {
+        "building": "b-rotc",
+        "entrance": "e-b-rotc-1",
+        "metersToPath": 30.8
+      },
+      {
+        "building": "b-lifelong",
+        "entrance": "e-b-lifelong-1",
+        "metersToPath": 2.9
+      },
+      {
+        "building": "b-dream",
+        "entrance": "e-b-dream-1",
+        "metersToPath": 8.9
+      },
+      {
+        "building": "b-hawaii",
+        "entrance": "e-b-hawaii-1",
+        "metersToPath": 29.1
+      },
+      {
+        "building": "b-dream23",
+        "entrance": "e-b-dream23-1",
+        "metersToPath": 0.7
+      },
+      {
+        "building": "b-field",
+        "entrance": "e-b-field-1",
+        "metersToPath": 0
+      },
+      {
+        "building": "b-basketball",
+        "entrance": "e-b-basketball-1",
+        "metersToPath": 0
+      },
+      {
+        "building": "b-tennis",
+        "entrance": "e-b-tennis-1",
+        "metersToPath": 4.6
+      },
+      {
+        "building": "b-c",
+        "entrance": "e-b-c-1",
+        "metersToPath": 9.6
+      },
+      {
+        "building": "b-parking",
+        "entrance": "e-b-parking-1",
+        "metersToPath": 0
+      },
+      {
+        "building": "b-woongbi",
+        "entrance": "e-b-woongbi-1",
+        "metersToPath": 5.7
+      },
+      {
+        "building": "b-biryong",
+        "entrance": "e-b-biryong-1",
+        "metersToPath": 3.8
+      },
+      {
+        "building": "b-parking-office",
+        "entrance": "e-b-parking-office-1",
+        "metersToPath": 7.3
+      }
+    ],
+    "skippedEntrances": [
+      {
+        "osmNode": 10058120919,
+        "building": "b-2",
+        "label": "2호관 구조시험동 입구",
+        "reason": "access=private"
+      }
+    ]
+  }
+}
