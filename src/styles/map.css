@@ -813,3 +813,16 @@
     transform: translateY(-16px);
   }
 }
+
+/* A place chosen in search pulses briefly. */
+.poi.is-pulsing .poi-bg {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: poi-pulse 0.8s var(--ease-out) 3;
+}
+
+@keyframes poi-pulse {
+  50% {
+    transform: scale(1.6);
+  }
+}

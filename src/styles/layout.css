@@ -41,6 +41,7 @@
 .search-area {
   grid-row: 2;
   padding: 0 var(--space-5) var(--space-3);
+  z-index: calc(var(--z-sheet) + 1); /* the results popup must overlap the panel below */
 }
 
 .sheet {

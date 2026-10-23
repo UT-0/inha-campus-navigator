@@ -76,7 +76,10 @@ export function substringDistance(pattern, text) {
   return Math.min(...previous);
 }
 
-/** Typos allowed for a query of the given (jamo) length. */
+/**
+ * Typos allowed for a query of the given length in characters (syllables for
+ * Korean), so short queries such as "버스" must match exactly.
+ */
 function allowedTypos(length) {
   if (length <= 3) return 0;
   if (length <= 7) return 1;
@@ -96,13 +99,14 @@ export function matchScore(query, term) {
   if (t === q) return 100;
   if (t.startsWith(q)) return 90 - Math.min(10, t.length - q.length);
   if (t.includes(q)) return 75 - Math.min(10, t.length - q.length) / 2;
-  if (/^[ㄱ-ㅎ]+$/.test(q) && initialConsonants(t).includes(q)) return 70;
+  // Initial-consonant queries ("ㅈㅇㄷㅅㄱ"). Checked on the raw text because
+  // NFKC turns these letters into a different (conjoining) form.
+  const consonants = String(query).replace(/\s+/g, '');
+  if (/^[ㄱ-ㅎ]+$/.test(consonants) && initialConsonants(t).includes(consonants)) return 70;
 
-  const qj = toJamo(q);
-  const tj = toJamo(t);
-  const allowed = allowedTypos(qj.length);
+  const allowed = allowedTypos(q.length);
   if (allowed === 0) return 0;
-  const typos = substringDistance(qj, tj);
+  const typos = substringDistance(toJamo(q), toJamo(t));
   return typos <= allowed ? 55 - typos * 10 : 0;
 }
 
@@ -287,8 +291,8 @@ function scoreEntry(entry, query) {
  * @param {Object} [options]
  * @param {number} [options.perGroup=5] Max results per type.
  * @param {number} [options.minScore=40]
- * @returns {Array<{entry: SearchEntry, score: number}>} Best matches, grouped
- *          in GROUP_ORDER and sorted by score within each group.
+ * @returns {Array<{entry: SearchEntry, score: number}>} Best matches grouped by
+ *          type (strongest group first) and sorted by score within each group.
  */
 export function search(index, query, { perGroup = 5, minScore = 40 } = {}) {
   if (!normalize(query)) return [];
@@ -297,10 +301,10 @@ export function search(index, query, { perGroup = 5, minScore = 40 } = {}) {
     const score = scoreEntry(entry, query);
     if (score >= minScore) groups.get(entry.type)?.push({ entry, score });
   }
-  const results = [];
-  for (const type of GROUP_ORDER) {
-    const list = groups.get(type).sort((a, b) => b.score - a.score);
-    results.push(...list.slice(0, perGroup));
-  }
-  return results;
+  // Groups with the strongest match come first ("201" → rooms before courses
+  // whose code merely contains 201); ties keep the GROUP_ORDER.
+  const ranked = GROUP_ORDER.map((type) => groups.get(type).sort((a, b) => b.score - a.score))
+    .filter((list) => list.length > 0)
+    .sort((a, b) => b[0].score - a[0].score);
+  return ranked.flatMap((list) => list.slice(0, perGroup));
 }

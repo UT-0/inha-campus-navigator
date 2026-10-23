@@ -231,13 +231,23 @@ export function createMapController({ campus, onBuildingActivate, getPadding }) 
     },
     flyToBuilding(id) {
       const building = buildingsById.get(id);
-      if (building) panZoom.flyTo(buildingBounds(building), { margin: 64, maxScale: 3 });
+      if (building) panZoom.flyTo(buildingBounds(building), { margin: 80, maxScale: 2.2 });
     },
     flyToPoints(points, options) {
       if (points.length > 0) panZoom.flyTo(boundsOf(points), options);
     },
     refreshLayout() {
       panZoom.refresh();
+    },
+    /** Briefly pulses a POI or gate icon so it is easy to spot. */
+    pulsePlace(id) {
+      const poi = svg.querySelector(`.poi[data-id="${CSS.escape(id)}"]`);
+      if (!poi) return;
+      poi.classList.remove('is-pulsing');
+      // Restart the CSS animation.
+      void poi.getBoundingClientRect();
+      poi.classList.add('is-pulsing');
+      setTimeout(() => poi.classList.remove('is-pulsing'), 2600);
     },
   };
 }

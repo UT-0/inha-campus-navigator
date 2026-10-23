@@ -25,6 +25,9 @@ import {
 import { createMapController } from './map/mapController.js';
 import { createRouteLayer } from './map/routeLayer.js';
 import { createRoutePanel } from './ui/routePanel.js';
+import { createBuildingPanel } from './ui/buildingPanel.js';
+import { createBuildingList } from './ui/buildingList.js';
+import { createSearchBar } from './ui/searchBar.js';
 import { createIcon } from './ui/icons.js';
 import { showToast } from './ui/toast.js';
 import { el } from './utils/dom.js';
@@ -88,10 +91,7 @@ async function start() {
   const map = createMapController({
     campus,
     getPadding: mapPadding,
-    onBuildingActivate: (id) => {
-      setState({ selectedBuilding: id });
-      map.flyToBuilding(id);
-    },
+    onBuildingActivate: (id) => openBuilding(id),
   });
   const routeLayer = createRouteLayer({
     routeLayer: map.view.layers.route,
@@ -104,6 +104,17 @@ async function start() {
   function routeExtent(route) {
     const outline = (id) => (buildingsById.get(id)?.polygon ?? []).map(([x, y]) => ({ x, y }));
     return [...router.pointsOf(route.path), ...outline(route.fromId), ...outline(route.toId)];
+  }
+
+  /**
+   * Opens a building's panel and flies the map to it.
+   * @param {string} id
+   * @param {{type: string, value: string}|null} [highlight] Item to highlight.
+   */
+  function openBuilding(id, highlight = null) {
+    if (!buildingsById.has(id)) return;
+    setState({ selectedBuilding: id, highlight });
+    map.flyToBuilding(id);
   }
 
   // ---------- Actions shared by the UI modules ----------
@@ -160,6 +171,21 @@ async function start() {
       setState({ from, to });
       actions.findRoute();
     },
+    /** "Start here" in the building panel. */
+    startHere(id) {
+      setState({ from: id, selectedBuilding: null, highlight: null });
+      if (getState().to) actions.findRoute();
+      else showToast(t('toast.fromSet', { name: localizeName(buildingsById.get(id)) }));
+    },
+    /** "Go here" in the building panel. */
+    goHere(id) {
+      setState({ to: id, selectedBuilding: null, highlight: null });
+      if (getState().from) actions.findRoute();
+      else showToast(t('toast.toSet', { name: localizeName(buildingsById.get(id)) }));
+    },
+    zoomTo(id) {
+      map.flyToBuilding(id);
+    },
   };
 
   // ---------- Panels ----------
@@ -171,6 +197,31 @@ async function start() {
     router,
     actions,
     getRecent: () => [],
+  });
+  createBuildingPanel({
+    container: document.getElementById('building-view'),
+    routeView: document.getElementById('route-view'),
+    campus,
+    courses,
+    actions,
+  });
+  createBuildingList({
+    container: document.getElementById('building-list'),
+    campus,
+    onOpen: (id) => openBuilding(id),
+  });
+  createSearchBar({
+    container: document.getElementById('search-area'),
+    campus,
+    courses,
+    onResult: (entry) => {
+      if (entry.buildingId) openBuilding(entry.buildingId, entry.highlight);
+      else if (entry.point) {
+        setState({ selectedBuilding: null, highlight: null });
+        map.flyToPoints([entry.point], { margin: 120, maxScale: 2.5 });
+        map.pulsePlace(entry.id.replace(/^place:/, ''));
+      }
+    },
   });
 
   // ---------- Reactions to state changes ----------
