@@ -223,7 +223,8 @@ export default {
   'building.unverified': '아직 확인되지 않음: {list}.',
   'building.sources': '출처 ({n})',
   'building.sourceMeta': '{fields} · {date} 확인',
-  'building.photoCredit': '사진: {author}, {license}',
+  'building.photoBy': '사진:',
+  'building.ownWork': '직접 촬영',
 
   // Data status
   'status.verified': '확인됨',

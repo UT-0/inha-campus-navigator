@@ -483,7 +483,13 @@ function amenityDetail(key, amenity) {
   if (key === 'food') {
     if (!amenity.places?.length) return null;
     return amenity.places.map((place) =>
-      [localize(place), ...(place.hours ?? []).map((h) => `${localize(h)} ${h.time}`)].join(' · '),
+      [
+        localize(place),
+        ...(place.hours ?? []).map((h) => `${localize(h)} ${h.time}`),
+        place.status === 'osm' ? t('status.osm') : null,
+      ]
+        .filter(Boolean)
+        .join(' · '),
     );
   }
   if (key === 'restrooms') {
@@ -506,49 +512,83 @@ function statusTag(status) {
   return el('span', { class: 'status-tag', 'data-status': status, text: t(`status.${status}`) });
 }
 
-/** Photo with credit, or a placeholder card. */
+/**
+ * The building photo with its credit line, or, when there is no photo yet, a
+ * fallback card in the category color with the building number and name.
+ */
 function photoBlock(building, category) {
   const photo = building.photo;
   const src = typeof photo === 'string' ? photo : photo?.src;
-  if (src) {
+  if (!src) {
     return el(
-      'figure',
-      { class: 'building-figure' },
-      el('img', {
-        class: 'building-photo',
-        src: resolveAssetUrl(src),
-        alt: localize(building.name),
-        loading: 'lazy',
-      }),
-      photo?.author
-        ? el(
-            'figcaption',
-            { class: 'photo-credit' },
-            photo.sourceUrl
-              ? el('a', {
-                  href: photo.sourceUrl,
-                  target: '_blank',
-                  rel: 'noopener',
-                  text: t('building.photoCredit', {
-                    author: photo.author,
-                    license: photo.license ?? '',
-                  }),
-                })
-              : t('building.photoCredit', { author: photo.author, license: photo.license ?? '' }),
-          )
-        : null,
+      'div',
+      {
+        class: 'building-photo is-placeholder',
+        'data-category': category,
+        role: 'img',
+        'aria-label': `${localize(building.name)} — ${t('building.photo')}`,
+      },
+      el(
+        'div',
+        { class: 'placeholder-art', 'aria-hidden': 'true' },
+        createIcon('building', { size: 40, strokeWidth: 1.4 }),
+        building.number ? el('span', { class: 'placeholder-number', text: building.number }) : null,
+      ),
+      el(
+        'div',
+        { class: 'placeholder-text', 'aria-hidden': 'true' },
+        el('span', { class: 'placeholder-name', text: localize(building.name) }),
+        el('span', { class: 'placeholder-note', text: t('building.photo') }),
+      ),
     );
   }
+  const small = photo?.width && photo.width < 600;
+  const credit = photo?.author
+    ? el(
+        'figcaption',
+        { class: 'photo-credit' },
+        `${t('building.photoBy')} `,
+        photo.sourceUrl
+          ? el('a', {
+              href: photo.sourceUrl,
+              target: '_blank',
+              rel: 'noopener',
+              text: photo.author,
+            })
+          : photo.author === 'own work'
+            ? t('building.ownWork')
+            : photo.author,
+        photo.license ? ' · ' : null,
+        photo.license
+          ? photo.licenseUrl
+            ? el('a', {
+                href: photo.licenseUrl,
+                target: '_blank',
+                rel: 'noopener license',
+                text: photo.license,
+              })
+            : photo.license
+          : null,
+      )
+    : null;
   return el(
-    'div',
-    {
-      class: 'building-photo is-placeholder',
-      'data-category': category,
-      role: 'img',
-      'aria-label': t('building.photo'),
-    },
-    createIcon('building', { size: 32, strokeWidth: 1.6 }),
-    el('span', { text: t('building.photo') }),
+    'figure',
+    { class: 'building-figure' },
+    el('img', {
+      class: `building-photo${small ? ' is-small' : ''}`,
+      src: resolveAssetUrl(src),
+      ...(photo?.thumb && !small
+        ? {
+            srcset: `${resolveAssetUrl(photo.thumb)} 400w, ${resolveAssetUrl(src)} 1200w`,
+            sizes: '(max-width: 899.98px) 100vw, 340px',
+          }
+        : {}),
+      alt: localize(building.name),
+      loading: 'lazy',
+      decoding: 'async',
+      ...(photo?.width ? { width: photo.width, height: photo.height } : {}),
+    }),
+    credit,
   );
 }
 

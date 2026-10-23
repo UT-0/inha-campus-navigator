@@ -226,7 +226,8 @@ export default {
   'building.unverified': 'Not yet verified: {list}.',
   'building.sources': 'Sources ({n})',
   'building.sourceMeta': '{fields} · retrieved {date}',
-  'building.photoCredit': 'Photo: {author}, {license}',
+  'building.photoBy': 'Photo:',
+  'building.ownWork': 'own work',
 
   // Data status
   'status.verified': 'Verified',

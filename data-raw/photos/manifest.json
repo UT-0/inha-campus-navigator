@@ -1,0 +1,51 @@
+{
+  "b-1": {
+    "src": "photos/web/b-1.webp",
+    "thumb": "photos/web/b-1-400.webp",
+    "width": 1200,
+    "height": 1600,
+    "author": "Ifflies",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:%EC%9D%B8%ED%95%98%EB%8C%80%ED%95%99%EA%B5%90_%EB%B3%B8%EA%B4%80.jpg",
+    "retrieved": "2026-10-23",
+    "kind": "commons"
+  },
+  "b-7": {
+    "src": "photos/web/b-7.webp",
+    "thumb": "photos/web/b-7-400.webp",
+    "width": 1200,
+    "height": 900,
+    "author": "Ifflies",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:%EC%9D%B8%ED%95%98%EB%8C%80%ED%95%99%EA%B5%90_%ED%95%99%EC%83%9D%ED%9A%8C%EA%B4%80.jpg",
+    "retrieved": "2026-10-23",
+    "kind": "commons"
+  },
+  "b-library": {
+    "src": "photos/web/b-library.webp",
+    "thumb": "photos/web/b-library-400.webp",
+    "width": 1200,
+    "height": 900,
+    "author": "Ifflies",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:%EC%9D%B8%ED%95%98%EB%8C%80%ED%95%99%EA%B5%90_%EC%A0%95%EC%84%9D%ED%95%99%EC%88%A0%EC%A0%95%EB%B3%B4%EA%B4%80.jpg",
+    "retrieved": "2026-10-23",
+    "kind": "commons"
+  },
+  "b-nabille": {
+    "src": "photos/web/b-nabille.webp",
+    "thumb": "photos/web/b-nabille-400.webp",
+    "width": 242,
+    "height": 336,
+    "author": "Projecthanbic",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:%EB%82%98%EB%B9%8C%EB%A0%88%EA%B4%80.jpg",
+    "retrieved": "2026-10-23",
+    "kind": "commons",
+    "note": "Very small (242 × 336 px): replace with a better photo."
+  }
+}

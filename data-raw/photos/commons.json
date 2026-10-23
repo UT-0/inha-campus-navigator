@@ -1,0 +1,81 @@
+{
+  "_note": "Wikimedia Commons photos chosen for buildings. Only files with a free license (CC0, CC BY, CC BY-SA, public domain). Metadata read from each file page on the retrieved date; scripts/fetch-photos.mjs re-checks it through the Commons API before downloading.",
+  "category": "https://commons.wikimedia.org/wiki/Category:Inha_University",
+  "photos": [
+    {
+      "buildingId": "b-1",
+      "file": "File:인하대학교 본관.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%EC%9D%B8%ED%95%98%EB%8C%80%ED%95%99%EA%B5%90_%EB%B3%B8%EA%B4%80.jpg",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f1/%EC%9D%B8%ED%95%98%EB%8C%80%ED%95%99%EA%B5%90_%EB%B3%B8%EA%B4%80.jpg",
+      "author": "Ifflies",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "date": "2011-02-15",
+      "width": 1536,
+      "height": 2048,
+      "retrieved": "2026-10-23"
+    },
+    {
+      "buildingId": "b-library",
+      "file": "File:인하대학교 정석학술정보관.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%EC%9D%B8%ED%95%98%EB%8C%80%ED%95%99%EA%B5%90_%EC%A0%95%EC%84%9D%ED%95%99%EC%88%A0%EC%A0%95%EB%B3%B4%EA%B4%80.jpg",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/86/%EC%9D%B8%ED%95%98%EB%8C%80%ED%95%99%EA%B5%90_%EC%A0%95%EC%84%9D%ED%95%99%EC%88%A0%EC%A0%95%EB%B3%B4%EA%B4%80.jpg",
+      "author": "Ifflies",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "date": "2011-02-15",
+      "width": 2048,
+      "height": 1536,
+      "retrieved": "2026-10-23"
+    },
+    {
+      "buildingId": "b-7",
+      "file": "File:인하대학교 학생회관.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%EC%9D%B8%ED%95%98%EB%8C%80%ED%95%99%EA%B5%90_%ED%95%99%EC%83%9D%ED%9A%8C%EA%B4%80.jpg",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/6/61/%EC%9D%B8%ED%95%98%EB%8C%80%ED%95%99%EA%B5%90_%ED%95%99%EC%83%9D%ED%9A%8C%EA%B4%80.jpg",
+      "author": "Ifflies",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "date": "2011-02-15",
+      "width": 2048,
+      "height": 1536,
+      "retrieved": "2026-10-23"
+    },
+    {
+      "buildingId": "b-nabille",
+      "file": "File:나빌레관.jpg",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%EB%82%98%EB%B9%8C%EB%A0%88%EA%B4%80.jpg",
+      "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1c/%EB%82%98%EB%B9%8C%EB%A0%88%EA%B4%80.jpg",
+      "author": "Projecthanbic",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "date": "2014-08-04",
+      "width": 242,
+      "height": 336,
+      "retrieved": "2026-10-23",
+      "note": "Very small (242 × 336 px): replace with a better photo."
+    }
+  ],
+  "checkedNotUsed": [
+    {
+      "file": "File:Inha temp.jpg",
+      "reason": "University logo, not a building"
+    },
+    {
+      "file": "File:인하대학교 비룡탑.jpg",
+      "reason": "Monument, not a building"
+    },
+    {
+      "file": "File:인하대학교 명판.jpg",
+      "reason": "Name plate, not a building"
+    },
+    {
+      "file": "File:Q1593043 Inha University A01.jpg",
+      "reason": "Inha Univ. subway station name plate"
+    },
+    {
+      "file": "File:Q1593043 Inha University A02.jpg",
+      "reason": "Inha Univ. subway station platform"
+    }
+  ]
+}

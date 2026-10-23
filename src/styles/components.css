@@ -1133,26 +1133,72 @@ button.chip:active {
 }
 
 .building-photo.is-placeholder {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  overflow: hidden;
   color: var(--badge-color);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
   background:
     radial-gradient(
-      circle at 20% 20%,
-      color-mix(in srgb, var(--badge-color) 22%, transparent),
+      circle at 85% 15%,
+      color-mix(in srgb, var(--badge-color) 26%, transparent),
       transparent 55%
     ),
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--badge-color) 14%, var(--color-surface)),
+      color-mix(in srgb, var(--badge-color) 16%, var(--color-surface)),
       var(--color-surface-2)
     );
   border: 1px solid color-mix(in srgb, var(--badge-color) 25%, transparent);
+}
+
+.placeholder-art {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  opacity: 0.9;
+}
+
+.placeholder-number {
+  font-size: 44px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.placeholder-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.placeholder-name {
+  font-size: var(--font-size-md, 1rem);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.placeholder-note {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+}
+
+.building-photo.is-small {
+  object-fit: contain;
+  background: var(--color-surface-2);
+}
+
+.building-figure img.building-photo {
+  height: auto; /* the width/height attributes only reserve space */
 }
 
 .building-badges {

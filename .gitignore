@@ -3,3 +3,7 @@ dist
 .DS_Store
 *.log
 .vite
+
+# Photos downloaded by scripts/fetch-photos.mjs (re-downloadable; the
+# optimized copies in public/photos/web/ are committed)
+data-raw/photos/commons/

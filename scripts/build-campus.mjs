@@ -18,6 +18,7 @@
  *
  * Run: npm run data:build
  */
+import { existsSync } from 'node:fs';
 import { readFile, writeFile } from 'node:fs/promises';
 import { createProjection } from '../src/utils/projection.js';
 import {
@@ -447,6 +448,22 @@ const amenities = buildAmenities({
   osmRetrieved: osmMeta.fetched.slice(0, 10),
 });
 writeDescriptions({ buildings, nodes: walk.nodes, areas });
+
+// ---------------------------------------------------------------------------
+// 7. Photos (scripts/optimize-photos.mjs writes the manifest)
+// ---------------------------------------------------------------------------
+
+const photoManifestUrl = new URL('data-raw/photos/manifest.json', ROOT);
+const photos = existsSync(photoManifestUrl)
+  ? JSON.parse(await readFile(photoManifestUrl, 'utf8'))
+  : {};
+for (const b of buildings) {
+  const photo = photos[b.id];
+  if (!photo) continue;
+  const { note, retrieved, ...fields } = photo;
+  b.photo = fields;
+  if (photo.sourceUrl) b.sources.push({ field: 'photo', url: photo.sourceUrl, retrieved });
+}
 
 // ---------------------------------------------------------------------------
 // Output

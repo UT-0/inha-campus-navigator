@@ -15,10 +15,15 @@
     "test:watch": "vitest",
     "format": "prettier --write .",
     "data:fetch-osm": "NODE_USE_ENV_PROXY=1 node scripts/fetch-osm.mjs",
-    "data:build": "node scripts/build-campus.mjs"
+    "data:build": "node scripts/build-campus.mjs",
+    "photos:fetch": "NODE_USE_ENV_PROXY=1 node scripts/fetch-photos.mjs",
+    "photos:optimize": "node scripts/optimize-photos.mjs",
+    "photos:todo": "node scripts/photos-todo.mjs",
+    "photos": "npm run photos:fetch && npm run photos:optimize && npm run data:build && npm run photos:todo"
   },
   "devDependencies": {
     "prettier": "^3.9.10",
+    "sharp": "^0.35.5",
     "vite": "^8.3.5",
     "vitest": "^5.0.5"
   }
