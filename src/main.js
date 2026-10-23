@@ -465,6 +465,24 @@ async function start() {
 }
 
 /**
+ * Registers the service worker (public/sw.js) in production builds, so the
+ * app works offline after the first visit and can be installed. Files the
+ * page loaded before the worker took over are handed to it for caching.
+ */
+function registerServiceWorker() {
+  if (!import.meta.env.PROD || !('serviceWorker' in navigator)) return;
+  const base = import.meta.env.BASE_URL;
+  navigator.serviceWorker
+    .register(`${base}sw.js`, { scope: base })
+    .then(() => navigator.serviceWorker.ready)
+    .then((registration) => {
+      const urls = performance.getEntriesByType('resource').map((entry) => entry.name);
+      registration.active?.postMessage({ type: 'cache-urls', urls: [location.href, ...urls] });
+    })
+    .catch((error) => console.warn('[app] Offline support unavailable:', error));
+}
+
+/**
  * Announces a message to screen readers through the aria-live region.
  * @param {string} message
  */
@@ -518,4 +536,4 @@ function showErrorScreen(error) {
   screen.hidden = false;
 }
 
-start().catch(showErrorScreen);
+start().then(registerServiceWorker, showErrorScreen);

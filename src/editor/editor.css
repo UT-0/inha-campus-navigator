@@ -401,3 +401,44 @@
     min-width: 40px;
   }
 }
+
+/* Real-data schema: curved paths, estimated items, amenity rows */
+
+.ed-edge {
+  fill: none;
+  stroke-linejoin: round;
+}
+
+.ed-edge.is-estimated {
+  stroke: color-mix(in srgb, var(--color-warning-text) 25%, transparent);
+}
+
+.ed-node.is-estimated {
+  stroke: var(--color-warning-text);
+  stroke-dasharray: 2 1;
+}
+
+.ed-outline {
+  fill-rule: evenodd;
+}
+
+.ep-grid-3 {
+  grid-template-columns: 1fr 1fr 1.2fr;
+}
+
+.ep-details {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+}
+
+.ep-details > summary {
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.ep-details[open] {
+  display: grid;
+  gap: var(--space-2);
+}

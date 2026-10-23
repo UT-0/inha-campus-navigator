@@ -37,6 +37,13 @@ export const TURN_THRESHOLDS = { straight: 30, slight: 60, normal: 135, uturn: 1
 const LANDMARK_BUILDING_METERS = 20;
 /** A POI counts as "passed" if it is within this many meters of the leg. */
 const LANDMARK_POI_METERS = 15;
+/**
+ * Well-known landmarks (the library, the sports field, the Student Center,
+ * Ingyeong Lake…; `landmark: true` in the data) count from farther away and
+ * win over an ordinary building at a similar distance.
+ */
+const FAMOUS_LANDMARK_METERS = 45;
+const FAMOUS_LANDMARK_BONUS = 25;
 /** Corners at least this sharp are announced even where paths don't meet. */
 const CORNER_DEGREES = 60;
 /** Length (m) over which the heading at the start/end of a segment is measured. */
@@ -407,22 +414,27 @@ function legPieces(leg) {
 
 /**
  * Picks one landmark that the leg walks past: the closest building beside the
- * path; otherwise a named place passed straight through; otherwise a POI.
+ * path (well-known landmarks preferred); otherwise a named place passed
+ * straight through (a gate); otherwise a landmark POI such as the station.
  */
 function findLandmark(leg, campus, graph, excluded, name) {
   const unitsToMeters = graph.metersPerUnit;
   const pieces = legPieces(leg);
 
   let best = null;
-  for (const building of campus.buildings) {
-    if (excluded.has(building.id)) continue;
+  const shapes = [
+    ...campus.buildings.filter((b) => !excluded.has(b.id)),
+    ...(campus.areas ?? []).filter((a) => a.landmark && a.name),
+  ];
+  for (const shape of shapes) {
     const meters =
-      Math.min(...pieces.map((p) => shapeToSegmentDistance(building, p.a, p.b))) * unitsToMeters;
+      Math.min(...pieces.map((p) => shapeToSegmentDistance(shape, p.a, p.b))) * unitsToMeters;
+    const limit = shape.landmark ? FAMOUS_LANDMARK_METERS : LANDMARK_BUILDING_METERS;
     // Only count it as "passing" if the building lies alongside the leg, not
     // just beyond one of its ends.
-    if (meters > LANDMARK_BUILDING_METERS || !isAlongside(shapeCentroid(building), pieces))
-      continue;
-    if (!best || meters < best.meters) best = { meters, label: name(building.name) };
+    if (meters > limit || !isAlongside(shapeCentroid(shape), pieces)) continue;
+    const score = meters - (shape.landmark ? FAMOUS_LANDMARK_BONUS : 0);
+    if (!best || score < best.score) best = { score, label: name(shape.name) };
   }
   if (best) return best.label;
 

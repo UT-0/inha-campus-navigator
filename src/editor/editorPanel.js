@@ -1,7 +1,8 @@
 /**
  * Side panel of the Map Editor: file actions (import, export, validate,
  * preview), the reference image controls, scale settings, tool options, the
- * "new shape" form, the properties form of the selected item, and the
+ * "new shape" form, the properties form of the selected item (including data
+ * statuses, amenities, step-free entrances and "last verified"), and the
  * validation results.
  *
  * Every edit goes through `api.commit`, so it can be undone. Sections are
@@ -15,17 +16,50 @@ import { CATEGORIES } from '../map/widgets.js';
 
 const NODE_TYPES = ['junction', 'entrance', 'gate'];
 const POI_TYPES = [
-  'bus_stop',
-  'cafe',
-  'convenience_store',
-  'restaurant',
-  'atm',
-  'parking',
   'restroom',
   'printer',
-  'gate',
+  'atm',
+  'cafe',
+  'restaurant',
+  'convenience_store',
+  'vending',
+  'water',
+  'lounge',
+  'bench',
+  'aed',
+  'smoking',
+  'health',
+  'bus_stop',
+  'subway_entrance',
+  'bicycle_parking',
+  'parking',
 ];
-const AREA_TYPES = ['green', 'plaza', 'water', 'ground'];
+const POI_GROUPS = [
+  'food',
+  'restroom',
+  'printing',
+  'money',
+  'transport',
+  'health',
+  'study',
+  'services',
+];
+const AREA_TYPES = [
+  'campus',
+  'green',
+  'wood',
+  'pitch',
+  'parking',
+  'plaza',
+  'water',
+  'urban',
+  'other-campus',
+  'ground',
+];
+const STATUSES = ['verified', 'osm', 'estimated', 'unknown'];
+const WHEELCHAIR = ['', 'yes', 'limited', 'no'];
+/** Amenities with a yes/no answer; the others list locations (or floors). */
+const YES_NO_AMENITIES = new Set(['wifi', 'elevator', 'accessibleEntrance']);
 
 /**
  * @param {HTMLElement} container
@@ -119,6 +153,56 @@ export function createEditorPanel(container, api) {
       {},
       picker,
       button(label, icon, () => picker.click()),
+    );
+  }
+
+  /** A status select (verified / osm / estimated / unknown). */
+  function statusSelect(label, value, onChange) {
+    return select(
+      label,
+      value ?? 'unknown',
+      STATUSES.map((status) => [status, t(`status.${status}`)]),
+      onChange,
+    );
+  }
+
+  /**
+   * One row per amenity: its status and what is known (yes/no, or a list of
+   * places separated by ";"). Marking something you checked on campus as
+   * "Verified" is what turns "Not yet verified" into a fact in the app.
+   */
+  function amenityFields(building) {
+    return el(
+      'details',
+      { class: 'ep-details' },
+      el('summary', { text: t('building.amenities') }),
+      Object.entries(building.amenities ?? {}).map(([key, amenity]) => {
+        const update = (mutate) => edit(() => mutate(api.findSelected().amenities[key]));
+        const value = YES_NO_AMENITIES.has(key)
+          ? select(
+              t(`amenity.${key}`),
+              amenity.available === null || amenity.available === undefined
+                ? ''
+                : String(amenity.available),
+              [
+                ['', t('status.unknown')],
+                ['true', t('amenity.yes')],
+                ['false', t('amenity.none')],
+              ],
+              (v) => update((a) => (a.available = v === '' ? null : v === 'true')),
+            )
+          : input(`${t(`amenity.${key}`)} (;)`, listText(key, amenity), (v) =>
+              update((a) => setList(key, a, v)),
+            );
+        return el(
+          'div',
+          { class: 'ep-grid' },
+          value,
+          statusSelect(t('editor.field.status'), amenity.status, (v) =>
+            update((a) => (a.status = v)),
+          ),
+        );
+      }),
     );
   }
 
@@ -402,28 +486,55 @@ export function createEditorPanel(container, api) {
           'div',
           { class: 'ep-grid' },
           input(t('editor.field.number'), item.number, (value) =>
-            edit(() => (api.findSelected().number = value)),
+            edit(() => (api.findSelected().number = value.trim() || null)),
           ),
           input(
-            t('editor.field.floors'),
-            item.floors,
-            (value) => edit(() => (api.findSelected().floors = Number(value) || 1)),
-            { type: 'number' },
+            t('editor.field.lastVerified'),
+            item.lastVerified ?? '',
+            (value) => edit(() => (api.findSelected().lastVerified = value || null)),
+            { type: 'date' },
           ),
         ),
         ...names(item),
-        input(t('editor.field.shortEn'), item.shortName?.en, (value) =>
-          edit(() => setName(api.findSelected(), 'shortName', 'en', value)),
+        el(
+          'div',
+          { class: 'ep-grid' },
+          select(
+            t('editor.field.category'),
+            item.category,
+            CATEGORIES.map((c) => [c, t(`category.${c}`)]),
+            (value) => edit(() => (api.findSelected().category = value)),
+          ),
+          statusSelect(t('editor.field.status'), item.categoryStatus, (value) =>
+            edit(() => (api.findSelected().categoryStatus = value)),
+          ),
         ),
-        input(t('editor.field.shortKo'), item.shortName?.ko, (value) =>
-          edit(() => setName(api.findSelected(), 'shortName', 'ko', value)),
+        el(
+          'div',
+          { class: 'ep-grid ep-grid-3' },
+          input(
+            t('editor.field.floorsAbove'),
+            item.floors?.above ?? '',
+            (value) => edit(() => (api.findSelected().floors.above = Number(value) || null)),
+            { type: 'number' },
+          ),
+          input(
+            t('editor.field.floorsBelow'),
+            item.floors?.below ?? '',
+            (value) => edit(() => (api.findSelected().floors.below = Number(value) || null)),
+            { type: 'number' },
+          ),
+          statusSelect(t('editor.field.status'), item.floors?.status, (value) =>
+            edit(() => (api.findSelected().floors.status = value)),
+          ),
         ),
-        select(
-          t('editor.field.category'),
-          item.category,
-          CATEGORIES.map((c) => [c, t(`category.${c}`)]),
-          (value) => edit(() => (api.findSelected().category = value)),
+        input(t('editor.field.descriptionEn'), item.description?.en, (value) =>
+          edit(() => setName(api.findSelected(), 'description', 'en', value)),
         ),
+        input(t('editor.field.descriptionKo'), item.description?.ko, (value) =>
+          edit(() => setName(api.findSelected(), 'description', 'ko', value)),
+        ),
+        amenityFields(item),
         el(
           'div',
           { class: 'ep-grid' },
@@ -443,7 +554,14 @@ export function createEditorPanel(container, api) {
         el(
           'p',
           { class: 'ep-muted' },
-          `${t('editor.field.entrances')}: ${(item.entrances ?? []).join(', ') || t('editor.field.none')}`,
+          `${t('editor.field.entrances')}: ${
+            (item.entrances ?? [])
+              .map((id) => {
+                const node = campus.nodes.find((n) => n.id === id);
+                return `${id} (${t(`status.${node?.status ?? 'unknown'}`)})`;
+              })
+              .join(', ') || t('editor.field.none')
+          }`,
         ),
       );
     } else if (sel.kind === 'node') {
@@ -457,8 +575,31 @@ export function createEditorPanel(container, api) {
             api.commit((c) => setNodeType(c, api.findSelected(), value), { keepForm: false }),
         ),
       );
+      content.push(
+        statusSelect(t('editor.field.status'), item.status, (value) =>
+          edit(() => (api.findSelected().status = value)),
+        ),
+      );
       if (item.type === 'entrance') {
         content.push(
+          select(
+            t('editor.field.wheelchair'),
+            item.wheelchair ?? '',
+            WHEELCHAIR.map((v) => [v, v ? t(`editor.wheelchair.${v}`) : t('status.unknown')]),
+            (value) =>
+              edit(() => {
+                const node = api.findSelected();
+                if (value) node.wheelchair = value;
+                else delete node.wheelchair;
+              }),
+          ),
+          input(t('editor.field.label'), item.label ?? '', (value) =>
+            edit(() => {
+              const node = api.findSelected();
+              if (value.trim()) node.label = value.trim();
+              else delete node.label;
+            }),
+          ),
           select(
             t('editor.field.building'),
             item.building ?? '',
@@ -495,6 +636,16 @@ export function createEditorPanel(container, api) {
         checkbox(t('editor.field.covered'), Boolean(item.covered), (checked) =>
           edit(() => (api.findSelected().covered = checked)),
         ),
+        checkbox(t('editor.field.crossing'), Boolean(item.crossing), (checked) =>
+          edit(() => {
+            const edge = api.findSelected();
+            if (checked) edge.crossing = 'unmarked';
+            else delete edge.crossing;
+          }),
+        ),
+        statusSelect(t('editor.field.status'), item.status, (value) =>
+          edit(() => (api.findSelected().status = value)),
+        ),
       );
     } else if (sel.kind === 'poi') {
       content.push(
@@ -502,8 +653,35 @@ export function createEditorPanel(container, api) {
         select(
           t('editor.field.type'),
           item.type,
-          POI_TYPES.map((type) => [type, t(`facility.${type}`)]),
+          [...new Set([item.type, ...POI_TYPES])].map((type) => [type, t(`facility.${type}`)]),
           (value) => edit(() => (api.findSelected().type = value)),
+        ),
+        el(
+          'div',
+          { class: 'ep-grid' },
+          select(
+            t('editor.field.group'),
+            item.group ?? 'services',
+            POI_GROUPS.map((g) => [g, t(`filters.${g}`)]),
+            (value) => edit(() => (api.findSelected().group = value)),
+          ),
+          statusSelect(t('editor.field.status'), item.status, (value) =>
+            edit(() => (api.findSelected().status = value)),
+          ),
+        ),
+        select(
+          t('editor.field.insideBuilding'),
+          item.indoor ? (item.buildingId ?? '') : '',
+          [
+            ['', t('editor.field.outdoors')],
+            ...campus.buildings.map((b) => [b.id, `${b.number ?? ''} ${b.name?.en ?? b.id}`]),
+          ],
+          (value) =>
+            edit(() => {
+              const poi = api.findSelected();
+              poi.buildingId = value || null;
+              poi.indoor = Boolean(value);
+            }),
         ),
         ...names(item),
         position(item),
@@ -514,7 +692,7 @@ export function createEditorPanel(container, api) {
         select(
           t('editor.field.type'),
           item.type,
-          AREA_TYPES.map((a) => [a, t(`editor.area.${a}`)]),
+          [...new Set([item.type, ...AREA_TYPES])].map((a) => [a, t(`editor.area.${a}`)]),
           (value) => edit(() => (api.findSelected().type = value)),
         ),
         ...names(item),
@@ -719,5 +897,34 @@ function setEntranceBuilding(campus, node, buildingId) {
     building.entrances = [...(building.entrances ?? []), node.id];
   } else {
     delete node.building;
+  }
+}
+
+/** Amenity details as one line of text, "; " between entries. */
+function listText(key, amenity) {
+  if (key === 'restrooms') return (amenity.floors ?? []).join('; ');
+  if (key === 'food') return (amenity.places ?? []).map((p) => p.ko || p.en).join('; ');
+  return (amenity.locations ?? [])
+    .map((l) => (typeof l === 'string' ? l : l.ko || l.en))
+    .join('; ');
+}
+
+/** Saves a "; "-separated list back into an amenity (same text in both languages). */
+function setList(key, amenity, text) {
+  const entries = text
+    .split(';')
+    .map((part) => part.trim())
+    .filter(Boolean);
+  if (key === 'restrooms') amenity.floors = entries;
+  else if (key === 'food') {
+    amenity.places = entries.map((name) => {
+      const known = (amenity.places ?? []).find((p) => p.ko === name || p.en === name);
+      return known ?? { ko: name, en: name, status: 'verified' };
+    });
+  } else {
+    amenity.locations = entries.map((name) => {
+      const known = (amenity.locations ?? []).find((l) => l.ko === name || l.en === name);
+      return known ?? { ko: name, en: name };
+    });
   }
 }

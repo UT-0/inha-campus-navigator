@@ -14,10 +14,15 @@
  *  - validation with the same checks the app runs, JSON import/export, and
  *    "Preview in app" to test routing on the draft before exporting.
  *
+ * Works on the real-data schema: buildings and areas have `polygons` (several
+ * rings), paths follow their real `geometry`, and nodes, buildings, amenities
+ * and paths carry a `status` (verified / osm / estimated / unknown) that the
+ * panel lets you correct after checking on campus.
+ *
  * The side panel (forms, file buttons, problems) lives in editorPanel.js.
  */
 import './editor.css';
-import { renderMap, updateScaledElements } from '../map/renderMap.js';
+import { edgePoints, renderMap, ringsPath, updateScaledElements } from '../map/renderMap.js';
 import { createPanZoom } from '../map/panZoom.js';
 import { createLabels } from '../map/labels.js';
 import { validateCampus } from '../routing/graph.js';
@@ -26,11 +31,14 @@ import { el, svgEl, readStorage, writeStorage } from '../utils/dom.js';
 import {
   boundsOf,
   distance,
-  pointInPolygon,
+  outerRings,
+  pointInShape,
   polygonCentroid,
-  polygonToSegmentDistance,
+  shapeCentroid,
+  shapeToSegmentDistance,
 } from '../utils/geometry.js';
 import { createIcon } from '../ui/icons.js';
+import { POI_GROUPS } from '../map/widgets.js';
 import { createEditorPanel } from './editorPanel.js';
 import { DRAFT_KEY } from './draft.js';
 
@@ -93,7 +101,12 @@ export function startEditor(initialCampus) {
 
   // ---------- DOM ----------
 
-  const svg = svgEl('svg', { class: 'map editor-svg', 'aria-label': t('editor.title') });
+  // Show every kind of place at every zoom (the app's filter chips don't apply here).
+  const svg = svgEl('svg', {
+    class: `map editor-svg ${POI_GROUPS.map(([group]) => `filter-${group}`).join(' ')}`,
+    'data-lod': 'high',
+    'aria-label': t('editor.title'),
+  });
   const camera = svgEl('g', { class: 'editor-camera' });
   const overlay = svgEl('g', { class: 'editor-overlay' });
   svg.append(camera);
@@ -169,17 +182,13 @@ export function startEditor(initialCampus) {
 
     // Paths: wide invisible lines that are easy to click.
     campus.edges.forEach((edge, index) => {
-      const a = nodes.get(edge.from);
-      const b = nodes.get(edge.to);
-      if (!a || !b) return;
+      const points = edgePoints(edge, nodes);
+      if (points.length < 2) return;
       const selected = sel?.kind === 'edge' && sel.id === index;
       parts.push(
-        svgEl('line', {
-          class: `ed-edge${selected ? ' is-selected' : ''}`,
-          x1: a.x,
-          y1: a.y,
-          x2: b.x,
-          y2: b.y,
+        svgEl('polyline', {
+          class: `ed-edge${selected ? ' is-selected' : ''}${edge.status === 'estimated' ? ' is-estimated' : ''}`,
+          points: points.map((p) => p.join(',')).join(' '),
           'stroke-width': 12 * px,
           'data-kind': 'edge',
           'data-index': index,
@@ -197,30 +206,34 @@ export function startEditor(initialCampus) {
         const flagged = editor.flagged.has(item.id);
         if (isSelected || flagged) {
           parts.push(
-            svgEl('polygon', {
+            svgEl('path', {
               class: `ed-outline${flagged ? ' is-flagged' : ''}`,
-              points: item.polygon.map((p) => p.join(',')).join(' '),
+              d: ringsPath(outerRings(item)),
               'stroke-width': 3 * px,
             }),
           );
         }
-        if (isSelected || editor.mode === 'move') {
-          item.polygon.forEach(([vx, vy], vi) => {
-            parts.push(
-              svgEl('rect', {
-                class: 'ed-vertex',
-                x: vx - 5 * px,
-                y: vy - 5 * px,
-                width: 10 * px,
-                height: 10 * px,
-                'stroke-width': 1.5 * px,
-                'data-kind': 'vertex',
-                'data-owner': kind,
-                'data-id': item.id,
-                'data-vi': vi,
-              }),
-            );
-          });
+        // Corner handles for every ring (big campus areas only when selected).
+        if (isSelected || (editor.mode === 'move' && kind === 'building')) {
+          outerRings(item).forEach((ring, ri) =>
+            ring.forEach(([vx, vy], vi) => {
+              parts.push(
+                svgEl('rect', {
+                  class: 'ed-vertex',
+                  x: vx - 5 * px,
+                  y: vy - 5 * px,
+                  width: 10 * px,
+                  height: 10 * px,
+                  'stroke-width': 1.5 * px,
+                  'data-kind': 'vertex',
+                  'data-owner': kind,
+                  'data-id': item.id,
+                  'data-ri': ri,
+                  'data-vi': vi,
+                }),
+              );
+            }),
+          );
         }
       }
     }
@@ -232,7 +245,7 @@ export function startEditor(initialCampus) {
       const radius = node.type === 'junction' ? 4.5 : 6;
       parts.push(
         svgEl('circle', {
-          class: `ed-node ed-node-${node.type}${selected ? ' is-selected' : ''}${editor.flagged.has(node.id) ? ' is-flagged' : ''}`,
+          class: `ed-node ed-node-${node.type}${selected ? ' is-selected' : ''}${editor.flagged.has(node.id) ? ' is-flagged' : ''}${node.status === 'estimated' ? ' is-estimated' : ''}`,
           cx: node.x,
           cy: node.y,
           r: (selected ? radius + 2 : radius) * px,
@@ -455,9 +468,7 @@ export function startEditor(initialCampus) {
     let best = null;
     for (const building of campus.buildings) {
       const p = { x, y };
-      const d = pointInPolygon(p, building.polygon)
-        ? 0
-        : polygonToSegmentDistance(building.polygon, p, p);
+      const d = pointInShape(p, building) ? 0 : shapeToSegmentDistance(building, p, p);
       if (!best || d < best.d) best = { building, d };
     }
     return best?.building ?? null;
@@ -474,6 +485,7 @@ export function startEditor(initialCampus) {
           kind,
           owner: handle.dataset.owner,
           id: handle.dataset.id,
+          ri: Number(handle.dataset.ri ?? 0),
           vi: Number(handle.dataset.vi),
         };
       return { kind, id: handle.dataset.id };
@@ -537,7 +549,8 @@ export function startEditor(initialCampus) {
     }[type];
     const id = uniqueId(prefix, allIds());
     commit((c) => {
-      const node = { id, x: point[0], y: point[1], type };
+      // Placed by you: counts as verified (change it in the panel if not).
+      const node = { id, x: point[0], y: point[1], type, status: 'verified' };
       if (building) {
         node.building = building.id;
         const target = c.buildings.find((b) => b.id === building.id);
@@ -553,12 +566,18 @@ export function startEditor(initialCampus) {
     const id = uniqueId('p-', allIds());
     const type = editor.poiType;
     commit((c) => {
+      const building = c.buildings.find((b) => pointInShape({ x: point[0], y: point[1] }, b));
       c.pois.push({
         id,
         type,
+        group: POI_GROUP[type] ?? 'services',
         x: point[0],
         y: point[1],
         name: { en: t(`facility.${type}`), ko: t(`facility.${type}`) },
+        buildingId: building?.id ?? null,
+        indoor: Boolean(building),
+        status: 'verified',
+        source: { url: 'on-site', retrieved: new Date().toISOString().slice(0, 10) },
       });
     });
     select({ kind: 'poi', id });
@@ -574,7 +593,9 @@ export function startEditor(initialCampus) {
       // Clicking empty space adds a junction on the way.
       nodeId = uniqueId('j-', allIds());
       const id = nodeId;
-      commit((c) => c.nodes.push({ id, x: point[0], y: point[1], type: 'junction' }));
+      commit((c) =>
+        c.nodes.push({ id, x: point[0], y: point[1], type: 'junction', status: 'verified' }),
+      );
     }
     const from = editor.connectFrom;
     if (from && from !== nodeId) {
@@ -583,7 +604,14 @@ export function startEditor(initialCampus) {
       );
       if (!exists) {
         commit((c) =>
-          c.edges.push({ from, to: nodeId, distance: null, stairs: false, covered: false }),
+          c.edges.push({
+            from,
+            to: nodeId,
+            distance: null,
+            stairs: false,
+            covered: false,
+            status: 'verified',
+          }),
         );
       }
     }
@@ -614,24 +642,18 @@ export function startEditor(initialCampus) {
     const center = polygonCentroid(points);
     commit((c) => {
       if (kind === 'building') {
-        c.buildings.push({
-          id,
-          number: number || String(c.buildings.length + 1),
-          name: { en: nameEn || id, ko: nameKo || nameEn || id },
-          shortName: { en: nameEn || id, ko: nameKo || nameEn || id },
-          category,
-          polygon: points,
-          labelPosition: [Math.round(center.x), Math.round(center.y)],
-          entrances: [],
-          floors: 1,
-          description: { en: '', ko: '' },
-          departments: [],
-          facilities: [],
-          rooms: [],
-          openingHours: { en: '', ko: '' },
-        });
+        c.buildings.push(
+          newBuilding({
+            id,
+            number: number || null,
+            name: { en: nameEn || id, ko: nameKo || nameEn || id },
+            category,
+            polygons: [points],
+            labelPosition: [Math.round(center.x), Math.round(center.y)],
+          }),
+        );
       } else {
-        const area = { id, type: areaType, polygon: points };
+        const area = { id, type: areaType, polygons: [points] };
         if (nameEn || nameKo) area.name = { en: nameEn || nameKo, ko: nameKo || nameEn };
         c.areas.push(area);
       }
@@ -663,8 +685,8 @@ export function startEditor(initialCampus) {
       if (hit.kind === 'area') c.areas = c.areas.filter((a) => a.id !== hit.id);
       if (hit.kind === 'vertex') {
         const list = hit.owner === 'building' ? c.buildings : c.areas;
-        const item = list.find((x) => x.id === hit.id);
-        if (item && item.polygon.length > 3) item.polygon.splice(hit.vi, 1);
+        const ring = list.find((x) => x.id === hit.id)?.polygons?.[hit.ri];
+        if (ring && ring.length > 3) ring.splice(hit.vi, 1);
       }
     });
   }
@@ -736,18 +758,35 @@ export function startEditor(initialCampus) {
   function moveTarget(hit, [x, y]) {
     if (hit.kind === 'node') {
       const node = campus.nodes.find((n) => n.id === hit.id);
-      if (node) Object.assign(node, { x, y });
+      if (!node) return;
+      Object.assign(node, { x, y });
+      // Paths ending here follow the node; their length is measured again.
+      for (const edge of campus.edges) {
+        if (edge.from !== node.id && edge.to !== node.id) continue;
+        if (Array.isArray(edge.geometry) && edge.geometry.length >= 2) {
+          const index = edge.from === node.id ? 0 : edge.geometry.length - 1;
+          edge.geometry[index] = [x, y];
+          edge.distance = polylineMeters(edge.geometry, campus.meta.metersPerUnit);
+        } else {
+          edge.distance = null; // straight line: measured automatically
+        }
+      }
     } else if (hit.kind === 'poi') {
       const poi = campus.pois.find((p) => p.id === hit.id);
       if (poi) Object.assign(poi, { x, y });
     } else if (hit.kind === 'vertex') {
       const list = hit.owner === 'building' ? campus.buildings : campus.areas;
       const item = list.find((i) => i.id === hit.id);
-      if (!item) return;
-      item.polygon[hit.vi] = [x, y];
+      const ring = item?.polygons?.[hit.ri];
+      if (!ring) return;
+      ring[hit.vi] = [x, y];
+      // Keep the label inside the building.
       if (hit.owner === 'building') {
-        const c = polygonCentroid(item.polygon);
-        item.labelPosition = [Math.round(c.x), Math.round(c.y)];
+        const [lx, ly] = item.labelPosition ?? [];
+        if (!pointInShape({ x: lx, y: ly }, item)) {
+          const c = shapeCentroid(item);
+          item.labelPosition = [Math.round(c.x), Math.round(c.y)];
+        }
       }
     }
   }
@@ -834,7 +873,12 @@ export function startEditor(initialCampus) {
         const node = campus.nodes.find((n) => n.id === id);
         if (node) points.push(node);
         const building = campus.buildings.find((b) => b.id === id);
-        if (building) points.push(...building.polygon.map(([x, y]) => ({ x, y })));
+        if (building)
+          points.push(
+            ...outerRings(building)
+              .flat()
+              .map(([x, y]) => ({ x, y })),
+          );
       }
       if (points.length) panZoom.flyTo(boundsOf(points), { maxScale: 4 });
     },
@@ -881,4 +925,89 @@ function ensureShape(campus) {
   for (const key of ['buildings', 'nodes', 'edges', 'pois', 'areas']) {
     if (!Array.isArray(campus[key])) campus[key] = [];
   }
+  // Older files: a single `polygon` becomes `polygons`; missing fields get defaults.
+  for (const item of [...campus.buildings, ...campus.areas]) {
+    if (!item.polygons && Array.isArray(item.polygon)) item.polygons = [item.polygon];
+    delete item.polygon;
+  }
+  for (const building of campus.buildings) {
+    const defaults = newBuilding(building);
+    for (const [key, value] of Object.entries(defaults)) {
+      if (building[key] === undefined) building[key] = value;
+    }
+    if (typeof building.floors !== 'object' || building.floors === null) {
+      building.floors = { above: building.floors ?? null, below: null, status: 'unknown' };
+    }
+    for (const [key, value] of Object.entries(defaults.amenities)) {
+      building.amenities[key] = building.amenities[key] ?? value;
+    }
+  }
+}
+
+/** Amenity group for a new place, as used by the map filters. */
+const POI_GROUP = {
+  bus_stop: 'transport',
+  subway_entrance: 'transport',
+  bicycle_parking: 'transport',
+  parking: 'transport',
+  cafe: 'food',
+  restaurant: 'food',
+  convenience_store: 'food',
+  vending: 'food',
+  water: 'food',
+  restroom: 'restroom',
+  printer: 'printing',
+  atm: 'money',
+  aed: 'health',
+  health: 'health',
+  smoking: 'health',
+  lounge: 'study',
+  bench: 'study',
+};
+
+/** A building with every field of the schema; unknown facts stay "unknown". */
+function newBuilding(fields) {
+  const unknownList = () => ({ locations: [], status: 'unknown' });
+  return {
+    number: null,
+    aliases: [],
+    roomPrefixes: [],
+    category: 'other',
+    categoryStatus: 'verified',
+    kind: 'building',
+    polygons: [],
+    entrances: [],
+    floors: { above: null, below: null, status: 'unknown' },
+    description: { ko: '', en: '' },
+    descriptionStatus: 'unknown',
+    floorDirectory: [],
+    departments: [],
+    amenities: {
+      wifi: { available: null, networks: [], status: 'unknown' },
+      restrooms: { floors: [], accessible: null, status: 'unknown' },
+      printers: unknownList(),
+      elevator: { available: null, status: 'unknown' },
+      accessibleEntrance: { available: null, status: 'unknown' },
+      waterFountain: unknownList(),
+      vending: unknownList(),
+      atm: unknownList(),
+      studySpace: unknownList(),
+      lockers: unknownList(),
+      food: { places: [], status: 'unknown' },
+    },
+    openingHours: { text: null, status: 'unknown' },
+    photo: { src: null, author: null, license: null, sourceUrl: null },
+    sources: [],
+    lastVerified: null,
+    ...fields,
+  };
+}
+
+/** Length of a polyline in meters. */
+function polylineMeters(points, metersPerUnit = 1) {
+  let total = 0;
+  for (let i = 1; i < points.length; i++) {
+    total += Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]);
+  }
+  return Math.round(total * metersPerUnit * 10) / 10;
 }

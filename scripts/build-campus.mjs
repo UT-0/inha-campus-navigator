@@ -466,6 +466,15 @@ const amenities = buildAmenities({
 });
 writeDescriptions({ buildings, nodes: walk.nodes, areas });
 
+// Well-known landmarks, mentioned in walking directions when a route passes them.
+const LANDMARK_BUILDINGS = new Set(['b-library', 'b-1', 'b-7', 'b-field', 'b-60th', 'b-hitech']);
+for (const b of buildings) if (LANDMARK_BUILDINGS.has(b.id)) b.landmark = true;
+for (const a of areas) {
+  if (a.name?.ko !== '인경호') continue;
+  a.landmark = true;
+  a.name.en = 'Ingyeong Lake'; // romanised; OSM has only the Korean name
+}
+
 // ---------------------------------------------------------------------------
 // 7. Photos (scripts/optimize-photos.mjs writes the manifest)
 // ---------------------------------------------------------------------------
