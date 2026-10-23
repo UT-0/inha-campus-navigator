@@ -13,7 +13,16 @@ import './styles/map.css';
 
 import { setState } from './state.js';
 import { buildGraph, logProblems, validateCampus } from './routing/graph.js';
-import { applyStaticTranslations, detectLanguage, setLanguage, t } from './i18n/index.js';
+import {
+  applyStaticTranslations,
+  detectLanguage,
+  getLanguage,
+  setLanguage,
+  t,
+} from './i18n/index.js';
+import { createMapController } from './map/mapController.js';
+import { createIcon } from './ui/icons.js';
+import { el } from './utils/dom.js';
 
 /**
  * Loads campus.json and courses.json. Dynamic imports let us catch a missing
@@ -64,11 +73,54 @@ async function start() {
   if (errors.length > 0) throw new Error(errors.map((p) => p.message).join('\n'));
 
   const graph = buildGraph(campus);
-  setState({ campus, courses });
+  setState({ campus, courses, lang: getLanguage() });
 
+  const map = createMapController({
+    campus,
+    getPadding: mapPadding,
+    onBuildingActivate: (id) => {
+      setState({ selectedBuilding: id });
+      map.flyToBuilding(id);
+    },
+  });
+
+  showSampleBanner(campus);
   document.getElementById('route-panel').textContent =
     `${campus.buildings.length} buildings, ${graph.nodes.size} nodes loaded.`;
   document.getElementById('map-loading').classList.add('is-hidden');
+}
+
+const mobileQuery = window.matchMedia('(max-width: 899.98px)');
+
+/**
+ * Screen space covered by floating UI, so the camera centres routes and
+ * buildings in the part of the map that is actually visible.
+ * @returns {{top:number,right:number,bottom:number,left:number}}
+ */
+function mapPadding() {
+  if (!mobileQuery.matches) return { top: 0, right: 64, bottom: 0, left: 0 };
+  const mapRect = document.getElementById('map-area').getBoundingClientRect();
+  const searchBottom = document.getElementById('search-area').getBoundingClientRect().bottom;
+  // Use the sheet's resting height, not its live position, which may be mid-animation.
+  const peek = parseFloat(
+    getComputedStyle(document.getElementById('app')).getPropertyValue('--sheet-peek'),
+  );
+  return {
+    top: Math.max(0, searchBottom - mapRect.top),
+    right: 0,
+    bottom: Number.isFinite(peek) ? peek : 0,
+    left: 0,
+  };
+}
+
+/** Shows the "sample data" banner while campus.json is flagged as placeholder. */
+function showSampleBanner(campus) {
+  const banner = document.getElementById('sample-banner');
+  banner.hidden = campus._placeholder !== true;
+  banner.replaceChildren(
+    createIcon('info', { size: 14 }),
+    el('span', { text: t('app.sampleData') }),
+  );
 }
 
 start().catch(showErrorScreen);

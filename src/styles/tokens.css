@@ -40,7 +40,8 @@
   --color-warning-text: #6b5200;
 
   /* ---- Map ---- */
-  --map-water: #d4e6f7;
+  --map-outside: #e3e8ef;
+  --map-water: #cfe3f6;
   --map-ground: #eef1e8;
   --map-ground-edge: #dfe4d6;
   --map-green: #cfe5c0;
@@ -158,6 +159,7 @@
   --color-warning-bg: #3a3112;
   --color-warning-text: #f3dc8c;
 
+  --map-outside: #0c1322;
   --map-water: #12243d;
   --map-ground: #141e2f;
   --map-ground-edge: #1d2a40;

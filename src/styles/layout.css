@@ -75,7 +75,7 @@
   position: relative;
   min-width: 0;
   overflow: hidden;
-  background: var(--map-water);
+  background: var(--map-outside);
   /* Space the floating map widgets keep free at each edge. */
   --map-inset-top: var(--space-4);
   --map-inset-bottom: var(--space-4);

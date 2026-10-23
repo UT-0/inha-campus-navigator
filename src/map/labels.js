@@ -1,0 +1,177 @@
+/**
+ * Building, gate and area labels, and their visibility by zoom level.
+ *
+ * Labels keep a constant on-screen size (they are counter-scaled against the
+ * camera zoom). Rules:
+ *  - the building number badge is always visible;
+ *  - the full name is shown when it fits inside the building at the current
+ *    zoom, otherwise the short name if that fits, otherwise nothing;
+ *  - hovered, selected and route start/end buildings always show their full
+ *    name (with a halo so it stays readable over anything);
+ *  - gate and area names appear once the map is zoomed in far enough.
+ */
+import { svgEl } from '../utils/dom.js';
+import { boundsOf, polygonCentroid } from '../utils/geometry.js';
+import { markerSize } from './renderMap.js';
+
+const NAME_FONT_SIZE = 12;
+const AREA_FONT_SIZE = 11;
+const BADGE_RADIUS = 10;
+/** Gap (px) between the badge and the name. */
+const NAME_OFFSET = BADGE_RADIUS + 13;
+
+let measureContext = null;
+
+/**
+ * Measures text width in pixels with a canvas, using the app's font.
+ * @param {string} text
+ * @param {number} fontSize
+ * @param {number} [weight=600]
+ * @returns {number}
+ */
+function measureText(text, fontSize, weight = 600) {
+  if (!measureContext) measureContext = document.createElement('canvas').getContext('2d');
+  const family = getComputedStyle(document.body).fontFamily || 'sans-serif';
+  measureContext.font = `${weight} ${fontSize}px ${family}`;
+  return measureContext.measureText(text).width;
+}
+
+/**
+ * Creates all labels inside `layer`.
+ * @param {SVGGElement} layer
+ * @param {object} campus
+ * @returns {{ update: (view: LabelView) => void, setLanguage: (lang: 'en'|'ko') => void, elements: SVGGElement[] }}
+ */
+export function createLabels(layer, campus) {
+  layer.replaceChildren();
+  const buildingLabels = [];
+  const otherLabels = [];
+
+  for (const building of campus.buildings) {
+    if (!Array.isArray(building.polygon) || building.polygon.length < 3) continue;
+    const bounds = boundsOf(building.polygon);
+    const [x, y] = building.labelPosition ?? centroidPair(building.polygon);
+    const name = svgEl('text', { class: 'label-name', y: NAME_OFFSET });
+    const group = svgEl(
+      'g',
+      { class: 'label label-building', 'data-id': building.id, 'data-x': x, 'data-y': y },
+      svgEl('circle', {
+        class: 'label-badge',
+        r: BADGE_RADIUS,
+        'data-category': building.category,
+      }),
+      svgEl('text', { class: 'label-number', dy: '0.35em', text: building.number ?? '' }),
+      name,
+    );
+    layer.append(group);
+    buildingLabels.push({
+      building,
+      group,
+      name,
+      width: bounds.maxX - bounds.minX,
+      height: bounds.maxY - bounds.minY,
+      texts: null,
+    });
+  }
+
+  for (const node of campus.nodes.filter((n) => n.type === 'gate' && n.name)) {
+    const text = svgEl('text', { class: 'label-gate', y: 26 });
+    const group = svgEl(
+      'g',
+      { class: 'label label-gate-group', 'data-x': node.x, 'data-y': node.y },
+      text,
+    );
+    layer.append(group);
+    otherLabels.push({ item: node, group, text, minZoom: 1.6 });
+  }
+
+  for (const area of (campus.areas ?? []).filter((a) => a.name && a.polygon?.length >= 3)) {
+    const center = polygonCentroid(area.polygon);
+    const bounds = boundsOf(area.polygon);
+    const text = svgEl('text', { class: `label-area label-area-${area.type}`, dy: '0.35em' });
+    const group = svgEl(
+      'g',
+      { class: 'label label-area-group', 'data-x': center.x, 'data-y': center.y },
+      text,
+    );
+    layer.append(group);
+    otherLabels.push({
+      item: area,
+      group,
+      text,
+      areaWidth: bounds.maxX - bounds.minX,
+      minZoom: 1.3,
+    });
+  }
+
+  let lang = 'en';
+
+  function setLanguage(next) {
+    lang = next;
+    for (const label of buildingLabels) {
+      const full = pick(label.building.name, lang);
+      const short = pick(label.building.shortName, lang) || full;
+      label.texts = {
+        full,
+        short,
+        fullWidth: measureText(full, NAME_FONT_SIZE),
+        shortWidth: measureText(short, NAME_FONT_SIZE),
+      };
+    }
+    for (const label of otherLabels) {
+      label.text.textContent = pick(label.item.name, lang);
+      label.textWidth = measureText(label.text.textContent, AREA_FONT_SIZE, 500);
+    }
+  }
+
+  /**
+   * @typedef {Object} LabelView
+   * @property {number} scale         Camera zoom (screen px per map unit).
+   * @property {number} relativeZoom  Zoom relative to the whole-campus view.
+   * @property {Set<string>} emphasized Building ids that always show their name.
+   */
+
+  /** Repositions labels and decides which names are visible. */
+  function update({ scale, relativeZoom, emphasized }) {
+    const inverse = 1 / scale;
+    const badgeScale = Math.max(0.8, markerSize(scale)) * inverse;
+    for (const label of buildingLabels) {
+      const { group, name, texts } = label;
+      group.setAttribute(
+        'transform',
+        `translate(${group.dataset.x} ${group.dataset.y}) scale(${badgeScale})`,
+      );
+      if (!texts) continue;
+      const screenW = label.width * scale - 8;
+      const screenH = label.height * scale;
+      const roomForName = screenH >= NAME_OFFSET * 2 + 6;
+      let text = '';
+      if (emphasized.has(label.building.id)) text = texts.full;
+      else if (roomForName && texts.fullWidth <= screenW) text = texts.full;
+      else if (roomForName && texts.shortWidth <= screenW) text = texts.short;
+      if (name.textContent !== text) name.textContent = text;
+      group.classList.toggle('is-emphasized', emphasized.has(label.building.id));
+    }
+    for (const label of otherLabels) {
+      const { group } = label;
+      group.setAttribute(
+        'transform',
+        `translate(${group.dataset.x} ${group.dataset.y}) scale(${inverse})`,
+      );
+      const fits = label.areaWidth ? label.textWidth <= label.areaWidth * scale - 10 : true;
+      group.classList.toggle('is-hidden', relativeZoom < label.minZoom || !fits);
+    }
+  }
+
+  return { update, setLanguage, elements: buildingLabels.map((l) => l.group) };
+}
+
+function pick(value, lang) {
+  if (!value) return '';
+  return typeof value === 'string' ? value : (value[lang] ?? value.en ?? '');
+}
+
+function centroidPair(polygon) {
+  const c = polygonCentroid(polygon);
+  return [c.x, c.y];
+}
