@@ -18,17 +18,6 @@ export const CATEGORIES = [
   'food',
   'other',
 ];
-const LEGEND_POI_TYPES = [
-  'bus_stop',
-  'parking',
-  'cafe',
-  'restaurant',
-  'convenience_store',
-  'atm',
-  'restroom',
-  'printer',
-  'gate',
-];
 /** "Nice" scale bar lengths in meters. */
 const NICE_DISTANCES = [5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 5000];
 
@@ -159,21 +148,26 @@ export function createLegend(container) {
     const places = el(
       'ul',
       { class: 'legend-list legend-list-places' },
-      LEGEND_POI_TYPES.map((type) =>
+      [...POI_GROUPS, ['gate', 'gate']].map(([group, icon]) =>
         el(
           'li',
           {},
           el(
             'span',
-            { class: 'legend-poi', 'data-type': type, 'aria-hidden': 'true' },
+            {
+              class: 'legend-poi',
+              'data-group': group,
+              'data-type': group,
+              'aria-hidden': 'true',
+            },
             svgEl('svg', {
               viewBox: '0 0 24 24',
               width: 12,
               height: 12,
-              html: ICON_PATHS[type],
+              html: ICON_PATHS[icon],
             }),
           ),
-          t(`facility.${type}`),
+          group === 'gate' ? t('facility.gate') : t(`filters.${group}`),
         ),
       ),
     );
@@ -244,4 +238,66 @@ export function createTooltip(tooltip, mapArea) {
       tooltip.hidden = true;
     },
   };
+}
+
+/** Map filter groups, in chip order, with the icon shown on each chip. */
+export const POI_GROUPS = [
+  ['food', 'restaurant'],
+  ['restroom', 'restroom'],
+  ['printing', 'printer'],
+  ['money', 'atm'],
+  ['transport', 'bus_stop'],
+  ['health', 'health'],
+  ['study', 'lounge'],
+  ['services', 'info'],
+];
+
+/**
+ * Toggleable filter chips for amenity groups. Groups with nothing mapped
+ * stay visible but disabled, so it is clear the data is missing rather than
+ * the feature.
+ * @param {HTMLElement} container
+ * @param {Object<string, number>} counts Number of places per group.
+ * @param {(groups: string[]) => void} onChange
+ * @returns {{ render: (active: string[]) => void }}
+ */
+export function createPoiFilters(container, counts, onChange) {
+  let active = [];
+
+  function render(groups = active) {
+    active = groups;
+    container.replaceChildren(
+      el(
+        'div',
+        { class: 'map-filters-row', role: 'group', 'aria-label': t('filters.label') },
+        POI_GROUPS.map(([group, icon]) => {
+          const count = counts[group] ?? 0;
+          const on = active.includes(group);
+          return el(
+            'button',
+            {
+              class: 'filter-chip',
+              type: 'button',
+              'data-group': group,
+              'aria-pressed': String(on && count > 0),
+              'aria-disabled': count === 0 ? 'true' : null,
+              title: count === 0 ? t('filters.none') : t(`filters.${group}`),
+              onClick: () => {
+                if (count === 0) return;
+                onChange(on ? active.filter((g) => g !== group) : [...active, group]);
+              },
+            },
+            el(
+              'span',
+              { class: 'filter-dot', 'aria-hidden': 'true' },
+              createIcon(icon, { size: 12 }),
+            ),
+            t(`filters.${group}`),
+          );
+        }),
+      ),
+    );
+  }
+
+  return { render };
 }

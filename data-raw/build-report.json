@@ -285,5 +285,18 @@
       "location": "항공우주융합캠퍼스 207호",
       "note": "Office is at the Aerospace Convergence Campus, not on the main campus."
     }
-  ]
+  ],
+  "amenities": {
+    "counts": {
+      "food": 8,
+      "restroom": 0,
+      "printing": 1,
+      "money": 13,
+      "transport": 33,
+      "health": 4,
+      "study": 5,
+      "services": 4
+    },
+    "skipped": []
+  }
 }

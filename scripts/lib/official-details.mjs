@@ -1,9 +1,9 @@
 /**
  * Attaches official facts (data-raw/official/details.json) to buildings:
  * department and college offices, campus offices, ATMs, the cafeteria,
- * Wi-Fi, lounges; builds the floor directory; and writes short bilingual
- * descriptions from those facts only (plus a location hint computed from
- * the map geometry). Nothing here is guessed: buildings without facts get a
+ * Wi-Fi, lounges; builds the floor directory. `writeDescriptions` then
+ * writes short bilingual descriptions from those facts only (plus a location
+ * hint computed from the map geometry). Nothing here is guessed: buildings without facts get a
  * description that says their contents are not verified yet.
  */
 import { buildPrefixTable, floorLabel, parseRoomCode } from '../../src/utils/roomCode.js';
@@ -161,6 +161,7 @@ export function applyOfficialDetails({ buildings, details, nodes, areas }) {
       ko: details.cafeteria.ko,
       en: details.cafeteria.en,
       hours: details.cafeteria.hours,
+      status: 'verified',
     });
     cafeteria.amenities.food.status = 'verified';
     addSource(cafeteria, 'amenities.food', details.cafeteria.source, details.cafeteria.retrieved);
@@ -204,17 +205,27 @@ export function applyOfficialDetails({ buildings, details, nodes, areas }) {
     }
   }
 
-  // ---------- Descriptions ----------
+  return { unresolved };
+}
+
+/**
+ * Writes short bilingual descriptions from the facts attached so far (run
+ * after the official details and the amenities).
+ * @param {object} options
+ * @param {object[]} options.buildings
+ * @param {object[]} options.nodes
+ * @param {object[]} options.areas
+ */
+export function writeDescriptions({ buildings, nodes, areas }) {
   const landmarks = buildLandmarks(buildings, nodes, areas);
   for (const b of buildings) {
     b.description = describe(b, landmarks);
-    b.descriptionStatus =
-      b.departments.length || b.floorDirectory.length || b.amenities.atm.locations.length
-        ? 'verified'
-        : 'osm';
+    const official =
+      b.departments.length ||
+      b.floorDirectory.some((f) => f.items.some((i) => i.status === 'verified')) ||
+      b.amenities.atm.locations.length;
+    b.descriptionStatus = official ? 'verified' : 'osm';
   }
-
-  return { unresolved };
 }
 
 /** Well-known places used in "where is it" hints. */
@@ -275,6 +286,25 @@ function locationHint(b, landmarks) {
     ko: `${best.l.ko} ${COMPASS.ko[index]}에 있습니다`,
     en: `${COMPASS.en[index]} of ${best.l.en}`,
   };
+}
+
+/** English for a place whose OSM name is Korean only: "a post office (우편취급국)". */
+const TYPE_EN = {
+  cafe: 'a café',
+  restaurant: 'a restaurant',
+  convenience_store: 'a convenience store',
+  post_office: 'a post office',
+  museum: 'the university museum',
+  bookstore: 'a bookstore',
+  prayer_room: 'a prayer room',
+  printer: 'a print shop',
+};
+
+function englishName(item) {
+  if (item.status === 'verified') return `the ${item.en}`;
+  const type = TYPE_EN[item.kind ?? item.type];
+  if (item.en === item.ko && type && /[가-힣]/.test(item.ko)) return `${type} (${item.ko})`;
+  return item.en;
 }
 
 /**
@@ -364,7 +394,10 @@ function describe(b, landmarks) {
 
   const facilities = { en: [], ko: [] };
   for (const item of offices) {
-    if (
+    if (item.status === 'osm') {
+      facilities.en.push(englishName(item));
+      facilities.ko.push(item.ko);
+    } else if (
       item.type === 'facility' ||
       item.kind === 'counseling' ||
       item.kind === 'student_support' ||
@@ -378,9 +411,14 @@ function describe(b, landmarks) {
     facilities.en.push('a student lounge');
     facilities.ko.push('학생 휴게실');
   }
-  if (b.amenities.food.places.length) {
-    facilities.en.push(`the ${b.amenities.food.places[0].en}`);
-    facilities.ko.push(b.amenities.food.places[0].ko);
+  const food = b.amenities.food.places.slice(0, 3);
+  for (const place of food) {
+    facilities.en.push(englishName(place));
+    facilities.ko.push(place.ko);
+  }
+  if (b.amenities.food.places.length > 3) {
+    facilities.en.push('more food places');
+    facilities.ko.push('그 밖의 식음료 매장');
   }
   if (b.amenities.atm.locations.length) {
     facilities.en.push('a Hana Bank ATM');
@@ -408,4 +446,53 @@ function describe(b, landmarks) {
     );
   }
   return { en: en.join(' '), ko: ko.join(' ') };
+}
+
+/**
+ * Campus-wide facts for the Info panel, straight from details.json with
+ * their sources. Topics without a source are listed with status "unknown".
+ * @param {object} details
+ */
+export function infoFromDetails(details) {
+  const office = (kind) =>
+    details.offices
+      .filter((o) => o.kind === kind)
+      .map((o) => ({
+        ko: o.ko,
+        en: o.en,
+        location: o.location,
+        phone: o.phone ?? null,
+        hours: o.hours ?? null,
+        source: { url: o.source, retrieved: o.retrieved },
+      }));
+  return {
+    wifi: {
+      ssid: details.wifi.ssid,
+      coverage: details.wifi.coverage,
+      login: details.wifi.login,
+      purpose: details.wifi.purpose,
+      help: details.wifi.help,
+      sources: details.wifi.sources,
+    },
+    computerLabs: details.computerLabs,
+    library: {
+      homepage: details.library.homepage,
+      hours: null,
+      status: 'unknown',
+    },
+    cafeteria: {
+      ko: details.cafeteria.ko,
+      en: details.cafeteria.en,
+      building: details.cafeteria.building,
+      hours: details.cafeteria.hours,
+      source: { url: details.cafeteria.source, retrieved: details.cafeteria.retrieved },
+    },
+    health: office('health'),
+    support: [...office('counseling'), ...office('student_support')],
+    lostAndFound: { status: 'unknown' },
+    security: { status: 'unknown' },
+    contacts: details.contacts,
+    transport: details.transport,
+    shuttle: details.shuttle,
+  };
 }

@@ -28,6 +28,7 @@ import { createMapController } from './map/mapController.js';
 import { createRouteLayer } from './map/routeLayer.js';
 import { createRoutePanel } from './ui/routePanel.js';
 import { createBuildingPanel } from './ui/buildingPanel.js';
+import { createInfoPanel } from './ui/infoPanel.js';
 import { createBuildingList } from './ui/buildingList.js';
 import { createSearchBar } from './ui/searchBar.js';
 import { createSettings } from './ui/settings.js';
@@ -95,7 +96,13 @@ async function start() {
   const buildingsById = new Map(campus.buildings.map((b) => [b.id, b]));
   const nameOf = (id) => localize(buildingsById.get(id)?.name);
 
-  createSettings(document.getElementById('settings'));
+  let infoPanel = null;
+  createSettings(document.getElementById('settings'), {
+    onInfo: () => {
+      infoPanel?.open();
+      sheet.snapTo('full');
+    },
+  });
 
   // ---------- Bottom sheet (phones) ----------
 
@@ -129,7 +136,7 @@ async function start() {
   const map = createMapController({
     campus,
     getPadding: mapPadding,
-    onBuildingActivate: (id) => openBuilding(id),
+    onBuildingActivate: (id, highlight) => openBuilding(id, highlight),
   });
   const routeLayer = createRouteLayer({
     routeLayer: map.view.layers.route,
@@ -276,6 +283,12 @@ async function start() {
     courses,
     actions,
   });
+  infoPanel = createInfoPanel({
+    container: document.getElementById('info-view'),
+    routeView: document.getElementById('route-view'),
+    campus,
+    openBuilding,
+  });
   createBuildingList({
     container: document.getElementById('building-list'),
     campus,
@@ -289,6 +302,12 @@ async function start() {
       if (entry.buildingId) {
         openBuilding(entry.buildingId, entry.highlight);
       } else if (entry.point) {
+        // Make sure the place's group is shown on the map.
+        const poi = campus.pois.find((p) => `place:${p.id}` === entry.id);
+        const filters = getState().poiFilters;
+        if (poi?.group && !filters.includes(poi.group)) {
+          setState({ poiFilters: [...filters, poi.group] });
+        }
         setState({ selectedBuilding: null, highlight: null });
         sheet.snapTo('peek');
         map.flyToPoints([entry.point], { margin: 120, maxScale: 2.5 });

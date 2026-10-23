@@ -30,7 +30,12 @@ import {
   simplifyRing,
 } from './lib/geo.mjs';
 import { buildWalkGraph } from './lib/walk-graph.mjs';
-import { applyOfficialDetails } from './lib/official-details.mjs';
+import {
+  applyOfficialDetails,
+  infoFromDetails,
+  writeDescriptions,
+} from './lib/official-details.mjs';
+import { buildAmenities } from './lib/amenities.mjs';
 
 const ROOT = new URL('../', import.meta.url);
 const SIMPLIFY_METERS = 0.5;
@@ -46,6 +51,8 @@ const official = await readJson('data-raw/official/buildings.json');
 const sources = (await readJson('data-raw/official-sources.json')).sources;
 const sourceById = new Map(sources.map((s) => [s.id, s]));
 const CAMPUS_WAY = Number(osmMeta.campusWay.split('/')[1]);
+/** Inha Technical College (인하공업전문대학), a separate school: excluded. */
+const TECH_COLLEGE_WAY = 568420965;
 
 // ---------------------------------------------------------------------------
 // 1. Projection centred on the campus boundary
@@ -426,6 +433,22 @@ const details = JSON.parse(await readFile(new URL('data-raw/official/details.jso
 const { unresolved } = applyOfficialDetails({ buildings, details, nodes: walk.nodes, areas });
 
 // ---------------------------------------------------------------------------
+// 6. Amenities (OSM points + official facilities), then descriptions
+// ---------------------------------------------------------------------------
+
+const amenities = buildAmenities({
+  osm,
+  toXY,
+  buildings,
+  campusRing,
+  excludeRing: ringFromIds(osm.ways.get(TECH_COLLEGE_WAY).nodes),
+  viewBox,
+  details,
+  osmRetrieved: osmMeta.fetched.slice(0, 10),
+});
+writeDescriptions({ buildings, nodes: walk.nodes, areas });
+
+// ---------------------------------------------------------------------------
 // Output
 // ---------------------------------------------------------------------------
 
@@ -455,7 +478,8 @@ const campus = {
   buildings,
   nodes: walk.nodes,
   edges: walk.edges,
-  pois: [],
+  pois: amenities.pois,
+  info: infoFromDetails(details),
   areas,
   roads,
   context,
@@ -466,7 +490,7 @@ await writeFile(new URL('src/data/courses.json', ROOT), '[]\n');
 // Details for VERIFY.md and DATA-REPORT.md (estimated links, dropped paths…).
 await writeFile(
   new URL('data-raw/build-report.json', ROOT),
-  `${JSON.stringify({ built: today, graph: walk.report, unresolved }, null, 2)}\n`,
+  `${JSON.stringify({ built: today, graph: walk.report, unresolved, amenities: amenities.report }, null, 2)}\n`,
 );
 console.log(
   `campus.json: ${buildings.length} buildings, ${areas.length} areas, ${roads.length} roads, ${context.length} context buildings, ${walk.nodes.length} nodes, ${walk.edges.length} edges; viewBox ${viewBox.join(' ')}`,

@@ -8,7 +8,7 @@
  */
 import { getState, setState, subscribe } from '../state.js';
 import { localize, t } from '../i18n/index.js';
-import { el } from '../utils/dom.js';
+import { el, readStorage, writeStorage } from '../utils/dom.js';
 import { boundsOf } from '../utils/geometry.js';
 import { buildingBounds, renderMap, updateScaledElements } from './renderMap.js';
 import { createPanZoom } from './panZoom.js';
@@ -17,9 +17,18 @@ import {
   createCompass,
   createLegend,
   createMapControls,
+  createPoiFilters,
   createScaleBar,
   createTooltip,
 } from './widgets.js';
+
+const FILTERS_KEY = 'icn.poiFilters';
+const DEFAULT_FILTERS = ['food', 'transport'];
+/** Zoom (relative to the whole-map view) where small places appear. */
+const LOD_MID = 1.8;
+const LOD_HIGH = 4;
+/** Building-panel amenity to highlight when an amenity badge is clicked. */
+const GROUP_AMENITY = { food: 'food', money: 'atm', study: 'studySpace' };
 
 /**
  * @typedef {Object} MapController
@@ -34,7 +43,8 @@ import {
  * Creates the map.
  * @param {Object} options
  * @param {object} options.campus
- * @param {(id: string) => void} options.onBuildingActivate Called when a building is clicked or activated.
+ * @param {(id: string, highlight?: {type: string, value: string}|null) => void} options.onBuildingActivate
+ *        Called when a building (or an amenity badge next to it) is clicked or activated.
  * @param {() => {top:number,right:number,bottom:number,left:number}} options.getPadding
  *        Screen areas covered by floating UI (search bar, bottom sheet…).
  * @returns {MapController}
@@ -66,6 +76,31 @@ export function createMapController({ campus, onBuildingActivate, getPadding }) 
   const compass = createCompass(document.getElementById('compass'));
   const legend = createLegend(document.getElementById('legend'));
 
+  // ---------- Amenity filters and level of detail ----------
+
+  const poisById = new Map((campus.pois ?? []).map((p) => [p.id, p]));
+  const groupCounts = {};
+  for (const poi of campus.pois ?? []) groupCounts[poi.group] = (groupCounts[poi.group] ?? 0) + 1;
+  const filters = createPoiFilters(document.getElementById('map-filters'), groupCounts, (groups) =>
+    setState({ poiFilters: groups }),
+  );
+  setState({ poiFilters: readStorage(FILTERS_KEY, DEFAULT_FILTERS) });
+
+  function applyFilters() {
+    const active = getState().poiFilters ?? [];
+    for (const name of [...svg.classList].filter((c) => c.startsWith('filter-'))) {
+      svg.classList.remove(name);
+    }
+    for (const group of active) svg.classList.add(`filter-${group}`);
+    filters.render(active);
+  }
+
+  /** Low zoom: buildings, gates and landmarks only; high zoom: everything. */
+  function levelOfDetail(relativeZoom) {
+    if (relativeZoom < LOD_MID) return 'low';
+    return relativeZoom < LOD_HIGH ? 'mid' : 'high';
+  }
+
   function emphasizedBuildings() {
     const { from, to, selectedBuilding, hoveredBuilding } = getState();
     return new Set([from, to, selectedBuilding, hoveredBuilding].filter(Boolean));
@@ -77,6 +112,8 @@ export function createMapController({ campus, onBuildingActivate, getPadding }) 
     updateScaledElements(view.scaledEls, k);
     scaleBar.update(k);
     svg.style.setProperty('--zoom', String(k));
+    const lod = levelOfDetail(relativeZoom);
+    if (svg.dataset.lod !== lod) svg.dataset.lod = lod;
     for (const listener of cameraListeners) listener(k);
   }
 
@@ -113,18 +150,38 @@ export function createMapController({ campus, onBuildingActivate, getPadding }) 
     const building = buildingFromEvent(event);
     if (building) setState({ hoveredBuilding: building.id });
     const poi = event.target.closest?.('.poi');
-    if (poi) {
-      const item = poi.classList.contains('poi-gate')
-        ? campus.nodes.find((n) => n.id === poi.dataset.id)
-        : campus.pois.find((p) => p.id === poi.dataset.id);
-      if (item)
-        tooltip.show(
-          localize(item.name) || t(`facility.${poi.dataset.type}`),
-          event.clientX,
-          event.clientY,
-        );
-    }
+    if (poi) showPoiTooltip(poi, event.clientX, event.clientY);
   });
+
+  /** Name and type of a place; for a building's amenity badge, all its places. */
+  function showPoiTooltip(poi, x, y) {
+    if (poi.classList.contains('poi-gate')) {
+      const gate = campus.nodes.find((n) => n.id === poi.dataset.id);
+      if (gate) tooltip.show(localize(gate.name) || t('facility.gate'), x, y);
+      return;
+    }
+    const ids = poi.dataset.ids ? poi.dataset.ids.split(' ') : [poi.dataset.id];
+    const items = ids.map((id) => poisById.get(id)).filter(Boolean);
+    if (items.length === 0) return;
+    const line = (item) => {
+      const type = t(`facility.${item.type}`);
+      const name = localize(item.name);
+      const routes = item.routes?.length ? ` · ${item.routes.join(', ')}` : '';
+      return name && name !== type ? `${name} (${type})${routes}` : `${type}${routes}`;
+    };
+    const building = poi.dataset.building ? buildingsById.get(poi.dataset.building) : null;
+    tooltip.show(
+      el(
+        'span',
+        { class: 'tooltip-content tooltip-list' },
+        building ? el('strong', { text: localize(building.name) }) : null,
+        ...items.slice(0, 6).map((item) => el('span', { text: line(item) })),
+        items.length > 6 ? el('span', { text: t('filters.more', { n: items.length - 6 }) }) : null,
+      ),
+      x,
+      y,
+    );
+  }
 
   svg.addEventListener('pointermove', (event) => {
     if (event.pointerType === 'touch' || event.buttons) return;
@@ -143,6 +200,20 @@ export function createMapController({ campus, onBuildingActivate, getPadding }) 
   svg.addEventListener('pointerdown', () => tooltip.hide());
 
   svg.addEventListener('click', (event) => {
+    const poi = event.target.closest?.('.poi-indoor, .poi-poi');
+    if (poi?.dataset.building) {
+      const amenity = GROUP_AMENITY[poi.dataset.group];
+      onBuildingActivate(
+        poi.dataset.building,
+        amenity ? { type: 'amenity', value: amenity } : null,
+      );
+      return;
+    }
+    if (poi) {
+      // Touch screens have no hover: show the name on tap.
+      showPoiTooltip(poi, event.clientX, event.clientY);
+      return;
+    }
     const building = buildingFromEvent(event);
     if (building) onBuildingActivate(building.id);
   });
@@ -195,12 +266,17 @@ export function createMapController({ campus, onBuildingActivate, getPadding }) 
     controls.render();
     compass.render();
     legend.render();
+    filters.render(getState().poiFilters ?? []);
     scaleBar.update();
     refreshLabels();
   }
 
   subscribe((state, changed) => {
     if (changed.includes('lang')) applyLanguage();
+    if (changed.includes('poiFilters')) {
+      writeStorage(FILTERS_KEY, state.poiFilters);
+      applyFilters();
+    }
     if (
       ['selectedBuilding', 'hoveredBuilding', 'from', 'to', 'route'].some((k) =>
         changed.includes(k),
@@ -214,6 +290,7 @@ export function createMapController({ campus, onBuildingActivate, getPadding }) 
   svg.setAttribute('role', 'group');
   svg.querySelector('title')?.remove();
   applyLanguage();
+  applyFilters();
   applyBuildingClasses();
 
   // Fonts change text widths: re-measure labels once the web font is ready.

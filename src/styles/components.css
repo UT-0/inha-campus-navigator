@@ -36,7 +36,7 @@
 .header-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   flex-shrink: 0;
 }
 
@@ -1507,4 +1507,102 @@ a.item-title:hover {
 .fact dd.is-unknown {
   font-weight: var(--font-weight-medium);
   color: var(--color-text-muted);
+}
+
+/* ---------- Info panel ---------- */
+
+.info-intro {
+  margin: var(--space-1) 0 var(--space-3);
+}
+
+.info-section {
+  margin-top: var(--space-4);
+}
+
+.info-section .section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: minmax(88px, 34%) minmax(0, 1fr);
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+}
+
+.info-row dt {
+  color: var(--color-text-muted);
+}
+
+.info-row dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.info-stack {
+  display: grid;
+  gap: 2px;
+  justify-items: start;
+}
+
+.info-offices,
+.info-bullets {
+  display: grid;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+}
+
+.info-bullets {
+  margin-bottom: var(--space-3);
+  padding-left: 1.1em;
+  list-style: disc;
+}
+
+.info-office {
+  display: grid;
+  gap: 2px;
+  justify-items: start;
+}
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-accent);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+.link-btn svg {
+  flex-shrink: 0;
+}
+
+.phone {
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.info-panel code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.95em;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-2);
 }

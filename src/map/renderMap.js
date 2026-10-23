@@ -266,40 +266,105 @@ function drawBuildings(layer, campus) {
 /**
  * POIs and gates: round icon badges that keep a constant on-screen size
  * (the camera's zoom is cancelled by a counter-scale, see `updateScaledElements`).
+ *
+ * Outdoor POIs are drawn at their real location. Amenities inside a building
+ * are not drawn at exact points: each building gets one badge per group
+ * (food, money…) in a row just below its label.
  */
 function drawPois(layer, campus) {
   const scaled = [];
-  const items = [
-    ...(campus.pois ?? [])
-      .filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y))
-      .map((p) => ({ ...p, kind: 'poi' })),
-    ...campus.nodes
-      .filter((n) => n.type === 'gate')
-      .map((n) => ({ ...n, type: 'gate', kind: 'gate' })),
-  ];
-  for (const item of items) {
+  const badge = (attrs, icon, offsetX = 0, offsetY = 0) => {
     const group = svgEl(
       'g',
-      {
-        class: `poi poi-${item.kind}`,
-        'data-type': item.type,
-        'data-group': item.group ?? '',
-        'data-id': item.id,
-        'data-x': item.x,
-        'data-y': item.y,
-      },
-      svgEl('circle', { class: 'poi-bg', r: 11 }),
-      svgEl('g', {
-        class: 'poi-icon',
-        transform: 'translate(-7 -7) scale(0.5833)',
-        html: ICON_PATHS[item.icon ?? item.type] ?? ICON_PATHS.info,
-      }),
+      attrs,
+      svgEl(
+        'g',
+        { class: 'poi-body', transform: `translate(${offsetX} ${offsetY})` },
+        svgEl('circle', { class: 'poi-bg', r: 11 }),
+        svgEl('g', {
+          class: 'poi-icon',
+          transform: 'translate(-7 -7) scale(0.5833)',
+          html: ICON_PATHS[icon] ?? ICON_PATHS.info,
+        }),
+      ),
     );
     layer.append(group);
     scaled.push(group);
+  };
+
+  const pois = (campus.pois ?? []).filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y));
+  for (const poi of pois.filter((p) => !p.indoor)) {
+    badge(
+      {
+        class: 'poi poi-poi',
+        'data-type': poi.type,
+        'data-group': poi.group ?? '',
+        'data-id': poi.id,
+        'data-x': poi.x,
+        'data-y': poi.y,
+        ...(poi.landmark ? { 'data-landmark': '' } : {}),
+        ...(poi.minZoom ? { 'data-min-zoom': poi.minZoom } : {}),
+      },
+      poi.icon ?? poi.type,
+    );
+  }
+
+  // Indoor amenities: one badge per building and group, in a centred row.
+  const buildingsById = new Map(campus.buildings.map((b) => [b.id, b]));
+  const byBuilding = new Map();
+  for (const poi of pois.filter((p) => p.indoor && buildingsById.has(p.buildingId))) {
+    if (!byBuilding.has(poi.buildingId)) byBuilding.set(poi.buildingId, new Map());
+    const groups = byBuilding.get(poi.buildingId);
+    if (!groups.has(poi.group)) groups.set(poi.group, []);
+    groups.get(poi.group).push(poi);
+  }
+  for (const [buildingId, groups] of byBuilding) {
+    const [x, y] = buildingsById.get(buildingId).labelPosition;
+    const list = [...groups.entries()];
+    list.forEach(([group, items], i) => {
+      badge(
+        {
+          class: 'poi poi-indoor',
+          'data-type': items[0].type,
+          'data-group': group,
+          'data-building': buildingId,
+          'data-ids': items.map((p) => p.id).join(' '),
+          'data-x': x,
+          'data-y': y,
+        },
+        GROUP_ICONS[group] ?? items[0].type,
+        (i - (list.length - 1) / 2) * 24,
+        30,
+      );
+    });
+  }
+
+  for (const gate of campus.nodes.filter((n) => n.type === 'gate')) {
+    badge(
+      {
+        class: 'poi poi-gate',
+        'data-type': 'gate',
+        'data-id': gate.id,
+        'data-x': gate.x,
+        'data-y': gate.y,
+      },
+      'gate',
+    );
   }
   return scaled;
 }
+
+/** Icon of an indoor amenity badge, by group. */
+const GROUP_ICONS = {
+  food: 'restaurant',
+  restroom: 'restroom',
+  printing: 'printer',
+  money: 'atm',
+  transport: 'bus_stop',
+  health: 'health',
+  study: 'lounge',
+  services: 'info',
+};
 
 /**
  * How large markers are drawn at a given zoom: full size normally, shrinking

@@ -252,16 +252,33 @@ export function buildSearchIndex(campus, courses, labelFor) {
     });
   }
 
+  /** Amenity to highlight in the building panel for an indoor place. */
+  const GROUP_AMENITY = { food: 'food', money: 'atm', study: 'studySpace' };
   for (const poi of campus.pois ?? []) {
+    // Official offices and lounges are already listed via the floor directory.
+    if (
+      poi.indoor &&
+      poi.status === 'verified' &&
+      ['health', 'counseling', 'lounge'].includes(poi.type)
+    )
+      continue;
     const typeLabel = labelFor(`facility.${poi.type}`);
     entries.push({
       type: 'place',
       id: `place:${poi.id}`,
-      buildingId: null,
+      buildingId: poi.indoor ? poi.buildingId : null,
       title: poi.name ?? typeLabel,
-      subtitle: typeLabel,
+      subtitle: poi.indoor
+        ? {
+            en: `${typeLabel.en} · ${buildingsById.get(poi.buildingId)?.name.en ?? ''}`,
+            ko: `${typeLabel.ko} · ${buildingsById.get(poi.buildingId)?.name.ko ?? ''}`,
+          }
+        : typeLabel,
       terms: [...both(poi.name), ...both(typeLabel), poi.type],
-      highlight: null,
+      highlight:
+        poi.indoor && GROUP_AMENITY[poi.group]
+          ? { type: 'amenity', value: GROUP_AMENITY[poi.group] }
+          : null,
       point: { x: poi.x, y: poi.y },
       icon: poi.type,
     });

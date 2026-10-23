@@ -43,7 +43,7 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
     const { selectedBuilding } = getState();
     const building = buildings.get(selectedBuilding);
     container.hidden = !building;
-    routeView.hidden = Boolean(building);
+    routeView.hidden = Boolean(building) || getState().infoOpen;
     renderedId = building?.id ?? null;
     if (!building) {
       container.replaceChildren();

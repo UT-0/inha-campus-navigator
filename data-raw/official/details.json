@@ -1,1160 +1,1163 @@
 {
- "_note": "Facts collected from official Inha University pages (URL and retrieval date on every entry). Korean text is quoted as written; English department names come from the official English college list (matched by homepage URL). The ATM list is from the English ATM page; Korean wording of ATM locations is our translation.",
- "retrieved": "2026-10-23",
- "colleges": [
-  {
-   "ko": "프런티어창의대학",
-   "en": "Frontier College of Creative Studies",
-   "office": null,
-   "phone": null,
-   "source": "https://www.inha.ac.kr/kr/989/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "공과대학",
-   "en": "College of Engineering",
-   "office": "2호관 2남 212호",
-   "phone": "032-860-7285~90",
-   "source": "https://www.inha.ac.kr/kr/990/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "자연과학대학",
-   "en": "College of Natural Sciences",
-   "office": "5호관 동 317호",
-   "phone": "032-860-7612, 7615",
-   "source": "https://www.inha.ac.kr/kr/991/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "경영대학",
-   "en": "College of Business Administration",
-   "office": "6호관 222호",
-   "phone": "032-860-7822",
-   "source": "https://www.inha.ac.kr/kr/992/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "사범대학",
-   "en": "College of Education",
-   "office": "서호관 206호",
-   "phone": "032-860-7831~3",
-   "source": "https://www.inha.ac.kr/kr/993/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "사회과학대학",
-   "en": "College of Social Sciences",
-   "office": "9호관 411호",
-   "phone": "032-860-7903",
-   "source": "https://www.inha.ac.kr/kr/994/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "문과대학",
-   "en": "College of Humanities",
-   "office": "5호관 남 309호",
-   "phone": "032-860-7982~4",
-   "source": "https://www.inha.ac.kr/kr/995/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "의과대학",
-   "en": "College of Medicine",
-   "office": "60주년기념관 330호",
-   "phone": "032-860-9801~9807",
-   "source": "https://www.inha.ac.kr/kr/996/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "간호대학",
-   "en": "School of Nursing",
-   "office": "5호관 남 254호",
-   "phone": "032-860-8200, 8218~8219",
-   "source": "https://www.inha.ac.kr/kr/4142/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "미래융합대학",
-   "en": "College of Future Convergence",
-   "office": "미래융합대학관 106호",
-   "phone": "032-860-9301~4",
-   "source": "https://www.inha.ac.kr/kr/997/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "예술체육대학",
-   "en": "College of Arts & Sports",
-   "office": "5호관 남 434호",
-   "phone": "032-860-8161~3",
-   "source": "https://www.inha.ac.kr/kr/998/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "국제대학",
-   "en": "College of International Studies",
-   "office": "평생교육원 221호",
-   "phone": "032-860-9122~6",
-   "source": "https://www.inha.ac.kr/kr/999/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "AI융합대학",
-   "en": "College of AI Convergence",
-   "office": "60주년 901A호",
-   "phone": "032-860-9442",
-   "source": "https://www.inha.ac.kr/kr/3907/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "바이오융합대학",
-   "en": "College of Bio-Innovation",
-   "office": "5호관 동 209A",
-   "phone": "032-860-8869",
-   "source": "https://www.inha.ac.kr/kr/4097/subview.do",
-   "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
-   "retrieved": "2026-10-23"
-  }
- ],
- "departments": [
-  {
-   "college": "공과대학",
-   "ko": "기계공학과",
-   "en": "Mechanical Engineering",
-   "url": "https://mech.inha.ac.kr",
-   "office": "2북 291호",
-   "phone": "032-860-7300~1",
-   "source": "https://mech.inha.ac.kr/mech/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "항공우주공학과",
-   "en": "Aerospace Engineering",
-   "url": "https://aerospace.inha.ac.kr",
-   "office": "항공우주융합캠퍼스 208호",
-   "phone": "032-720-9010, 9039",
-   "source": "https://aerospace.inha.ac.kr/aerospace/index.do",
-   "retrieved": "2026-10-23",
-   "note": "Office is at the Aerospace Convergence Campus, not on the main campus."
-  },
-  {
-   "college": "공과대학",
-   "ko": "조선해양공학과",
-   "en": "Naval Architecture & Ocean Engineering",
-   "url": "https://naoe.inha.ac.kr",
-   "office": "2북 491호",
-   "phone": "032-860-7330",
-   "source": "https://naoe.inha.ac.kr/naoe/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "산업경영공학과",
-   "en": "Industrial Engineering",
-   "url": "https://ie.inha.ac.kr",
-   "office": "2호관 북쪽 477A호",
-   "phone": "032-860-7360",
-   "source": "https://ie.inha.ac.kr/ie/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "화학공학과",
-   "en": "Chemical Engineering",
-   "url": "https://chemeng.inha.ac.kr",
-   "office": "60주년기념관 801A호",
-   "phone": "032-860-7460, 7490",
-   "source": "https://chemeng.inha.ac.kr/chemeng/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "고분자공학과",
-   "en": "Polymer Science & Engineering",
-   "url": "https://inhapoly.inha.ac.kr",
-   "office": null,
-   "phone": "032-860-7480",
-   "source": "https://inhapoly.inha.ac.kr/inhapoly/index.do",
-   "retrieved": "2026-10-23",
-   "note": "Homepage gives no building or room."
-  },
-  {
-   "college": "공과대학",
-   "ko": "신소재공학과",
-   "en": "Materials Science and Engineering",
-   "url": "http://dmse.inha.ac.kr",
-   "office": "5북 135호",
-   "phone": "032-860-7520/7530",
-   "source": "https://dmse.inha.ac.kr/dmse/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "사회인프라공학과",
-   "en": "Civil Engineering",
-   "url": "https://civil.inha.ac.kr",
-   "office": "2남 207호",
-   "phone": "032-860-7560",
-   "source": "https://civil.inha.ac.kr/civil/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "환경공학과",
-   "en": "Environmental Engineering",
-   "url": "https://environment.inha.ac.kr",
-   "office": "2호관 동 441호",
-   "phone": "032-860-7500",
-   "source": "https://environment.inha.ac.kr/environment/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "공간정보공학과",
-   "en": "Geoinformatic Engineering",
-   "url": "https://geoinfo.inha.ac.kr",
-   "office": "4호관 302호",
-   "phone": "032-860-7600",
-   "source": "https://geoinfo.inha.ac.kr/geoinfo/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "건축학부(건축공학·건축학)",
-   "en": "Architectural Engineering / Architecture",
-   "url": "https://arch.inha.ac.kr",
-   "office": "2호관 413호",
-   "phone": "032-860-7580, 032-860-8710",
-   "source": "https://arch.inha.ac.kr/arch/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "에너지자원공학과",
-   "en": "Energy Resource Engineering",
-   "url": "https://eneres.inha.ac.kr",
-   "office": "2남 231B호",
-   "phone": "032-860-7550",
-   "source": "https://eneres.inha.ac.kr/eneres/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "전기전자공학부",
-   "en": "Electrical and Electronic Engineering",
-   "url": "https://ee.inha.ac.kr",
-   "office": "하이테크센터 801호",
-   "phone": "032-860-7410~1",
-   "source": "https://ee.inha.ac.kr/ee/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "반도체시스템공학과",
-   "en": "Semiconductor Systems Engineering",
-   "url": "https://sse.inha.ac.kr",
-   "office": "하이테크관 201호",
-   "phone": "032-860-7355",
-   "source": "https://sse.inha.ac.kr/sse/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "공과대학",
-   "ko": "이차전지융합학과",
-   "en": "Secondary Battery Convergence",
-   "url": "https://ibattery.inha.ac.kr",
-   "office": "2호관(남) 316A",
-   "phone": "032-860-8820",
-   "source": "https://ibattery.inha.ac.kr/ibattery/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "자연과학대학",
-   "ko": "수학과",
-   "en": "Mathematics",
-   "url": "https://math.inha.ac.kr",
-   "office": "5동 213B호",
-   "phone": "032-860-7620",
-   "source": "https://math.inha.ac.kr/math/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "자연과학대학",
-   "ko": "통계학과",
-   "en": "Statistics",
-   "url": "https://statistics.inha.ac.kr",
-   "office": "5북 442B호",
-   "phone": "032-860-7640",
-   "source": "https://statistics.inha.ac.kr/statistics/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "자연과학대학",
-   "ko": "물리학과",
-   "en": "Physics",
-   "url": "https://physics.inha.ac.kr",
-   "office": "5동 316호",
-   "phone": "032-860-7650",
-   "source": "https://physics.inha.ac.kr/physics/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "자연과학대학",
-   "ko": "화학과",
-   "en": "Chemistry",
-   "url": "https://chemistry.inha.ac.kr",
-   "office": "5호관 417B호",
-   "phone": "032-860-7670",
-   "source": "https://chemistry.inha.ac.kr/chemistry/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "자연과학대학",
-   "ko": "해양과학과",
-   "en": "Ocean Sciences",
-   "url": "http://ocean.inha.ac.kr",
-   "office": "5북 236호",
-   "phone": "032-860-7700",
-   "source": "https://ocean.inha.ac.kr/ocean/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "자연과학대학",
-   "ko": "식품영양학과",
-   "en": "Food & Nutrition",
-   "url": "https://foodnutri.inha.ac.kr",
-   "office": "본관 517호",
-   "phone": "032-860-8120",
-   "source": "https://foodnutri.inha.ac.kr/foodnutri/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "경영대학",
-   "ko": "경영학과",
-   "en": "Business Administration",
-   "url": "https://biz.inha.ac.kr",
-   "office": "6호관 222호",
-   "phone": "032-860-7730, 7828, 7750",
-   "source": "https://biz.inha.ac.kr/biz/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "경영대학",
-   "ko": "파이낸스경영학과",
-   "en": "Finance",
-   "url": "https://gfiba.inha.ac.kr",
-   "office": "6호관 222호",
-   "phone": "032-860-7823",
-   "source": "https://gfiba.inha.ac.kr/gfiba/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "경영대학",
-   "ko": "아태물류학부",
-   "en": "Asia Pacific School of Logistics",
-   "url": "https://apsl.inha.ac.kr",
-   "office": null,
-   "phone": null,
-   "source": "https://apsl.inha.ac.kr/apsl/index.do",
-   "retrieved": "2026-10-23",
-   "note": "Homepage gives no building or room."
-  },
-  {
-   "college": "경영대학",
-   "ko": "국제통상학과",
-   "en": "International Trade",
-   "url": "https://star.inha.ac.kr",
-   "office": "6호관 222호",
-   "phone": "032-860-7790",
-   "source": "https://star.inha.ac.kr/star/index.do",
-   "retrieved": "2026-10-23",
-   "note": "Shared office: 경영대학통합행정실."
-  },
-  {
-   "college": "사범대학",
-   "ko": "국어교육과",
-   "en": "Korean Language Education",
-   "url": "https://koreanedu.inha.ac.kr",
-   "office": "서호관 223호",
-   "phone": "032-860-7840",
-   "source": "https://koreanedu.inha.ac.kr/koreanedu/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사범대학",
-   "ko": "영어교육과",
-   "en": "English Language Education",
-   "url": "https://dele.inha.ac.kr",
-   "office": "서호관 425호",
-   "phone": "032-860-7850",
-   "source": "https://dele.inha.ac.kr/dele/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사범대학",
-   "ko": "사회교육과",
-   "en": "Social Studies Education",
-   "url": "https://socialedu.inha.ac.kr",
-   "office": "서호관 219호",
-   "phone": "032-860-7860",
-   "source": "https://socialedu.inha.ac.kr/socialedu/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사범대학",
-   "ko": "교육학과",
-   "en": "Education",
-   "url": "https://education.inha.ac.kr",
-   "office": "서호관 325호",
-   "phone": "032-860-7870",
-   "source": "https://education.inha.ac.kr/education/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사범대학",
-   "ko": "체육교육과",
-   "en": "Physical Education",
-   "url": "https://physicaledu.inha.ac.kr",
-   "office": "서호관 416호",
-   "phone": "032-860-7880",
-   "source": "https://physicaledu.inha.ac.kr/physicaledu/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사범대학",
-   "ko": "수학교육과",
-   "en": "Mathematics Education",
-   "url": "https://mathed.inha.ac.kr",
-   "office": "서호관 443호",
-   "phone": "032-860-8150",
-   "source": "https://mathed.inha.ac.kr/mathed/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사회과학대학",
-   "ko": "행정학과",
-   "en": "Public Administration",
-   "url": "https://publicad.inha.ac.kr",
-   "office": "9호관 409호",
-   "phone": "032-860-7940",
-   "source": "https://publicad.inha.ac.kr/publicad/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사회과학대학",
-   "ko": "정치외교학과",
-   "en": "Political Science & International Relations",
-   "url": "https://political.inha.ac.kr",
-   "office": "9호관 409호",
-   "phone": "032-860-7960",
-   "source": "https://political.inha.ac.kr/political/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사회과학대학",
-   "ko": "미디어커뮤니케이션학과",
-   "en": "Media & Communication",
-   "url": "https://comm.inha.ac.kr",
-   "office": "9호관 409호",
-   "phone": "032-860-8790",
-   "source": "https://comm.inha.ac.kr/comm/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사회과학대학",
-   "ko": "경제학과",
-   "en": "Economics",
-   "url": "https://econ.inha.ac.kr",
-   "office": "9호관 409호",
-   "phone": "032-860-7770",
-   "source": "https://econ.inha.ac.kr/econ/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사회과학대학",
-   "ko": "소비자학과",
-   "en": "Consumer Science",
-   "url": "https://consumer.inha.ac.kr",
-   "office": "9호관 409호",
-   "phone": "032-860-8110",
-   "source": "https://consumer.inha.ac.kr/consumer/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사회과학대학",
-   "ko": "아동심리학과",
-   "en": "Child Psychology",
-   "url": "https://child.inha.ac.kr",
-   "office": "9호관 411호",
-   "phone": "032-860-8140",
-   "source": "https://child.inha.ac.kr/child/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "사회과학대학",
-   "ko": "사회복지학과",
-   "en": "Social Welfare Studies",
-   "url": "https://welfare.inha.ac.kr",
-   "office": "9호관 409호",
-   "phone": "032-860-8605",
-   "source": "https://welfare.inha.ac.kr/welfare/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "문과대학",
-   "ko": "한국어문학과",
-   "en": "Korean Language and Literature",
-   "url": "https://korean.inha.ac.kr",
-   "office": "5호관 남 263호",
-   "phone": "032-860-7990",
-   "source": "https://korean.inha.ac.kr/korean/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "문과대학",
-   "ko": "사학과",
-   "en": "History",
-   "url": "https://history.inha.ac.kr",
-   "office": "5남 215호",
-   "phone": "032-860-8070",
-   "source": "https://history.inha.ac.kr/history/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "문과대학",
-   "ko": "철학과",
-   "en": "Philosophy",
-   "url": "https://philosophy.inha.ac.kr",
-   "office": "5남 262호",
-   "phone": "032-860-8080",
-   "source": "https://philosophy.inha.ac.kr/philosophy/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "문과대학",
-   "ko": "중국학과",
-   "en": "China Studies",
-   "url": "https://chinese.inha.ac.kr",
-   "office": "5남 269호",
-   "phone": "032-860-8050",
-   "source": "https://chinese.inha.ac.kr/chinese/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "문과대학",
-   "ko": "일본언어문화학과",
-   "en": "Japanese Language & Culture",
-   "url": "https://japan.inha.ac.kr",
-   "office": "5남 102호",
-   "phone": "032-860-8060",
-   "source": "https://japan.inha.ac.kr/japan/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "문과대학",
-   "ko": "영미유럽인문융합학부 (영어영문학전공)",
-   "en": "Division of English and European Studies (English)",
-   "url": "https://ees.inha.ac.kr",
-   "office": "5남 115호",
-   "phone": "032-860-8010",
-   "source": "https://ees.inha.ac.kr/ees/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "문과대학",
-   "ko": "영미유럽인문융합학부 (프랑스언어문화전공)",
-   "en": "Division of English and European Studies (French)",
-   "url": "https://ees.inha.ac.kr",
-   "office": "5남 414호",
-   "phone": "032-860-8030",
-   "source": "https://ees.inha.ac.kr/ees/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "문과대학",
-   "ko": "문화콘텐츠문화경영학과",
-   "en": "Cultural Contents & Management",
-   "url": "https://culturecm.inha.ac.kr",
-   "office": "5남 265호",
-   "phone": "032-860-8040, 8900",
-   "source": "https://culturecm.inha.ac.kr/culturecm/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "의과대학",
-   "ko": "의과대학 (의예과·의학과)",
-   "en": "College of Medicine (Pre-medical Studies, Medical Science)",
-   "url": "https://medicine.inha.ac.kr",
-   "office": "60주년기념관 330호",
-   "phone": "032-860-9801~9807",
-   "source": "https://www.inha.ac.kr/kr/996/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "간호대학",
-   "ko": "간호학과",
-   "en": "Nursing",
-   "url": "https://nursing.inha.ac.kr",
-   "office": "5남 254호",
-   "phone": "032-860-8200",
-   "source": "https://nursing.inha.ac.kr/nursing/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "예술체육대학",
-   "ko": "조형예술학과",
-   "en": "Fine Arts",
-   "url": "http://finearts.inha.ac.kr",
-   "office": "서호관 322호",
-   "phone": "032-860-7890, 8160",
-   "source": "https://finearts.inha.ac.kr/finearts/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "예술체육대학",
-   "ko": "디자인융합학과",
-   "en": "Design Convergence",
-   "url": "https://design.inha.ac.kr",
-   "office": "서호관 125호",
-   "phone": "032-860-8170",
-   "source": "https://design.inha.ac.kr/design/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "예술체육대학",
-   "ko": "스포츠과학과",
-   "en": "Kinesiology",
-   "url": "https://sport.inha.ac.kr",
-   "office": "5서 554B호",
-   "phone": "032-860-8180",
-   "source": "https://sport.inha.ac.kr/sport/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "예술체육대학",
-   "ko": "연극영화학과",
-   "en": "Theater & Film Studies",
-   "url": "https://theatrefilm.inha.ac.kr",
-   "office": "5남 242호",
-   "phone": "032-860-8240",
-   "source": "https://theatrefilm.inha.ac.kr/theatrefilm/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "예술체육대학",
-   "ko": "의류디자인학과",
-   "en": "Fashion Design & Textiles",
-   "url": "https://fashion.inha.ac.kr",
-   "office": "본관 518호",
-   "phone": "032-860-8130",
-   "source": "https://fashion.inha.ac.kr/fashion/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "AI융합대학",
-   "ko": "인공지능공학과",
-   "en": "Artificial Intelligence",
-   "url": "https://doai.inha.ac.kr",
-   "office": "60주년기념관 909호",
-   "phone": "032-860-9444",
-   "source": "https://doai.inha.ac.kr/doai/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "AI융합대학",
-   "ko": "데이터사이언스학과",
-   "en": "Data Science",
-   "url": "https://datascience.inha.ac.kr",
-   "office": "60주년기념관 909호",
-   "phone": "032-860-9201",
-   "source": "https://datascience.inha.ac.kr/datascience/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "AI융합대학",
-   "ko": "스마트모빌리티공학과",
-   "en": "Smart Mobility Engineering",
-   "url": "https://sme.inha.ac.kr",
-   "office": "항공우주융합캠퍼스 207호",
-   "phone": "032-720-9080",
-   "source": "https://sme.inha.ac.kr/sme/index.do",
-   "retrieved": "2026-10-23",
-   "note": "Office is at the Aerospace Convergence Campus, not on the main campus."
-  },
-  {
-   "college": "AI융합대학",
-   "ko": "디자인테크놀로지학과",
-   "en": "Design Technology",
-   "url": "https://designtech.inha.ac.kr",
-   "office": "60주년기념관 909호",
-   "phone": "032-860-9445",
-   "source": "https://designtech.inha.ac.kr/designtech/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "AI융합대학",
-   "ko": "컴퓨터공학과",
-   "en": "Computer Engineering",
-   "url": "https://cse.inha.ac.kr",
-   "office": "하이테크 1012호",
-   "phone": "032-860-7440",
-   "source": "https://cse.inha.ac.kr/cse/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "바이오융합대학",
-   "ko": "생명공학과",
-   "en": "Biological Engineering",
-   "url": "https://bio.inha.ac.kr",
-   "office": "2남 231A호",
-   "phone": "032-860-7295",
-   "source": "https://bio.inha.ac.kr/bio/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "바이오융합대학",
-   "ko": "바이오제약공학과",
-   "en": "Biopharmaceutical Engineering",
-   "url": "https://biopharm.inha.ac.kr",
-   "office": "2남 231A호",
-   "phone": "032-860-8870",
-   "source": "https://biopharm.inha.ac.kr/biopharm/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "바이오융합대학",
-   "ko": "생명과학과",
-   "en": "Biological Sciences",
-   "url": "https://biology.inha.ac.kr",
-   "office": "5북 517호",
-   "phone": "032-860-7690",
-   "source": "https://biology.inha.ac.kr/biology/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "바이오융합대학",
-   "ko": "첨단바이오의약학과",
-   "en": "Medicinal Biosciences and Bioengineering",
-   "url": "https://biomedical.inha.ac.kr",
-   "office": "2남 231A호",
-   "phone": "032-860-7296",
-   "source": "https://biomedical.inha.ac.kr/biomedical/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "바이오융합대학",
-   "ko": "바이오식품공학과",
-   "en": "Food Science and Technology",
-   "url": "https://foodscience.inha.ac.kr",
-   "office": "5동 209A",
-   "phone": "032-860-8865",
-   "source": "https://foodscience.inha.ac.kr/foodscience/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "프런티어창의대학",
-   "ko": "자유전공융합학부",
-   "en": "Liberal and Convergence Studies",
-   "url": "https://las.inha.ac.kr",
-   "office": "60주년 기념관 1309호",
-   "phone": "032-860-9155",
-   "source": "https://las.inha.ac.kr/las/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "프런티어창의대학",
-   "ko": "교양교육지원실",
-   "en": "Liberal Education Support Office",
-   "url": null,
-   "office": "60주년기념관 1306호",
-   "phone": "032-860-9253",
-   "source": "https://www.inha.ac.kr/kr/989/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "프런티어창의대학",
-   "ko": "융합학부행정실",
-   "en": "Convergence Studies Administration Office",
-   "url": null,
-   "office": "60주년기념관 1309호",
-   "phone": "032-860-9162",
-   "source": "https://www.inha.ac.kr/kr/989/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "프런티어창의대학",
-   "ko": "융합전공지원실",
-   "en": "Convergence Majors Support Office",
-   "url": "https://conv.inha.ac.kr",
-   "office": "60주년기념관 1317호",
-   "phone": "032-860-9595",
-   "source": "https://www.inha.ac.kr/kr/989/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "국제대학",
-   "ko": "국제대학 (IBT·ISE·KLC학과)",
-   "en": "College of International Studies (IBT, ISE, KLC)",
-   "url": "https://sgcs.inha.ac.kr",
-   "office": "평생교육원 221호",
-   "phone": "032-860-9122~6",
-   "source": "https://www.inha.ac.kr/kr/999/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "college": "미래융합대학",
-   "ko": "미래융합대학 (메카트로닉스공학과 외 4개 학과)",
-   "en": "College of Future Convergence (Mechatronics and 4 more departments)",
-   "url": "https://fccollege.inha.ac.kr",
-   "office": "미래융합대학관 106호",
-   "phone": "032-860-9301~4",
-   "source": "https://www.inha.ac.kr/kr/997/subview.do",
-   "retrieved": "2026-10-23"
-  }
- ],
- "offices": [
-  {
-   "ko": "보건센터",
-   "en": "Health Center",
-   "location": "학생회관 215호",
-   "floorText": "2F",
-   "phone": "032-860-8311~2",
-   "hours": {
-    "en": "Semester: Mon–Fri 09:00–18:00; vacation: Mon–Fri 09:00–17:00. University doctor: Mon & Thu 13:00–17:00 (semester).",
-    "ko": "학기 중 월–금 09:00–18:00, 방학 중 월–금 09:00–17:00. 교의 진료: 학기 중 월·목 13:00–17:00."
-   },
-   "type": "facility",
-   "kind": "health",
-   "source": "https://www.inha.ac.kr/eng/3758/subview.do",
-   "retrieved": "2026-10-23",
-   "sourceText": "2F, Student Hall (Room 215, No.7)"
-  },
-  {
-   "ko": "학생상담센터",
-   "en": "Student Counseling Center",
-   "location": "정석학술정보관 5층 521호",
-   "phone": "032-860-8262~3, 032-860-9362~3",
-   "type": "office",
-   "kind": "counseling",
-   "source": "https://www.inha.ac.kr/kr/1079/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "인권센터",
-   "en": "Human Rights Center",
-   "location": "정석학술정보관 5층 519A",
-   "phone": "032-860-8314, 032-860-9344",
-   "type": "office",
-   "kind": "counseling",
-   "source": "https://www.inha.ac.kr/kr/1079/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "장애학생지원실",
-   "en": "Disability Support Office",
-   "location": "학생회관 345호",
-   "phone": "032-860-7067",
-   "type": "office",
-   "kind": "student_support",
-   "source": "https://www.inha.ac.kr/kr/1079/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "IT인프라팀 (무선인터넷 문의)",
-   "en": "IT Infrastructure Team (Wi-Fi help)",
-   "location": "60주년기념관 1408호",
-   "phone": "032-860-9073~4",
-   "type": "office",
-   "kind": "it",
-   "source": "https://internet.inha.ac.kr/internet/index.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "여학생 휴게실",
-   "en": "Female students' lounge",
-   "location": "5남 130호",
-   "hours": {
-    "ko": "09:00–18:00 (방학 중·공휴일 미운영)",
-    "en": "09:00–18:00 (closed during vacations and on holidays)"
-   },
-   "type": "lounge",
-   "source": "https://www.inha.ac.kr/kr/1076/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "여학생 휴게실",
-   "en": "Female students' lounge",
-   "location": "6호관 118호",
-   "hours": {
-    "ko": "09:00–18:00 (방학 중·공휴일 미운영)",
-    "en": "09:00–18:00 (closed during vacations and on holidays)"
-   },
-   "type": "lounge",
-   "source": "https://www.inha.ac.kr/kr/1076/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "남학생 휴게실",
-   "en": "Male students' lounge",
-   "location": "2북 273호",
-   "type": "lounge",
-   "source": "https://www.inha.ac.kr/kr/1076/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "남학생 휴게실",
-   "en": "Male students' lounge",
-   "location": "하이테크센터 100호",
-   "type": "lounge",
-   "source": "https://www.inha.ac.kr/kr/1076/subview.do",
-   "retrieved": "2026-10-23"
-  },
-  {
-   "ko": "공용 휴게실",
-   "en": "Shared lounge",
-   "location": "2남 240호",
-   "type": "lounge",
-   "source": "https://www.inha.ac.kr/kr/1076/subview.do",
-   "retrieved": "2026-10-23"
-  }
- ],
- "atms": {
-  "source": "https://www.inha.ac.kr/eng/3735/subview.do",
+  "_note": "Facts collected from official Inha University pages (URL and retrieval date on every entry). Korean text is quoted as written; English department names come from the official English college list (matched by homepage URL). The ATM list is from the English ATM page; Korean wording of ATM locations is our translation.",
   "retrieved": "2026-10-23",
-  "bank": "Hana Bank",
-  "list": [
-   {
-    "building": "b-1",
-    "en": "BF (near museum)",
-    "ko": "지하층 (박물관 근처)"
-   },
-   {
-    "building": "b-2",
-    "en": "Building No.2 North: between the entrance and the vending machines outside",
-    "ko": "2북: 출입구와 외부 자판기 사이"
-   },
-   {
-    "building": "b-hitech",
-    "en": "1st Floor Lobby",
-    "ko": "1층 로비"
-   },
-   {
-    "building": "b-5",
-    "en": "Building No. 5 North: 1st Floor Lobby",
-    "ko": "5북 1층 로비"
-   },
-   {
-    "building": "b-5",
-    "en": "Building No. 5 South: 1st Floor Lobby",
-    "ko": "5남 1층 로비"
-   },
-   {
-    "building": "b-6",
-    "en": "1st Floor Lobby",
-    "ko": "1층 로비"
-   },
-   {
-    "building": "b-seoho",
-    "en": "1st Floor Lobby",
-    "ko": "1층 로비"
-   },
-   {
-    "building": "b-law",
-    "en": "1st Floor Lobby",
-    "ko": "1층 로비"
-   },
-   {
-    "building": "b-library",
-    "en": "BF (near the stairs)",
-    "ko": "지하층 (계단 근처)"
-   },
-   {
-    "building": "b-woongbi",
-    "en": "1st Floor Lobby",
-    "ko": "1층 로비"
-   },
-   {
-    "building": "b-biryong",
-    "en": "1st Floor Lobby",
-    "ko": "1층 로비"
-   },
-   {
-    "building": "b-7",
-    "en": "Hana Bank on the 2nd Floor",
-    "ko": "2층 하나은행"
-   }
-  ]
- },
- "cafeteria": {
-  "ko": "학생식당",
-  "en": "Student Cafeteria",
-  "building": "b-7",
-  "buildingBasis": "Official page title '학생식당(학생회관)'",
-  "hours": [
-   {
-    "ko": "천원의 조식",
-    "en": "₩1,000 breakfast",
-    "time": "08:00–09:00"
-   },
-   {
-    "ko": "중식",
-    "en": "Lunch",
-    "time": "11:00–14:00"
-   },
-   {
-    "ko": "셀프라면",
-    "en": "Self-serve ramyeon",
-    "time": "10:30–18:30"
-   },
-   {
-    "ko": "석식",
-    "en": "Dinner",
-    "time": "17:00–18:30"
-   }
-  ],
-  "source": "https://www.inha.ac.kr/kr/1072/subview.do",
-  "retrieved": "2026-10-23"
- },
- "wifi": {
-  "ssid": "INHA-WLAN2",
-  "coverage": {
-   "ko": "교내 건물 실내 전체",
-   "en": "Inside all campus buildings"
-  },
-  "login": {
-   "ko": "포털 아이디/비밀번호와 동일",
-   "en": "Same ID and password as the Inha portal"
-  },
-  "purpose": {
-   "ko": "강의실 수업 및 학업 보조용",
-   "en": "For classes and study"
-  },
-  "help": {
-   "office": "IT인프라팀 (IT Infrastructure Team)",
-   "location": "60주년기념관 1408호",
-   "phone": "032-860-9073~4"
-  },
-  "sources": [
-   {
-    "url": "https://www.inha.ac.kr/kr/1067/subview.do",
-    "retrieved": "2026-10-23"
-   },
-   {
-    "url": "https://internet.inha.ac.kr/internet/index.do",
-    "retrieved": "2026-10-23"
-   }
-  ]
- },
- "computerLabs": {
-  "hours": "09:00~18:00(방학 17:00) 또는 21:00 / 00:00~24:00 24시간 개방(일부)",
-  "moreInfo": "https://cic.inha.ac.kr/cic/11082/subview.do",
-  "source": "https://www.inha.ac.kr/kr/1067/subview.do",
-  "retrieved": "2026-10-23"
- },
- "transport": {
-  "source": "https://www.inha.ac.kr/kr/970/subview.do",
-  "retrieved": "2026-10-23",
-  "subway": [
-   {
-    "ko": "수인분당선 인하대역 5번 출구: 정문 방향, 도보 약 1분",
-    "en": "Suin-Bundang Line, Inha Univ. Station Exit 5: towards the main gate, about 1 minute on foot"
-   },
-   {
-    "ko": "수인분당선 인하대역 4번 출구: 운동장 방향",
-    "en": "Suin-Bundang Line, Inha Univ. Station Exit 4: towards the sports field"
-   },
-   {
-    "ko": "1호선 주안역 2번 출구: 무료 셔틀버스",
-    "en": "Line 1, Juan Station Exit 2: free shuttle bus"
-   }
-  ],
-  "buses": {
-   "stop": "인하대학교",
-   "regional": [
-    "1601",
-    "9200"
-   ],
-   "city": [
-    "5",
-    "5-1",
-    "8",
-    "9",
-    "13",
-    "27",
-    "46",
-    "111-2"
-   ],
-   "otherRegion": [
-    "3001"
-   ],
-   "village": [
-    "511",
-    "512",
-    "515",
-    "516",
-    "517",
-    "518",
-    "519"
-   ],
-   "express": [
-    "908"
-   ]
-  },
-  "gates": [
-   {
-    "ko": "정문",
-    "en": "Main Gate"
-   },
-   {
-    "ko": "후문",
-    "en": "Back Gate",
-    "note": {
-     "ko": "후문으로는 차량 진입 불가",
-     "en": "Vehicles cannot enter through the back gate"
+  "colleges": [
+    {
+      "ko": "프런티어창의대학",
+      "en": "Frontier College of Creative Studies",
+      "office": null,
+      "phone": null,
+      "source": "https://www.inha.ac.kr/kr/989/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "공과대학",
+      "en": "College of Engineering",
+      "office": "2호관 2남 212호",
+      "phone": "032-860-7285~90",
+      "source": "https://www.inha.ac.kr/kr/990/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "자연과학대학",
+      "en": "College of Natural Sciences",
+      "office": "5호관 동 317호",
+      "phone": "032-860-7612, 7615",
+      "source": "https://www.inha.ac.kr/kr/991/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "경영대학",
+      "en": "College of Business Administration",
+      "office": "6호관 222호",
+      "phone": "032-860-7822",
+      "source": "https://www.inha.ac.kr/kr/992/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "사범대학",
+      "en": "College of Education",
+      "office": "서호관 206호",
+      "phone": "032-860-7831~3",
+      "source": "https://www.inha.ac.kr/kr/993/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "사회과학대학",
+      "en": "College of Social Sciences",
+      "office": "9호관 411호",
+      "phone": "032-860-7903",
+      "source": "https://www.inha.ac.kr/kr/994/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "문과대학",
+      "en": "College of Humanities",
+      "office": "5호관 남 309호",
+      "phone": "032-860-7982~4",
+      "source": "https://www.inha.ac.kr/kr/995/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "의과대학",
+      "en": "College of Medicine",
+      "office": "60주년기념관 330호",
+      "phone": "032-860-9801~9807",
+      "source": "https://www.inha.ac.kr/kr/996/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "간호대학",
+      "en": "School of Nursing",
+      "office": "5호관 남 254호",
+      "phone": "032-860-8200, 8218~8219",
+      "source": "https://www.inha.ac.kr/kr/4142/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "미래융합대학",
+      "en": "College of Future Convergence",
+      "office": "미래융합대학관 106호",
+      "phone": "032-860-9301~4",
+      "source": "https://www.inha.ac.kr/kr/997/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "예술체육대학",
+      "en": "College of Arts & Sports",
+      "office": "5호관 남 434호",
+      "phone": "032-860-8161~3",
+      "source": "https://www.inha.ac.kr/kr/998/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "국제대학",
+      "en": "College of International Studies",
+      "office": "평생교육원 221호",
+      "phone": "032-860-9122~6",
+      "source": "https://www.inha.ac.kr/kr/999/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "AI융합대학",
+      "en": "College of AI Convergence",
+      "office": "60주년 901A호",
+      "phone": "032-860-9442",
+      "source": "https://www.inha.ac.kr/kr/3907/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "바이오융합대학",
+      "en": "College of Bio-Innovation",
+      "office": "5호관 동 209A",
+      "phone": "032-860-8869",
+      "source": "https://www.inha.ac.kr/kr/4097/subview.do",
+      "sourceEn": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "retrieved": "2026-10-23"
     }
-   }
-  ]
- },
- "shuttle": {
-  "source": "https://www.inha.ac.kr/kr/971/subview.do",
-  "retrieved": "2026-10-23",
-  "operates": {
-   "ko": "1·2학기 평일만 운행 (공휴일·휴업일 제외)",
-   "en": "Weekdays during the 1st and 2nd semesters only (not on holidays)"
+  ],
+  "departments": [
+    {
+      "college": "공과대학",
+      "ko": "기계공학과",
+      "en": "Mechanical Engineering",
+      "url": "https://mech.inha.ac.kr",
+      "office": "2북 291호",
+      "phone": "032-860-7300~1",
+      "source": "https://mech.inha.ac.kr/mech/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "항공우주공학과",
+      "en": "Aerospace Engineering",
+      "url": "https://aerospace.inha.ac.kr",
+      "office": "항공우주융합캠퍼스 208호",
+      "phone": "032-720-9010, 9039",
+      "source": "https://aerospace.inha.ac.kr/aerospace/index.do",
+      "retrieved": "2026-10-23",
+      "note": "Office is at the Aerospace Convergence Campus, not on the main campus."
+    },
+    {
+      "college": "공과대학",
+      "ko": "조선해양공학과",
+      "en": "Naval Architecture & Ocean Engineering",
+      "url": "https://naoe.inha.ac.kr",
+      "office": "2북 491호",
+      "phone": "032-860-7330",
+      "source": "https://naoe.inha.ac.kr/naoe/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "산업경영공학과",
+      "en": "Industrial Engineering",
+      "url": "https://ie.inha.ac.kr",
+      "office": "2호관 북쪽 477A호",
+      "phone": "032-860-7360",
+      "source": "https://ie.inha.ac.kr/ie/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "화학공학과",
+      "en": "Chemical Engineering",
+      "url": "https://chemeng.inha.ac.kr",
+      "office": "60주년기념관 801A호",
+      "phone": "032-860-7460, 7490",
+      "source": "https://chemeng.inha.ac.kr/chemeng/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "고분자공학과",
+      "en": "Polymer Science & Engineering",
+      "url": "https://inhapoly.inha.ac.kr",
+      "office": null,
+      "phone": "032-860-7480",
+      "source": "https://inhapoly.inha.ac.kr/inhapoly/index.do",
+      "retrieved": "2026-10-23",
+      "note": "Homepage gives no building or room."
+    },
+    {
+      "college": "공과대학",
+      "ko": "신소재공학과",
+      "en": "Materials Science and Engineering",
+      "url": "http://dmse.inha.ac.kr",
+      "office": "5북 135호",
+      "phone": "032-860-7520/7530",
+      "source": "https://dmse.inha.ac.kr/dmse/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "사회인프라공학과",
+      "en": "Civil Engineering",
+      "url": "https://civil.inha.ac.kr",
+      "office": "2남 207호",
+      "phone": "032-860-7560",
+      "source": "https://civil.inha.ac.kr/civil/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "환경공학과",
+      "en": "Environmental Engineering",
+      "url": "https://environment.inha.ac.kr",
+      "office": "2호관 동 441호",
+      "phone": "032-860-7500",
+      "source": "https://environment.inha.ac.kr/environment/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "공간정보공학과",
+      "en": "Geoinformatic Engineering",
+      "url": "https://geoinfo.inha.ac.kr",
+      "office": "4호관 302호",
+      "phone": "032-860-7600",
+      "source": "https://geoinfo.inha.ac.kr/geoinfo/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "건축학부(건축공학·건축학)",
+      "en": "Architectural Engineering / Architecture",
+      "url": "https://arch.inha.ac.kr",
+      "office": "2호관 413호",
+      "phone": "032-860-7580, 032-860-8710",
+      "source": "https://arch.inha.ac.kr/arch/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "에너지자원공학과",
+      "en": "Energy Resource Engineering",
+      "url": "https://eneres.inha.ac.kr",
+      "office": "2남 231B호",
+      "phone": "032-860-7550",
+      "source": "https://eneres.inha.ac.kr/eneres/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "전기전자공학부",
+      "en": "Electrical and Electronic Engineering",
+      "url": "https://ee.inha.ac.kr",
+      "office": "하이테크센터 801호",
+      "phone": "032-860-7410~1",
+      "source": "https://ee.inha.ac.kr/ee/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "반도체시스템공학과",
+      "en": "Semiconductor Systems Engineering",
+      "url": "https://sse.inha.ac.kr",
+      "office": "하이테크관 201호",
+      "phone": "032-860-7355",
+      "source": "https://sse.inha.ac.kr/sse/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "공과대학",
+      "ko": "이차전지융합학과",
+      "en": "Secondary Battery Convergence",
+      "url": "https://ibattery.inha.ac.kr",
+      "office": "2호관(남) 316A",
+      "phone": "032-860-8820",
+      "source": "https://ibattery.inha.ac.kr/ibattery/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "자연과학대학",
+      "ko": "수학과",
+      "en": "Mathematics",
+      "url": "https://math.inha.ac.kr",
+      "office": "5동 213B호",
+      "phone": "032-860-7620",
+      "source": "https://math.inha.ac.kr/math/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "자연과학대학",
+      "ko": "통계학과",
+      "en": "Statistics",
+      "url": "https://statistics.inha.ac.kr",
+      "office": "5북 442B호",
+      "phone": "032-860-7640",
+      "source": "https://statistics.inha.ac.kr/statistics/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "자연과학대학",
+      "ko": "물리학과",
+      "en": "Physics",
+      "url": "https://physics.inha.ac.kr",
+      "office": "5동 316호",
+      "phone": "032-860-7650",
+      "source": "https://physics.inha.ac.kr/physics/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "자연과학대학",
+      "ko": "화학과",
+      "en": "Chemistry",
+      "url": "https://chemistry.inha.ac.kr",
+      "office": "5호관 417B호",
+      "phone": "032-860-7670",
+      "source": "https://chemistry.inha.ac.kr/chemistry/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "자연과학대학",
+      "ko": "해양과학과",
+      "en": "Ocean Sciences",
+      "url": "http://ocean.inha.ac.kr",
+      "office": "5북 236호",
+      "phone": "032-860-7700",
+      "source": "https://ocean.inha.ac.kr/ocean/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "자연과학대학",
+      "ko": "식품영양학과",
+      "en": "Food & Nutrition",
+      "url": "https://foodnutri.inha.ac.kr",
+      "office": "본관 517호",
+      "phone": "032-860-8120",
+      "source": "https://foodnutri.inha.ac.kr/foodnutri/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "경영대학",
+      "ko": "경영학과",
+      "en": "Business Administration",
+      "url": "https://biz.inha.ac.kr",
+      "office": "6호관 222호",
+      "phone": "032-860-7730, 7828, 7750",
+      "source": "https://biz.inha.ac.kr/biz/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "경영대학",
+      "ko": "파이낸스경영학과",
+      "en": "Finance",
+      "url": "https://gfiba.inha.ac.kr",
+      "office": "6호관 222호",
+      "phone": "032-860-7823",
+      "source": "https://gfiba.inha.ac.kr/gfiba/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "경영대학",
+      "ko": "아태물류학부",
+      "en": "Asia Pacific School of Logistics",
+      "url": "https://apsl.inha.ac.kr",
+      "office": null,
+      "phone": null,
+      "source": "https://apsl.inha.ac.kr/apsl/index.do",
+      "retrieved": "2026-10-23",
+      "note": "Homepage gives no building or room."
+    },
+    {
+      "college": "경영대학",
+      "ko": "국제통상학과",
+      "en": "International Trade",
+      "url": "https://star.inha.ac.kr",
+      "office": "6호관 222호",
+      "phone": "032-860-7790",
+      "source": "https://star.inha.ac.kr/star/index.do",
+      "retrieved": "2026-10-23",
+      "note": "Shared office: 경영대학통합행정실."
+    },
+    {
+      "college": "사범대학",
+      "ko": "국어교육과",
+      "en": "Korean Language Education",
+      "url": "https://koreanedu.inha.ac.kr",
+      "office": "서호관 223호",
+      "phone": "032-860-7840",
+      "source": "https://koreanedu.inha.ac.kr/koreanedu/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사범대학",
+      "ko": "영어교육과",
+      "en": "English Language Education",
+      "url": "https://dele.inha.ac.kr",
+      "office": "서호관 425호",
+      "phone": "032-860-7850",
+      "source": "https://dele.inha.ac.kr/dele/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사범대학",
+      "ko": "사회교육과",
+      "en": "Social Studies Education",
+      "url": "https://socialedu.inha.ac.kr",
+      "office": "서호관 219호",
+      "phone": "032-860-7860",
+      "source": "https://socialedu.inha.ac.kr/socialedu/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사범대학",
+      "ko": "교육학과",
+      "en": "Education",
+      "url": "https://education.inha.ac.kr",
+      "office": "서호관 325호",
+      "phone": "032-860-7870",
+      "source": "https://education.inha.ac.kr/education/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사범대학",
+      "ko": "체육교육과",
+      "en": "Physical Education",
+      "url": "https://physicaledu.inha.ac.kr",
+      "office": "서호관 416호",
+      "phone": "032-860-7880",
+      "source": "https://physicaledu.inha.ac.kr/physicaledu/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사범대학",
+      "ko": "수학교육과",
+      "en": "Mathematics Education",
+      "url": "https://mathed.inha.ac.kr",
+      "office": "서호관 443호",
+      "phone": "032-860-8150",
+      "source": "https://mathed.inha.ac.kr/mathed/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사회과학대학",
+      "ko": "행정학과",
+      "en": "Public Administration",
+      "url": "https://publicad.inha.ac.kr",
+      "office": "9호관 409호",
+      "phone": "032-860-7940",
+      "source": "https://publicad.inha.ac.kr/publicad/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사회과학대학",
+      "ko": "정치외교학과",
+      "en": "Political Science & International Relations",
+      "url": "https://political.inha.ac.kr",
+      "office": "9호관 409호",
+      "phone": "032-860-7960",
+      "source": "https://political.inha.ac.kr/political/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사회과학대학",
+      "ko": "미디어커뮤니케이션학과",
+      "en": "Media & Communication",
+      "url": "https://comm.inha.ac.kr",
+      "office": "9호관 409호",
+      "phone": "032-860-8790",
+      "source": "https://comm.inha.ac.kr/comm/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사회과학대학",
+      "ko": "경제학과",
+      "en": "Economics",
+      "url": "https://econ.inha.ac.kr",
+      "office": "9호관 409호",
+      "phone": "032-860-7770",
+      "source": "https://econ.inha.ac.kr/econ/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사회과학대학",
+      "ko": "소비자학과",
+      "en": "Consumer Science",
+      "url": "https://consumer.inha.ac.kr",
+      "office": "9호관 409호",
+      "phone": "032-860-8110",
+      "source": "https://consumer.inha.ac.kr/consumer/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사회과학대학",
+      "ko": "아동심리학과",
+      "en": "Child Psychology",
+      "url": "https://child.inha.ac.kr",
+      "office": "9호관 411호",
+      "phone": "032-860-8140",
+      "source": "https://child.inha.ac.kr/child/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "사회과학대학",
+      "ko": "사회복지학과",
+      "en": "Social Welfare Studies",
+      "url": "https://welfare.inha.ac.kr",
+      "office": "9호관 409호",
+      "phone": "032-860-8605",
+      "source": "https://welfare.inha.ac.kr/welfare/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "문과대학",
+      "ko": "한국어문학과",
+      "en": "Korean Language and Literature",
+      "url": "https://korean.inha.ac.kr",
+      "office": "5호관 남 263호",
+      "phone": "032-860-7990",
+      "source": "https://korean.inha.ac.kr/korean/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "문과대학",
+      "ko": "사학과",
+      "en": "History",
+      "url": "https://history.inha.ac.kr",
+      "office": "5남 215호",
+      "phone": "032-860-8070",
+      "source": "https://history.inha.ac.kr/history/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "문과대학",
+      "ko": "철학과",
+      "en": "Philosophy",
+      "url": "https://philosophy.inha.ac.kr",
+      "office": "5남 262호",
+      "phone": "032-860-8080",
+      "source": "https://philosophy.inha.ac.kr/philosophy/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "문과대학",
+      "ko": "중국학과",
+      "en": "China Studies",
+      "url": "https://chinese.inha.ac.kr",
+      "office": "5남 269호",
+      "phone": "032-860-8050",
+      "source": "https://chinese.inha.ac.kr/chinese/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "문과대학",
+      "ko": "일본언어문화학과",
+      "en": "Japanese Language & Culture",
+      "url": "https://japan.inha.ac.kr",
+      "office": "5남 102호",
+      "phone": "032-860-8060",
+      "source": "https://japan.inha.ac.kr/japan/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "문과대학",
+      "ko": "영미유럽인문융합학부 (영어영문학전공)",
+      "en": "Division of English and European Studies (English)",
+      "url": "https://ees.inha.ac.kr",
+      "office": "5남 115호",
+      "phone": "032-860-8010",
+      "source": "https://ees.inha.ac.kr/ees/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "문과대학",
+      "ko": "영미유럽인문융합학부 (프랑스언어문화전공)",
+      "en": "Division of English and European Studies (French)",
+      "url": "https://ees.inha.ac.kr",
+      "office": "5남 414호",
+      "phone": "032-860-8030",
+      "source": "https://ees.inha.ac.kr/ees/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "문과대학",
+      "ko": "문화콘텐츠문화경영학과",
+      "en": "Cultural Contents & Management",
+      "url": "https://culturecm.inha.ac.kr",
+      "office": "5남 265호",
+      "phone": "032-860-8040, 8900",
+      "source": "https://culturecm.inha.ac.kr/culturecm/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "의과대학",
+      "ko": "의과대학 (의예과·의학과)",
+      "en": "College of Medicine (Pre-medical Studies, Medical Science)",
+      "url": "https://medicine.inha.ac.kr",
+      "office": "60주년기념관 330호",
+      "phone": "032-860-9801~9807",
+      "source": "https://www.inha.ac.kr/kr/996/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "간호대학",
+      "ko": "간호학과",
+      "en": "Nursing",
+      "url": "https://nursing.inha.ac.kr",
+      "office": "5남 254호",
+      "phone": "032-860-8200",
+      "source": "https://nursing.inha.ac.kr/nursing/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "예술체육대학",
+      "ko": "조형예술학과",
+      "en": "Fine Arts",
+      "url": "http://finearts.inha.ac.kr",
+      "office": "서호관 322호",
+      "phone": "032-860-7890, 8160",
+      "source": "https://finearts.inha.ac.kr/finearts/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "예술체육대학",
+      "ko": "디자인융합학과",
+      "en": "Design Convergence",
+      "url": "https://design.inha.ac.kr",
+      "office": "서호관 125호",
+      "phone": "032-860-8170",
+      "source": "https://design.inha.ac.kr/design/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "예술체육대학",
+      "ko": "스포츠과학과",
+      "en": "Kinesiology",
+      "url": "https://sport.inha.ac.kr",
+      "office": "5서 554B호",
+      "phone": "032-860-8180",
+      "source": "https://sport.inha.ac.kr/sport/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "예술체육대학",
+      "ko": "연극영화학과",
+      "en": "Theater & Film Studies",
+      "url": "https://theatrefilm.inha.ac.kr",
+      "office": "5남 242호",
+      "phone": "032-860-8240",
+      "source": "https://theatrefilm.inha.ac.kr/theatrefilm/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "예술체육대학",
+      "ko": "의류디자인학과",
+      "en": "Fashion Design & Textiles",
+      "url": "https://fashion.inha.ac.kr",
+      "office": "본관 518호",
+      "phone": "032-860-8130",
+      "source": "https://fashion.inha.ac.kr/fashion/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "AI융합대학",
+      "ko": "인공지능공학과",
+      "en": "Artificial Intelligence",
+      "url": "https://doai.inha.ac.kr",
+      "office": "60주년기념관 909호",
+      "phone": "032-860-9444",
+      "source": "https://doai.inha.ac.kr/doai/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "AI융합대학",
+      "ko": "데이터사이언스학과",
+      "en": "Data Science",
+      "url": "https://datascience.inha.ac.kr",
+      "office": "60주년기념관 909호",
+      "phone": "032-860-9201",
+      "source": "https://datascience.inha.ac.kr/datascience/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "AI융합대학",
+      "ko": "스마트모빌리티공학과",
+      "en": "Smart Mobility Engineering",
+      "url": "https://sme.inha.ac.kr",
+      "office": "항공우주융합캠퍼스 207호",
+      "phone": "032-720-9080",
+      "source": "https://sme.inha.ac.kr/sme/index.do",
+      "retrieved": "2026-10-23",
+      "note": "Office is at the Aerospace Convergence Campus, not on the main campus."
+    },
+    {
+      "college": "AI융합대학",
+      "ko": "디자인테크놀로지학과",
+      "en": "Design Technology",
+      "url": "https://designtech.inha.ac.kr",
+      "office": "60주년기념관 909호",
+      "phone": "032-860-9445",
+      "source": "https://designtech.inha.ac.kr/designtech/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "AI융합대학",
+      "ko": "컴퓨터공학과",
+      "en": "Computer Engineering",
+      "url": "https://cse.inha.ac.kr",
+      "office": "하이테크 1012호",
+      "phone": "032-860-7440",
+      "source": "https://cse.inha.ac.kr/cse/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "바이오융합대학",
+      "ko": "생명공학과",
+      "en": "Biological Engineering",
+      "url": "https://bio.inha.ac.kr",
+      "office": "2남 231A호",
+      "phone": "032-860-7295",
+      "source": "https://bio.inha.ac.kr/bio/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "바이오융합대학",
+      "ko": "바이오제약공학과",
+      "en": "Biopharmaceutical Engineering",
+      "url": "https://biopharm.inha.ac.kr",
+      "office": "2남 231A호",
+      "phone": "032-860-8870",
+      "source": "https://biopharm.inha.ac.kr/biopharm/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "바이오융합대학",
+      "ko": "생명과학과",
+      "en": "Biological Sciences",
+      "url": "https://biology.inha.ac.kr",
+      "office": "5북 517호",
+      "phone": "032-860-7690",
+      "source": "https://biology.inha.ac.kr/biology/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "바이오융합대학",
+      "ko": "첨단바이오의약학과",
+      "en": "Medicinal Biosciences and Bioengineering",
+      "url": "https://biomedical.inha.ac.kr",
+      "office": "2남 231A호",
+      "phone": "032-860-7296",
+      "source": "https://biomedical.inha.ac.kr/biomedical/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "바이오융합대학",
+      "ko": "바이오식품공학과",
+      "en": "Food Science and Technology",
+      "url": "https://foodscience.inha.ac.kr",
+      "office": "5동 209A",
+      "phone": "032-860-8865",
+      "source": "https://foodscience.inha.ac.kr/foodscience/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "프런티어창의대학",
+      "ko": "자유전공융합학부",
+      "en": "Liberal and Convergence Studies",
+      "url": "https://las.inha.ac.kr",
+      "office": "60주년 기념관 1309호",
+      "phone": "032-860-9155",
+      "source": "https://las.inha.ac.kr/las/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "프런티어창의대학",
+      "ko": "교양교육지원실",
+      "en": "Liberal Education Support Office",
+      "url": null,
+      "office": "60주년기념관 1306호",
+      "phone": "032-860-9253",
+      "source": "https://www.inha.ac.kr/kr/989/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "프런티어창의대학",
+      "ko": "융합학부행정실",
+      "en": "Convergence Studies Administration Office",
+      "url": null,
+      "office": "60주년기념관 1309호",
+      "phone": "032-860-9162",
+      "source": "https://www.inha.ac.kr/kr/989/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "프런티어창의대학",
+      "ko": "융합전공지원실",
+      "en": "Convergence Majors Support Office",
+      "url": "https://conv.inha.ac.kr",
+      "office": "60주년기념관 1317호",
+      "phone": "032-860-9595",
+      "source": "https://www.inha.ac.kr/kr/989/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "국제대학",
+      "ko": "국제대학 (IBT·ISE·KLC학과)",
+      "en": "College of International Studies (IBT, ISE, KLC)",
+      "url": "https://sgcs.inha.ac.kr",
+      "office": "평생교육원 221호",
+      "phone": "032-860-9122~6",
+      "source": "https://www.inha.ac.kr/kr/999/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "college": "미래융합대학",
+      "ko": "미래융합대학 (메카트로닉스공학과 외 4개 학과)",
+      "en": "College of Future Convergence (Mechatronics and 4 more departments)",
+      "url": "https://fccollege.inha.ac.kr",
+      "office": "미래융합대학관 106호",
+      "phone": "032-860-9301~4",
+      "source": "https://www.inha.ac.kr/kr/997/subview.do",
+      "retrieved": "2026-10-23"
+    }
+  ],
+  "offices": [
+    {
+      "ko": "보건센터",
+      "en": "Health Center",
+      "location": "학생회관 215호",
+      "floorText": "2F",
+      "phone": "032-860-8311~2",
+      "hours": {
+        "en": "Semester: Mon–Fri 09:00–18:00; vacation: Mon–Fri 09:00–17:00. University doctor: Mon & Thu 13:00–17:00 (semester).",
+        "ko": "학기 중 월–금 09:00–18:00, 방학 중 월–금 09:00–17:00. 교의 진료: 학기 중 월·목 13:00–17:00."
+      },
+      "type": "facility",
+      "kind": "health",
+      "source": "https://www.inha.ac.kr/eng/3758/subview.do",
+      "retrieved": "2026-10-23",
+      "sourceText": "2F, Student Hall (Room 215, No.7)"
+    },
+    {
+      "ko": "학생상담센터",
+      "en": "Student Counseling Center",
+      "location": "정석학술정보관 5층 521호",
+      "phone": "032-860-8262~3, 032-860-9362~3",
+      "type": "office",
+      "kind": "counseling",
+      "source": "https://www.inha.ac.kr/kr/1079/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "인권센터",
+      "en": "Human Rights Center",
+      "location": "정석학술정보관 5층 519A",
+      "phone": "032-860-8314, 032-860-9344",
+      "type": "office",
+      "kind": "counseling",
+      "source": "https://www.inha.ac.kr/kr/1079/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "장애학생지원실",
+      "en": "Disability Support Office",
+      "location": "학생회관 345호",
+      "phone": "032-860-7067",
+      "type": "office",
+      "kind": "student_support",
+      "source": "https://www.inha.ac.kr/kr/1079/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "IT인프라팀 (무선인터넷 문의)",
+      "en": "IT Infrastructure Team (Wi-Fi help)",
+      "location": "60주년기념관 1408호",
+      "phone": "032-860-9073~4",
+      "type": "office",
+      "kind": "it",
+      "source": "https://internet.inha.ac.kr/internet/index.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "여학생 휴게실",
+      "en": "Female students' lounge",
+      "location": "5남 130호",
+      "hours": {
+        "ko": "09:00–18:00 (방학 중·공휴일 미운영)",
+        "en": "09:00–18:00 (closed during vacations and on holidays)"
+      },
+      "type": "lounge",
+      "source": "https://www.inha.ac.kr/kr/1076/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "여학생 휴게실",
+      "en": "Female students' lounge",
+      "location": "6호관 118호",
+      "hours": {
+        "ko": "09:00–18:00 (방학 중·공휴일 미운영)",
+        "en": "09:00–18:00 (closed during vacations and on holidays)"
+      },
+      "type": "lounge",
+      "source": "https://www.inha.ac.kr/kr/1076/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "남학생 휴게실",
+      "en": "Male students' lounge",
+      "location": "2북 273호",
+      "type": "lounge",
+      "source": "https://www.inha.ac.kr/kr/1076/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "남학생 휴게실",
+      "en": "Male students' lounge",
+      "location": "하이테크센터 100호",
+      "type": "lounge",
+      "source": "https://www.inha.ac.kr/kr/1076/subview.do",
+      "retrieved": "2026-10-23"
+    },
+    {
+      "ko": "공용 휴게실",
+      "en": "Shared lounge",
+      "location": "2남 240호",
+      "type": "lounge",
+      "source": "https://www.inha.ac.kr/kr/1076/subview.do",
+      "retrieved": "2026-10-23"
+    }
+  ],
+  "atms": {
+    "source": "https://www.inha.ac.kr/eng/3735/subview.do",
+    "retrieved": "2026-10-23",
+    "bank": "Hana Bank",
+    "list": [
+      {
+        "building": "b-1",
+        "en": "BF (near museum)",
+        "ko": "지하층 (박물관 근처)"
+      },
+      {
+        "building": "b-2",
+        "en": "Building No.2 North: between the entrance and the vending machines outside",
+        "ko": "2북: 출입구와 외부 자판기 사이"
+      },
+      {
+        "building": "b-hitech",
+        "en": "1st Floor Lobby",
+        "ko": "1층 로비"
+      },
+      {
+        "building": "b-5",
+        "en": "Building No. 5 North: 1st Floor Lobby",
+        "ko": "5북 1층 로비"
+      },
+      {
+        "building": "b-5",
+        "en": "Building No. 5 South: 1st Floor Lobby",
+        "ko": "5남 1층 로비"
+      },
+      {
+        "building": "b-6",
+        "en": "1st Floor Lobby",
+        "ko": "1층 로비"
+      },
+      {
+        "building": "b-seoho",
+        "en": "1st Floor Lobby",
+        "ko": "1층 로비"
+      },
+      {
+        "building": "b-law",
+        "en": "1st Floor Lobby",
+        "ko": "1층 로비"
+      },
+      {
+        "building": "b-library",
+        "en": "BF (near the stairs)",
+        "ko": "지하층 (계단 근처)"
+      },
+      {
+        "building": "b-woongbi",
+        "en": "1st Floor Lobby",
+        "ko": "1층 로비"
+      },
+      {
+        "building": "b-biryong",
+        "en": "1st Floor Lobby",
+        "ko": "1층 로비"
+      },
+      {
+        "building": "b-7",
+        "en": "Hana Bank on the 2nd Floor",
+        "ko": "2층 하나은행"
+      }
+    ]
   },
-  "campusStop": {
-   "ko": "정석학술정보관 뒤 정류장",
-   "en": "Stop behind the Jungseok Memorial Library"
+  "cafeteria": {
+    "ko": "학생식당",
+    "en": "Student Cafeteria",
+    "building": "b-7",
+    "buildingBasis": "Official page title '학생식당(학생회관)'",
+    "hours": [
+      {
+        "ko": "천원의 조식",
+        "en": "₩1,000 breakfast",
+        "time": "08:00–09:00"
+      },
+      {
+        "ko": "중식",
+        "en": "Lunch",
+        "time": "11:00–14:00"
+      },
+      {
+        "ko": "셀프라면",
+        "en": "Self-serve ramyeon",
+        "time": "10:30–18:30"
+      },
+      {
+        "ko": "석식",
+        "en": "Dinner",
+        "time": "17:00–18:30"
+      }
+    ],
+    "source": "https://www.inha.ac.kr/kr/1072/subview.do",
+    "retrieved": "2026-10-23"
   },
-  "phone": "032-860-8592"
- },
- "contacts": {
-  "source": "https://www.inha.ac.kr/campusMap/kr/view.do?layout=unknown&artclSeq=1",
-  "retrieved": "2026-10-23",
-  "main": "032-860-7114",
-  "emergency24h": "032-860-9119",
-  "address": {
-   "ko": "22212 인천광역시 미추홀구 인하로 100",
-   "en": "100 Inha-ro, Michuhol-gu, Incheon 22212"
+  "wifi": {
+    "ssid": "INHA-WLAN2",
+    "coverage": {
+      "ko": "교내 건물 실내 전체",
+      "en": "Inside all campus buildings"
+    },
+    "login": {
+      "ko": "포털 아이디/비밀번호와 동일",
+      "en": "Same ID and password as the Inha portal"
+    },
+    "purpose": {
+      "ko": "강의실 수업 및 학업 보조용",
+      "en": "For classes and study"
+    },
+    "help": {
+      "office": "IT인프라팀 (IT Infrastructure Team)",
+      "location": "60주년기념관 1408호",
+      "phone": "032-860-9073~4"
+    },
+    "sources": [
+      {
+        "url": "https://www.inha.ac.kr/kr/1067/subview.do",
+        "retrieved": "2026-10-23"
+      },
+      {
+        "url": "https://internet.inha.ac.kr/internet/index.do",
+        "retrieved": "2026-10-23"
+      }
+    ]
+  },
+  "computerLabs": {
+    "hours": {
+      "ko": "09:00~18:00(방학 17:00) 또는 21:00 / 00:00~24:00 24시간 개방(일부)",
+      "en": "09:00–18:00 (vacation: until 17:00) or until 21:00; some labs are open 24 hours"
+    },
+    "moreInfo": "https://cic.inha.ac.kr/cic/11082/subview.do",
+    "source": "https://www.inha.ac.kr/kr/1067/subview.do",
+    "retrieved": "2026-10-23"
+  },
+  "transport": {
+    "source": "https://www.inha.ac.kr/kr/970/subview.do",
+    "retrieved": "2026-10-23",
+    "subway": [
+      {
+        "ko": "수인분당선 인하대역 5번 출구: 정문 방향, 도보 약 1분",
+        "en": "Suin-Bundang Line, Inha Univ. Station Exit 5: towards the main gate, about 1 minute on foot"
+      },
+      {
+        "ko": "수인분당선 인하대역 4번 출구: 운동장 방향",
+        "en": "Suin-Bundang Line, Inha Univ. Station Exit 4: towards the sports field"
+      },
+      {
+        "ko": "1호선 주안역 2번 출구: 무료 셔틀버스",
+        "en": "Line 1, Juan Station Exit 2: free shuttle bus"
+      }
+    ],
+    "buses": {
+      "stop": "인하대학교",
+      "regional": [
+        "1601",
+        "9200"
+      ],
+      "city": [
+        "5",
+        "5-1",
+        "8",
+        "9",
+        "13",
+        "27",
+        "46",
+        "111-2"
+      ],
+      "otherRegion": [
+        "3001"
+      ],
+      "village": [
+        "511",
+        "512",
+        "515",
+        "516",
+        "517",
+        "518",
+        "519"
+      ],
+      "express": [
+        "908"
+      ]
+    },
+    "gates": [
+      {
+        "ko": "정문",
+        "en": "Main Gate"
+      },
+      {
+        "ko": "후문",
+        "en": "Back Gate",
+        "note": {
+          "ko": "후문으로는 차량 진입 불가",
+          "en": "Vehicles cannot enter through the back gate"
+        }
+      }
+    ]
+  },
+  "shuttle": {
+    "source": "https://www.inha.ac.kr/kr/971/subview.do",
+    "retrieved": "2026-10-23",
+    "operates": {
+      "ko": "1·2학기 평일만 운행 (공휴일·휴업일 제외)",
+      "en": "Weekdays during the 1st and 2nd semesters only (not on holidays)"
+    },
+    "campusStop": {
+      "ko": "정석학술정보관 뒤 정류장",
+      "en": "Stop behind the Jungseok Memorial Library"
+    },
+    "phone": "032-860-8592"
+  },
+  "contacts": {
+    "source": "https://www.inha.ac.kr/campusMap/kr/view.do?layout=unknown&artclSeq=1",
+    "retrieved": "2026-10-23",
+    "main": "032-860-7114",
+    "emergency24h": "032-860-9119",
+    "address": {
+      "ko": "22212 인천광역시 미추홀구 인하로 100",
+      "en": "100 Inha-ro, Michuhol-gu, Incheon 22212"
+    }
+  },
+  "library": {
+    "homepage": "https://lib.inha.ac.kr/",
+    "hoursStatus": "unknown",
+    "note": "Opening hours are shown by the library website's app and could not be retrieved; check lib.inha.ac.kr."
   }
- },
- "library": {
-  "homepage": "https://lib.inha.ac.kr/",
-  "hoursStatus": "unknown",
-  "note": "Opening hours are shown by the library website's app and could not be retrieved; check lib.inha.ac.kr."
- }
 }

@@ -30,6 +30,8 @@
  * @property {string|null} selectedBuilding Building whose panel is open.
  * @property {{type: string, value: string}|null} highlight Item to highlight in the building panel.
  * @property {string|null} hoveredBuilding  Building under the pointer.
+ * @property {string[]} poiFilters          Amenity groups shown on the map.
+ * @property {boolean} infoOpen             Whether the campus Info panel is open.
  */
 
 /** @type {AppState} */
@@ -46,6 +48,8 @@ const state = {
   selectedBuilding: null,
   highlight: null,
   hoveredBuilding: null,
+  poiFilters: [],
+  infoOpen: false,
 };
 
 /** @type {Set<(state: AppState, changed: string[]) => void>} */

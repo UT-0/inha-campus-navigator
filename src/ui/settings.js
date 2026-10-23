@@ -47,8 +47,9 @@ function applyTheme(theme) {
 /**
  * Creates the settings controls in the header.
  * @param {HTMLElement} container
+ * @param {{onInfo?: () => void}} [options] `onInfo` adds a button that opens the Info panel.
  */
-export function createSettings(container) {
+export function createSettings(container, { onInfo } = {}) {
   function render() {
     const { lang, theme } = getState();
 
@@ -105,7 +106,21 @@ export function createSettings(container) {
       createIcon(theme === 'dark' ? 'sun' : 'moon'),
     );
 
-    container.replaceChildren(languageSwitch, themeButton);
+    const infoButton = onInfo
+      ? el(
+          'button',
+          {
+            class: 'icon-btn info-toggle',
+            type: 'button',
+            'aria-label': t('info.open'),
+            title: t('info.open'),
+            onClick: onInfo,
+          },
+          createIcon('info'),
+        )
+      : null;
+
+    container.replaceChildren(...[languageSwitch, infoButton, themeButton].filter(Boolean));
   }
 
   // Follow the OS setting until the user makes a choice.
