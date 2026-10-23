@@ -3,8 +3,9 @@
  *
  * Shows everything known about the selected building: names in both
  * languages, number, category, a photo (or placeholder), description,
- * floors, opening hours, departments, facilities, rooms and the courses held
- * there. Buttons set the building as the route start or destination, or zoom
+ * floors, opening hours, departments with their offices, a floor directory,
+ * amenities (with what is not verified yet), the courses held there and the
+ * sources of every fact. Buttons set the building as the route start or destination, or zoom
  * the map to it. An item found through search (course, room, department,
  * facility) is highlighted and scrolled into view.
  */
@@ -68,17 +69,22 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
       el(
         'div',
         { class: 'building-badges' },
-        el('span', {
-          class: 'number-badge',
-          'data-category': category,
-          title: t('building.number', { number: building.number ?? '' }),
-          text: building.number ?? '',
-        }),
+        building.number
+          ? el('span', {
+              class: 'number-badge',
+              'data-category': category,
+              title: t('building.number', { number: building.number }),
+              text: building.number,
+            })
+          : null,
         el(
           'span',
           { class: 'category-badge', 'data-category': category },
           t(`category.${category}`),
         ),
+        building.categoryStatus && building.categoryStatus !== 'verified'
+          ? statusTag(building.categoryStatus)
+          : null,
       ),
       heading,
       otherName && otherName !== localize(building.name)
@@ -86,23 +92,7 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
         : null,
     );
 
-    const photo = building.photo
-      ? el('img', {
-          class: 'building-photo',
-          src: resolveAssetUrl(building.photo),
-          alt: localize(building.name),
-        })
-      : el(
-          'div',
-          {
-            class: 'building-photo is-placeholder',
-            'data-category': category,
-            role: 'img',
-            'aria-label': t('building.photo'),
-          },
-          createIcon('building', { size: 32, strokeWidth: 1.6 }),
-          el('span', { text: t('building.photo') }),
-        );
+    const photo = photoBlock(building, category);
 
     const buttons = el(
       'div',
@@ -136,22 +126,30 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
       ),
     );
 
+    const floors = floorsAbove(building);
+    const hours = hoursText(building);
     const facts = el(
       'dl',
       { class: 'facts' },
-      floorsAbove(building)
-        ? fact(
+      building.kind === 'area'
+        ? null
+        : fact(
             'building',
             t('building.floors'),
-            t('building.floorsValue', { n: floorsAbove(building) }),
-          )
-        : null,
-      hoursText(building) ? fact('clock', t('building.hours'), hoursText(building)) : null,
+            floors ? t('building.floorsValue', { n: floors }) : t('status.unknown'),
+            building.floors?.status,
+          ),
+      fact(
+        'clock',
+        t('building.hours'),
+        hours || t('status.unknown'),
+        hours ? building.openingHours?.status : 'unknown',
+      ),
     );
 
     const sections = [];
 
-    if (building.description) {
+    if (localize(building.description)) {
       sections.push(
         section(
           t('building.about'),
@@ -170,9 +168,29 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
             building.departments.map((department, i) =>
               el(
                 'li',
-                { class: `item${isHighlighted('department', i) ? ' is-highlighted' : ''}` },
+                {
+                  class: `item item-rich${isHighlighted('department', i) ? ' is-highlighted' : ''}`,
+                },
                 createIcon('users', { size: 16 }),
-                localize(department),
+                el(
+                  'div',
+                  { class: 'item-body' },
+                  department.url
+                    ? el('a', {
+                        class: 'item-title',
+                        href: department.url,
+                        target: '_blank',
+                        rel: 'noopener',
+                        text: localize(department),
+                      })
+                    : el('span', { class: 'item-title', text: localize(department) }),
+                  el('span', {
+                    class: 'item-meta',
+                    text: [department.floorLabel, localize(department.office), department.phone]
+                      .filter(Boolean)
+                      .join(' · '),
+                  }),
+                ),
               ),
             ),
           ),
@@ -180,27 +198,46 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
       );
     }
 
-    if (building.facilities?.length) {
+    if (building.floorDirectory?.length) {
       sections.push(
         section(
-          t('building.facilities'),
+          t('building.directory'),
           el(
-            'ul',
-            { class: 'chip-list' },
-            building.facilities.map((facility) =>
+            'div',
+            { class: 'floor-directory' },
+            building.floorDirectory.map((floor, f) =>
               el(
-                'li',
-                {
-                  class: `chip facility-chip${isHighlighted('facility', facility) ? ' is-highlighted' : ''}`,
-                },
-                createIcon(facility, { size: 16 }),
-                t(`facility.${facility}`),
+                'div',
+                { class: 'floor' },
+                el('span', { class: 'floor-label', text: floor.floor ?? '?' }),
+                el(
+                  'ul',
+                  { class: 'floor-items' },
+                  floor.items.map((item, i) =>
+                    el(
+                      'li',
+                      {
+                        class: `floor-item${isHighlighted('directory', `${f}:${i}`) ? ' is-highlighted' : ''}`,
+                      },
+                      el('span', { class: 'item-title', text: localize(item) }),
+                      el('span', {
+                        class: 'item-meta',
+                        text: [localize(item.room), item.phone].filter(Boolean).join(' · '),
+                      }),
+                      item.hours
+                        ? el('span', { class: 'item-meta', text: localize(item.hours) })
+                        : null,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
         ),
       );
     }
+
+    if (building.amenities) sections.push(amenitiesSection(building.amenities));
 
     if (building.rooms?.length) {
       sections.push(
@@ -221,31 +258,33 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
       );
     }
 
-    sections.push(
-      section(
-        t('building.courses'),
-        buildingCourses.length
-          ? el(
-              'ul',
-              { class: 'course-list' },
-              buildingCourses.map((course) =>
-                el(
-                  'li',
-                  {
-                    class: `course${isHighlighted('course', course.code) || isHighlighted('room', course.room) ? ' is-highlighted' : ''}`,
-                  },
-                  el('span', { class: 'course-code', text: course.code }),
-                  el('span', { class: 'course-name', text: localize(course.name) }),
-                  el('span', {
-                    class: 'course-room',
-                    text: t('building.courseRoom', { room: course.room }),
-                  }),
-                ),
+    if (buildingCourses.length) {
+      sections.push(
+        section(
+          t('building.courses'),
+          el(
+            'ul',
+            { class: 'course-list' },
+            buildingCourses.map((course) =>
+              el(
+                'li',
+                {
+                  class: `course${isHighlighted('course', course.code) || isHighlighted('room', course.room) ? ' is-highlighted' : ''}`,
+                },
+                el('span', { class: 'course-code', text: course.code }),
+                el('span', { class: 'course-name', text: localize(course.name) }),
+                el('span', {
+                  class: 'course-room',
+                  text: t('building.courseRoom', { room: course.room }),
+                }),
               ),
-            )
-          : el('p', { class: 'muted', text: t('building.noCourses') }),
-      ),
-    );
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (building.sources?.length) sections.push(sourcesSection(building));
 
     container.replaceChildren(
       el(
@@ -275,21 +314,110 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
     });
   }
 
-  function fact(icon, label, value) {
+  function fact(icon, label, value, status) {
     return el(
       'div',
       { class: 'fact' },
       el('dt', {}, createIcon(icon, { size: 16 }), label),
-      el('dd', { text: value }),
+      status === 'unknown'
+        ? el('dd', { class: 'is-unknown', text: t('status.unknown') })
+        : el('dd', {}, value, status && status !== 'verified' ? statusTag(status) : null),
     );
   }
 
-  function section(title, content) {
+  function amenitiesSection(amenities) {
+    const known = [];
+    const unknown = [];
+    for (const key of AMENITY_ORDER) {
+      const amenity = amenities[key];
+      if (!amenity) continue;
+      const detail = amenityDetail(key, amenity);
+      if (amenity.status === 'unknown' || detail === null) unknown.push(key);
+      else known.push({ key, amenity, detail });
+    }
+    return section(
+      t('building.amenities'),
+      known.length
+        ? el(
+            'ul',
+            { class: 'item-list' },
+            known.map(({ key, amenity, detail }) =>
+              el(
+                'li',
+                {
+                  class: `item item-rich${isHighlighted('amenity', key) ? ' is-highlighted' : ''}`,
+                },
+                createIcon(AMENITY_ICONS[key], { size: 16 }),
+                el(
+                  'div',
+                  { class: 'item-body' },
+                  el(
+                    'span',
+                    { class: 'item-title' },
+                    t(`amenity.${key}`),
+                    amenity.status !== 'verified' ? statusTag(amenity.status) : null,
+                  ),
+                  ...detail.map((line) => el('span', { class: 'item-meta', text: line })),
+                ),
+              ),
+            ),
+          )
+        : null,
+      unknown.length
+        ? el('p', {
+            class: 'muted unverified',
+            text: t('building.unverified', {
+              list: unknown.map((key) => t(`amenity.${key}`)).join(', '),
+            }),
+          })
+        : null,
+    );
+  }
+
+  function sourcesSection(building) {
+    const titles = new Map((campus.meta.sources ?? []).map((s) => [s.url, s.title]));
+    const byUrl = new Map();
+    for (const source of building.sources) {
+      if (!byUrl.has(source.url)) byUrl.set(source.url, { ...source, fields: [] });
+      byUrl.get(source.url).fields.push(source.field);
+    }
+    return el(
+      'details',
+      { class: 'building-sources' },
+      el('summary', { text: t('building.sources', { n: byUrl.size }) }),
+      el(
+        'ul',
+        {},
+        [...byUrl.values()].map((source) =>
+          el(
+            'li',
+            {},
+            el('a', {
+              href: source.url,
+              target: '_blank',
+              rel: 'noopener',
+              text: titles.get(source.url) ?? source.url.replace(/^https?:\/\//, ''),
+            }),
+            el('span', {
+              class: 'item-meta',
+              text: t('building.sourceMeta', {
+                fields: source.fields.join(', '),
+                date: source.retrieved,
+              }),
+            }),
+          ),
+        ),
+      ),
+      building.osmNote ? el('p', { class: 'item-meta', text: building.osmNote }) : null,
+    );
+  }
+
+  function section(title, ...content) {
     return el(
       'section',
       { class: 'building-section' },
       el('h3', { class: 'section-title', text: title }),
-      content,
+      ...content,
     );
   }
 
@@ -312,6 +440,118 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
   return { close };
 }
 
+/** Amenities in display order, with their icons. */
+const AMENITY_ORDER = [
+  'wifi',
+  'food',
+  'atm',
+  'studySpace',
+  'printers',
+  'restrooms',
+  'elevator',
+  'accessibleEntrance',
+  'waterFountain',
+  'vending',
+  'lockers',
+];
+const AMENITY_ICONS = {
+  wifi: 'wifi',
+  food: 'restaurant',
+  atm: 'atm',
+  studySpace: 'lounge',
+  printers: 'printer',
+  restrooms: 'restroom',
+  elevator: 'elevator',
+  accessibleEntrance: 'door',
+  waterFountain: 'water',
+  vending: 'convenience_store',
+  lockers: 'lockers',
+};
+
+/**
+ * Detail lines for a known amenity, or null when nothing is known.
+ * @param {string} key
+ * @param {object} amenity
+ * @returns {string[]|null}
+ */
+function amenityDetail(key, amenity) {
+  if (key === 'wifi') {
+    if (amenity.available === null) return null;
+    if (!amenity.available) return [t('amenity.none')];
+    return [[amenity.networks?.join(', '), localize(amenity.note)].filter(Boolean).join(' · ')];
+  }
+  if (key === 'food') {
+    if (!amenity.places?.length) return null;
+    return amenity.places.map((place) =>
+      [localize(place), ...(place.hours ?? []).map((h) => `${localize(h)} ${h.time}`)].join(' · '),
+    );
+  }
+  if (key === 'restrooms') {
+    if (!amenity.floors?.length) return null;
+    return [amenity.floors.join(', ')];
+  }
+  if ('available' in amenity) {
+    if (amenity.available === null) return null;
+    return [amenity.available ? t('amenity.yes') : t('amenity.none')];
+  }
+  if (!amenity.locations?.length) return null;
+  return amenity.locations.map((location) => localize(location));
+}
+
+/**
+ * A small label for data that is not confirmed by an official source.
+ * @param {'verified'|'osm'|'estimated'|'unknown'} status
+ */
+function statusTag(status) {
+  return el('span', { class: 'status-tag', 'data-status': status, text: t(`status.${status}`) });
+}
+
+/** Photo with credit, or a placeholder card. */
+function photoBlock(building, category) {
+  const photo = building.photo;
+  const src = typeof photo === 'string' ? photo : photo?.src;
+  if (src) {
+    return el(
+      'figure',
+      { class: 'building-figure' },
+      el('img', {
+        class: 'building-photo',
+        src: resolveAssetUrl(src),
+        alt: localize(building.name),
+        loading: 'lazy',
+      }),
+      photo?.author
+        ? el(
+            'figcaption',
+            { class: 'photo-credit' },
+            photo.sourceUrl
+              ? el('a', {
+                  href: photo.sourceUrl,
+                  target: '_blank',
+                  rel: 'noopener',
+                  text: t('building.photoCredit', {
+                    author: photo.author,
+                    license: photo.license ?? '',
+                  }),
+                })
+              : t('building.photoCredit', { author: photo.author, license: photo.license ?? '' }),
+          )
+        : null,
+    );
+  }
+  return el(
+    'div',
+    {
+      class: 'building-photo is-placeholder',
+      'data-category': category,
+      role: 'img',
+      'aria-label': t('building.photo'),
+    },
+    createIcon('building', { size: 32, strokeWidth: 1.6 }),
+    el('span', { text: t('building.photo') }),
+  );
+}
+
 /** Floors above ground, from the current ({above, …}) or older (number) schema. */
 function floorsAbove(building) {
   const floors = building.floors;
@@ -322,5 +562,5 @@ function floorsAbove(building) {
 function hoursText(building) {
   const hours = building.openingHours;
   if (!hours) return '';
-  return 'text' in hours ? localize(hours.text) : localize(hours);
+  return 'status' in hours ? localize(hours.text) : localize(hours);
 }

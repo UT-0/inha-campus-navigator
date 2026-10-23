@@ -137,7 +137,7 @@ export default {
   // Building panel
   'building.back': '뒤로',
   'building.number': '{number}번 건물',
-  'building.photo': '사진 준비 중',
+  'building.photo': '아직 사진이 없습니다',
   'building.floors': '층수',
   'building.floorsValue': '{n}층',
   'building.hours': '운영 시간',
@@ -152,6 +152,33 @@ export default {
   'building.goHere': '여기로 가기',
   'building.zoom': '건물 확대',
   'building.courseRoom': '{room}호',
+  'building.directory': '층별 안내',
+  'building.amenities': '편의시설',
+  'building.unverified': '아직 확인되지 않음: {list}.',
+  'building.sources': '출처 ({n})',
+  'building.sourceMeta': '{fields} · {date} 확인',
+  'building.photoCredit': '사진: {author}, {license}',
+
+  // Data status
+  'status.verified': '확인됨',
+  'status.osm': 'OpenStreetMap',
+  'status.estimated': '추정',
+  'status.unknown': '확인 전',
+
+  // Amenities
+  'amenity.wifi': '와이파이',
+  'amenity.food': '식당',
+  'amenity.atm': 'ATM',
+  'amenity.studySpace': '학습 공간·휴게실',
+  'amenity.printers': '프린터',
+  'amenity.restrooms': '화장실',
+  'amenity.elevator': '엘리베이터',
+  'amenity.accessibleEntrance': '계단 없는 출입구',
+  'amenity.waterFountain': '정수기',
+  'amenity.vending': '자판기',
+  'amenity.lockers': '사물함',
+  'amenity.yes': '있음',
+  'amenity.none': '없음',
 
   // Building list
   'list.title': '전체 건물',

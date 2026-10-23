@@ -2,38 +2,524 @@
   "_note": "Official building list (sources: inha-buildings-kr, inha-campusmap-kr, inha-buildings-en in data-raw/official-sources.json), matched to OpenStreetMap features. 'number' is the number on the official campus map legend (for N호관 buildings it equals the 호관 number). 'osm' lists the OSM features that make up the building. 'osmMatch' is 'name' when the OSM feature carries the same name, 'estimated' when the match is an inference that must be checked on campus.",
   "retrieved": "2026-10-23",
   "buildings": [
-    { "id": "b-1", "number": "1", "ko": "본관(1호관)", "en": "University Main Building", "aliases": ["본관", "1호관", "Main Building"], "category": "admin", "osm": ["way/217958071"], "osmMatch": "name" },
-    { "id": "b-2", "number": "2", "ko": "2호관", "en": "Building 2", "aliases": ["2동", "2남", "2북", "2남관", "2북관", "2호관(2동)", "2호관(2남)", "2호관(2북)"], "category": "academic", "osm": ["relation/14633181", "way/219983082"], "osmMatch": "name", "osmNote": "OSM maps 2북관 (relation) and 2남관 (way). The 2동 wing has no named OSM feature." },
-    { "id": "b-60th", "number": "3", "ko": "60주년기념관", "en": "60th Anniversary Hall", "aliases": ["60주년"], "category": "academic", "osm": ["way/218189298"], "osmMatch": "name" },
-    { "id": "b-4", "number": "4", "ko": "4호관", "en": "Building 4", "aliases": [], "category": "academic", "osm": ["way/219982956"], "osmMatch": "name" },
-    { "id": "b-5", "number": "5", "ko": "5호관", "en": "Building 5", "aliases": ["5동", "5서", "5남", "5북", "5호관(5동)", "5호관(5서)", "5호관(5남)", "5호관(5북)"], "category": "academic", "osm": ["relation/3149246"], "osmMatch": "name" },
-    { "id": "b-6", "number": "6", "ko": "6호관", "en": "Building 6", "aliases": [], "category": "academic", "osm": ["way/568420968"], "osmMatch": "name" },
-    { "id": "b-7", "number": "7", "ko": "7호관(학생회관)", "en": "Building 7 (Student Center)", "aliases": ["학생회관", "7호관", "Student Center"], "category": "student_services", "osm": ["way/218038027"], "osmMatch": "name" },
-    { "id": "b-library", "number": "8", "ko": "정석학술정보관", "en": "Jungseok Memorial Library", "aliases": ["도서관", "중앙도서관", "Library"], "category": "library", "osm": ["way/217958067"], "osmMatch": "name" },
-    { "id": "b-9", "number": "9", "ko": "9호관", "en": "Building 9", "aliases": [], "category": "academic", "osm": ["way/568420969"], "osmMatch": "name" },
-    { "id": "b-seoho", "number": "10", "ko": "서호관", "en": "West Lake Building", "aliases": [], "category": "academic", "osm": ["way/218188831"], "osmMatch": "name" },
-    { "id": "b-nabille", "number": "11", "ko": "나빌레관", "en": "Student Club Hall", "aliases": ["동아리관"], "category": "student_services", "osm": ["way/218188169"], "osmMatch": "name" },
-    { "id": "b-hitech", "number": "12", "ko": "하이테크센터", "en": "Inha Hi-Tech Center", "aliases": ["하이테크", "Hi-Tech Center"], "category": "academic", "osm": ["way/218081857"], "osmMatch": "name" },
-    { "id": "b-law", "number": "13", "ko": "로스쿨관", "en": "Law School", "aliases": ["법학전문대학원"], "category": "academic", "osm": ["way/217950511"], "osmMatch": "name" },
-    { "id": "b-rotc", "number": "14", "ko": "학군단", "en": "R.O.T.C. Building", "aliases": ["ROTC"], "category": "other", "osm": ["way/218265217"], "osmMatch": "name" },
-    { "id": "b-lifelong", "number": "15", "ko": "평생교육관/미래융합대학", "en": "Center for Continuing Education", "aliases": ["평생교육관", "미래융합대학"], "category": "academic", "osm": ["way/218186034"], "osmMatch": "name" },
-    { "id": "b-dream", "number": "16", "ko": "김현태 인하드림센터", "en": "Kim Hyun Tae Inha Dream Center", "aliases": ["인하드림센터", "김현태인하드림센터"], "category": "other", "osm": ["way/568420970"], "osmMatch": "name" },
-    { "id": "b-hawaii", "number": "17", "ko": "하와이교포기념관", "en": "The Hawaiian Compatriots Memorial Hall (Hyunkyung Gymnasium)", "aliases": ["현경체육관", "체육관", "Hyunkyung Gymnasium", "Gymnasium"], "category": "sports", "osm": ["way/218037242"], "osmMatch": "estimated", "osmNote": "The OSM building is named 체육관 / Gymnasium; the official English name identifies 하와이교포기념관 as the Hyunkyung Gymnasium. Match not yet confirmed on campus." },
-    { "id": "b-dream23", "number": "18", "ko": "인하드림센터 2·3관", "en": "Inha Dream Center 2ㆍ3", "aliases": ["인하드림센터 2관", "인하드림센터 3관", "드림센터"], "category": "other", "osm": ["way/471332105", "way/471332104"], "osmMatch": "name", "osmNote": "OSM draws these inside the Inha Technical College area outline, but the official Inha University building list includes them." },
-    { "id": "b-field", "number": "19", "ko": "대운동장", "en": "Sports Field", "aliases": ["운동장"], "category": "sports", "osm": ["way/220889089"], "osmMatch": "name", "kind": "area" },
-    { "id": "b-basketball", "number": "20", "ko": "농구장", "en": "Basketball Field", "aliases": ["Basketball Court"], "category": "sports", "osm": ["way/281499584"], "osmMatch": "name", "kind": "area" },
-    { "id": "b-tennis", "number": "21", "ko": "테니스장", "en": null, "enFromOsm": "Tennis Court", "aliases": ["Tennis Courts"], "category": "sports", "osm": ["way/281499585", "way/237487555"], "osmMatch": "estimated", "kind": "area", "osmNote": "The official legend lists one 테니스장; OSM has two tennis pitches on campus. Both are included until checked." },
-    { "id": "b-c", "number": "22", "ko": "C호관", "en": "Building C", "aliases": ["C동"], "category": "academic", "osm": ["way/568420972"], "osmMatch": "name" },
-    { "id": "b-parking", "number": "23", "ko": "비룡주차장", "en": "Parking Lot", "aliases": ["Biryong Parking Lot", "주차장"], "category": "other", "osm": ["way/568420971"], "osmMatch": "name", "kind": "area" },
-    { "id": "b-woongbi", "number": "24", "ko": "제1생활관(웅비재)", "en": "Woongbijae (Dormitory 1)", "aliases": ["웅비재", "제1생활관", "기숙사", "Dormitory 1"], "category": "dormitory", "osm": ["way/217948855"], "osmMatch": "name" },
-    { "id": "b-biryong", "number": "25", "ko": "제2, 3생활관(비룡재)", "en": "Biryongjae (Dormitory 2)", "aliases": ["비룡재", "제2생활관", "제3생활관", "기숙사", "Dormitory 2"], "category": "dormitory", "osm": ["way/218397211"], "osmMatch": "name" }
+    {
+      "id": "b-1",
+      "number": "1",
+      "ko": "본관(1호관)",
+      "en": "University Main Building",
+      "aliases": [
+        "본관",
+        "1호관",
+        "Main Building"
+      ],
+      "category": "admin",
+      "osm": [
+        "way/217958071"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "본관",
+        "1호관",
+        "1"
+      ]
+    },
+    {
+      "id": "b-2",
+      "number": "2",
+      "ko": "2호관",
+      "en": "Building 2",
+      "aliases": [
+        "2동",
+        "2남",
+        "2북",
+        "2남관",
+        "2북관",
+        "2호관(2동)",
+        "2호관(2남)",
+        "2호관(2북)"
+      ],
+      "category": "academic",
+      "osm": [
+        "relation/14633181",
+        "way/219983082"
+      ],
+      "osmMatch": "name",
+      "osmNote": "OSM maps 2북관 (relation) and 2남관 (way). The 2동 wing has no named OSM feature.",
+      "roomPrefixes": [
+        "2호관",
+        "2"
+      ]
+    },
+    {
+      "id": "b-60th",
+      "number": "3",
+      "ko": "60주년기념관",
+      "en": "60th Anniversary Hall",
+      "aliases": [
+        "60주년"
+      ],
+      "category": "academic",
+      "osm": [
+        "way/218189298"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "60주년기념관",
+        "60주년 기념관",
+        "60주년",
+        "60"
+      ]
+    },
+    {
+      "id": "b-4",
+      "number": "4",
+      "ko": "4호관",
+      "en": "Building 4",
+      "aliases": [],
+      "category": "academic",
+      "osm": [
+        "way/219982956"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "4호관",
+        "4"
+      ]
+    },
+    {
+      "id": "b-5",
+      "number": "5",
+      "ko": "5호관",
+      "en": "Building 5",
+      "aliases": [
+        "5동",
+        "5서",
+        "5남",
+        "5북",
+        "5호관(5동)",
+        "5호관(5서)",
+        "5호관(5남)",
+        "5호관(5북)"
+      ],
+      "category": "academic",
+      "osm": [
+        "relation/3149246"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "5호관",
+        "5"
+      ]
+    },
+    {
+      "id": "b-6",
+      "number": "6",
+      "ko": "6호관",
+      "en": "Building 6",
+      "aliases": [],
+      "category": "academic",
+      "osm": [
+        "way/568420968"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "6호관",
+        "6"
+      ]
+    },
+    {
+      "id": "b-7",
+      "number": "7",
+      "ko": "7호관(학생회관)",
+      "en": "Building 7 (Student Center)",
+      "aliases": [
+        "학생회관",
+        "7호관",
+        "Student Center"
+      ],
+      "category": "student_services",
+      "osm": [
+        "way/218038027"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "7호관",
+        "학생회관",
+        "Student Hall",
+        "7"
+      ]
+    },
+    {
+      "id": "b-library",
+      "number": "8",
+      "ko": "정석학술정보관",
+      "en": "Jungseok Memorial Library",
+      "aliases": [
+        "도서관",
+        "중앙도서관",
+        "Library"
+      ],
+      "category": "library",
+      "osm": [
+        "way/217958067"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "정석학술정보관",
+        "정석도서관"
+      ]
+    },
+    {
+      "id": "b-9",
+      "number": "9",
+      "ko": "9호관",
+      "en": "Building 9",
+      "aliases": [],
+      "category": "academic",
+      "osm": [
+        "way/568420969"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "9호관",
+        "9"
+      ]
+    },
+    {
+      "id": "b-seoho",
+      "number": "10",
+      "ko": "서호관",
+      "en": "West Lake Building",
+      "aliases": [],
+      "category": "academic",
+      "osm": [
+        "way/218188831"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "서호관"
+      ]
+    },
+    {
+      "id": "b-nabille",
+      "number": "11",
+      "ko": "나빌레관",
+      "en": "Student Club Hall",
+      "aliases": [
+        "동아리관"
+      ],
+      "category": "student_services",
+      "osm": [
+        "way/218188169"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "나빌레관"
+      ]
+    },
+    {
+      "id": "b-hitech",
+      "number": "12",
+      "ko": "하이테크센터",
+      "en": "Inha Hi-Tech Center",
+      "aliases": [
+        "하이테크",
+        "Hi-Tech Center"
+      ],
+      "category": "academic",
+      "osm": [
+        "way/218081857"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "하이테크센터",
+        "하이테크관",
+        "하이테크"
+      ]
+    },
+    {
+      "id": "b-law",
+      "number": "13",
+      "ko": "로스쿨관",
+      "en": "Law School",
+      "aliases": [
+        "법학전문대학원"
+      ],
+      "category": "academic",
+      "osm": [
+        "way/217950511"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "로스쿨관"
+      ]
+    },
+    {
+      "id": "b-rotc",
+      "number": "14",
+      "ko": "학군단",
+      "en": "R.O.T.C. Building",
+      "aliases": [
+        "ROTC"
+      ],
+      "category": "other",
+      "osm": [
+        "way/218265217"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "학군단"
+      ]
+    },
+    {
+      "id": "b-lifelong",
+      "number": "15",
+      "ko": "평생교육관/미래융합대학",
+      "en": "Center for Continuing Education",
+      "aliases": [
+        "평생교육관",
+        "미래융합대학"
+      ],
+      "category": "academic",
+      "osm": [
+        "way/218186034"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "평생교육관",
+        "평생교육원",
+        "미래융합대학관",
+        "Center for Continuing Education Building"
+      ]
+    },
+    {
+      "id": "b-dream",
+      "number": "16",
+      "ko": "김현태 인하드림센터",
+      "en": "Kim Hyun Tae Inha Dream Center",
+      "aliases": [
+        "인하드림센터",
+        "김현태인하드림센터"
+      ],
+      "category": "other",
+      "osm": [
+        "way/568420970"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "김현태 인하드림센터",
+        "김현태인하드림센터"
+      ]
+    },
+    {
+      "id": "b-hawaii",
+      "number": "17",
+      "ko": "하와이교포기념관",
+      "en": "The Hawaiian Compatriots Memorial Hall (Hyunkyung Gymnasium)",
+      "aliases": [
+        "현경체육관",
+        "체육관",
+        "Hyunkyung Gymnasium",
+        "Gymnasium"
+      ],
+      "category": "sports",
+      "osm": [
+        "way/218037242"
+      ],
+      "osmMatch": "estimated",
+      "osmNote": "The OSM building is named 체육관 / Gymnasium; the official English name identifies 하와이교포기념관 as the Hyunkyung Gymnasium. Match not yet confirmed on campus.",
+      "roomPrefixes": [
+        "하와이교포기념관"
+      ]
+    },
+    {
+      "id": "b-dream23",
+      "number": "18",
+      "ko": "인하드림센터 2·3관",
+      "en": "Inha Dream Center 2ㆍ3",
+      "aliases": [
+        "인하드림센터 2관",
+        "인하드림센터 3관",
+        "드림센터"
+      ],
+      "category": "other",
+      "osm": [
+        "way/471332105",
+        "way/471332104"
+      ],
+      "osmMatch": "name",
+      "osmNote": "OSM draws these inside the Inha Technical College area outline, but the official Inha University building list includes them.",
+      "roomPrefixes": [
+        "인하드림센터"
+      ]
+    },
+    {
+      "id": "b-field",
+      "number": "19",
+      "ko": "대운동장",
+      "en": "Sports Field",
+      "aliases": [
+        "운동장"
+      ],
+      "category": "sports",
+      "osm": [
+        "way/220889089"
+      ],
+      "osmMatch": "name",
+      "kind": "area"
+    },
+    {
+      "id": "b-basketball",
+      "number": "20",
+      "ko": "농구장",
+      "en": "Basketball Field",
+      "aliases": [
+        "Basketball Court"
+      ],
+      "category": "sports",
+      "osm": [
+        "way/281499584"
+      ],
+      "osmMatch": "name",
+      "kind": "area"
+    },
+    {
+      "id": "b-tennis",
+      "number": "21",
+      "ko": "테니스장",
+      "en": null,
+      "enFromOsm": "Tennis Court",
+      "aliases": [
+        "Tennis Courts"
+      ],
+      "category": "sports",
+      "osm": [
+        "way/281499585",
+        "way/237487555"
+      ],
+      "osmMatch": "estimated",
+      "kind": "area",
+      "osmNote": "The official legend lists one 테니스장; OSM has two tennis pitches on campus. Both are included until checked."
+    },
+    {
+      "id": "b-c",
+      "number": "22",
+      "ko": "C호관",
+      "en": "Building C",
+      "aliases": [
+        "C동"
+      ],
+      "category": "academic",
+      "osm": [
+        "way/568420972"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "C호관"
+      ]
+    },
+    {
+      "id": "b-parking",
+      "number": "23",
+      "ko": "비룡주차장",
+      "en": "Parking Lot",
+      "aliases": [
+        "Biryong Parking Lot",
+        "주차장"
+      ],
+      "category": "other",
+      "osm": [
+        "way/568420971"
+      ],
+      "osmMatch": "name",
+      "kind": "area"
+    },
+    {
+      "id": "b-woongbi",
+      "number": "24",
+      "ko": "제1생활관(웅비재)",
+      "en": "Woongbijae (Dormitory 1)",
+      "aliases": [
+        "웅비재",
+        "제1생활관",
+        "기숙사",
+        "Dormitory 1"
+      ],
+      "category": "dormitory",
+      "osm": [
+        "way/217948855"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "웅비재",
+        "제1생활관"
+      ]
+    },
+    {
+      "id": "b-biryong",
+      "number": "25",
+      "ko": "제2, 3생활관(비룡재)",
+      "en": "Biryongjae (Dormitory 2)",
+      "aliases": [
+        "비룡재",
+        "제2생활관",
+        "제3생활관",
+        "기숙사",
+        "Dormitory 2"
+      ],
+      "category": "dormitory",
+      "osm": [
+        "way/218397211"
+      ],
+      "osmMatch": "name",
+      "roomPrefixes": [
+        "비룡재",
+        "제2생활관",
+        "제3생활관"
+      ]
+    }
   ],
   "osmOnly": [
-    { "id": "b-parking-office", "ko": "주차관리실", "en": null, "category": "other", "osm": ["way/1098539003"], "note": "Named in OSM only; not on the official building list." },
-    { "id": "b-grazie", "ko": "Grazie", "en": "Grazie", "category": "other", "osm": ["way/575176169"], "note": "Named in OSM only (building=commercial); not on the official building list." }
+    {
+      "id": "b-parking-office",
+      "ko": "주차관리실",
+      "en": null,
+      "category": "other",
+      "osm": [
+        "way/1098539003"
+      ],
+      "note": "Named in OSM only; not on the official building list."
+    },
+    {
+      "id": "b-grazie",
+      "ko": "Grazie",
+      "en": "Grazie",
+      "category": "other",
+      "osm": [
+        "way/575176169"
+      ],
+      "note": "Named in OSM only (building=commercial); not on the official building list."
+    }
   ],
   "gates": [
-    { "id": "g-main", "ko": "정문", "en": "Main Gate", "osm": "node/4741793208", "source": "inha-campusmap-kr", "enStatus": "osm", "note": "OSM node named 인하대학교 정문; the official campus map is drawn '정문 기준'. English wording follows the OSM bus stop name 'Inha main gate'." },
-    { "id": "g-back", "ko": "후문", "en": "Back Gate", "osm": "node/4741793209", "source": "inha-campusmap-kr", "enStatus": "estimated", "note": "OSM node named 인하대학교 후문; the official site uses 후문 ('후문에서 본 캠퍼스'). English wording is our translation." }
-  ]
+    {
+      "id": "g-main",
+      "ko": "정문",
+      "en": "Main Gate",
+      "osm": "node/4741793208",
+      "source": "inha-campusmap-kr",
+      "enStatus": "osm",
+      "note": "OSM node named 인하대학교 정문; the official campus map is drawn '정문 기준'. English wording follows the OSM bus stop name 'Inha main gate'."
+    },
+    {
+      "id": "g-back",
+      "ko": "후문",
+      "en": "Back Gate",
+      "osm": "node/4741793209",
+      "source": "inha-campusmap-kr",
+      "enStatus": "estimated",
+      "note": "OSM node named 인하대학교 후문; the official site uses 후문 ('후문에서 본 캠퍼스'). English wording is our translation."
+    }
+  ],
+  "_roomPrefixesNote": "roomPrefixes: how room codes start for each building, taken from the office locations written on official pages (e.g. '2남 212호', '60주년 901A호', '하이테크 1012호', '평생교육원 221호', '미래융합대학관 106호'). Bare numbers ('2', '60') follow the same building numbering."
 }

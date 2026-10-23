@@ -30,6 +30,7 @@ import {
   simplifyRing,
 } from './lib/geo.mjs';
 import { buildWalkGraph } from './lib/walk-graph.mjs';
+import { applyOfficialDetails } from './lib/official-details.mjs';
 
 const ROOT = new URL('../', import.meta.url);
 const SIMPLIFY_METERS = 0.5;
@@ -234,18 +235,18 @@ const sourceRef = (id, field) => {
 };
 
 function emptyAmenities() {
-  const unknownList = { locations: [], status: 'unknown' };
+  const unknownList = () => ({ locations: [], status: 'unknown' });
   return {
     wifi: { available: null, networks: [], status: 'unknown' },
     restrooms: { floors: [], accessible: null, status: 'unknown' },
-    printers: { ...unknownList },
+    printers: unknownList(),
     elevator: { available: null, status: 'unknown' },
     accessibleEntrance: { available: null, status: 'unknown' },
-    waterFountain: { ...unknownList },
-    vending: { ...unknownList },
-    atm: { ...unknownList },
-    studySpace: { ...unknownList },
-    lockers: { ...unknownList },
+    waterFountain: unknownList(),
+    vending: unknownList(),
+    atm: unknownList(),
+    studySpace: unknownList(),
+    lockers: unknownList(),
     food: { places: [], status: 'unknown' },
   };
 }
@@ -281,6 +282,7 @@ for (const entry of official.buildings) {
     name: { ko: entry.ko, en: entry.en ?? entry.enFromOsm },
     nameStatus: { ko: 'verified', en: nameEnStatus },
     aliases: entry.aliases ?? [],
+    roomPrefixes: entry.roomPrefixes ?? [],
     category: entry.category,
     categoryStatus: CATEGORY_FROM_NAME.has(entry.id) ? 'verified' : 'estimated',
     kind: entry.kind ?? 'building',
@@ -324,6 +326,7 @@ for (const entry of official.osmOnly) {
     name: { ko: entry.ko, en: entry.en ?? entry.ko },
     nameStatus: { ko: 'osm', en: entry.en ? 'osm' : 'unknown' },
     aliases: [],
+    roomPrefixes: entry.roomPrefixes ?? [],
     category: entry.category,
     categoryStatus: 'estimated',
     kind: 'building',
@@ -416,6 +419,13 @@ const walk = buildWalkGraph({
 for (const b of buildings) b.entrances = walk.entrances[b.id] ?? [];
 
 // ---------------------------------------------------------------------------
+// 5. Official details (departments, offices, amenities, descriptions)
+// ---------------------------------------------------------------------------
+
+const details = JSON.parse(await readFile(new URL('data-raw/official/details.json', ROOT), 'utf8'));
+const { unresolved } = applyOfficialDetails({ buildings, details, nodes: walk.nodes, areas });
+
+// ---------------------------------------------------------------------------
 // Output
 // ---------------------------------------------------------------------------
 
@@ -456,7 +466,7 @@ await writeFile(new URL('src/data/courses.json', ROOT), '[]\n');
 // Details for VERIFY.md and DATA-REPORT.md (estimated links, dropped paths…).
 await writeFile(
   new URL('data-raw/build-report.json', ROOT),
-  `${JSON.stringify({ built: today, graph: walk.report }, null, 2)}\n`,
+  `${JSON.stringify({ built: today, graph: walk.report, unresolved }, null, 2)}\n`,
 );
 console.log(
   `campus.json: ${buildings.length} buildings, ${areas.length} areas, ${roads.length} roads, ${context.length} context buildings, ${walk.nodes.length} nodes, ${walk.edges.length} edges; viewBox ${viewBox.join(' ')}`,

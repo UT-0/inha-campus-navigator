@@ -178,10 +178,32 @@ export function buildSearchIndex(campus, courses, labelFor) {
         id: `department:${b.id}:${i}`,
         buildingId: b.id,
         title: department,
-        subtitle: b.name,
-        terms: both(department),
+        subtitle: department.office
+          ? {
+              en: `${b.name.en} · ${department.office.en}`,
+              ko: `${b.name.ko} · ${department.office.ko}`,
+            }
+          : b.name,
+        terms: [...both(department), department.college],
         highlight: { type: 'department', value: String(i) },
         icon: 'users',
+      });
+    });
+
+    (b.floorDirectory ?? []).forEach((floor, f) => {
+      floor.items.forEach((item, i) => {
+        // Department offices are already listed as departments.
+        if (b.departments?.some((d) => `${d.en} office` === item.en)) return;
+        entries.push({
+          type: 'facility',
+          id: `directory:${b.id}:${f}:${i}`,
+          buildingId: b.id,
+          title: { en: item.en, ko: item.ko },
+          subtitle: item.room ? { en: `${b.name.en} · ${item.room.en}`, ko: item.room.ko } : b.name,
+          terms: [item.en, item.ko],
+          highlight: { type: 'directory', value: `${f}:${i}` },
+          icon: item.type === 'lounge' ? 'lounge' : 'info',
+        });
       });
     });
 

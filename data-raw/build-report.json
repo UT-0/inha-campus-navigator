@@ -263,5 +263,27 @@
         "reason": "access=private"
       }
     ]
-  }
+  },
+  "unresolved": [
+    {
+      "what": "항공우주공학과",
+      "location": "항공우주융합캠퍼스 208호",
+      "note": "Office is at the Aerospace Convergence Campus, not on the main campus."
+    },
+    {
+      "what": "고분자공학과",
+      "location": "(not listed)",
+      "note": "Homepage gives no building or room."
+    },
+    {
+      "what": "아태물류학부",
+      "location": "(not listed)",
+      "note": "Homepage gives no building or room."
+    },
+    {
+      "what": "스마트모빌리티공학과",
+      "location": "항공우주융합캠퍼스 207호",
+      "note": "Office is at the Aerospace Convergence Campus, not on the main campus."
+    }
+  ]
 }

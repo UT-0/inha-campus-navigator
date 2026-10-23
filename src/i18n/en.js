@@ -140,7 +140,7 @@ export default {
   // Building panel
   'building.back': 'Back',
   'building.number': 'Building {number}',
-  'building.photo': 'Photo coming soon',
+  'building.photo': 'No photo yet',
   'building.floors': 'Floors',
   'building.floorsValue': '{n} floors',
   'building.hours': 'Opening hours',
@@ -155,6 +155,33 @@ export default {
   'building.goHere': 'Go here',
   'building.zoom': 'Zoom to building',
   'building.courseRoom': 'Room {room}',
+  'building.directory': 'Floor directory',
+  'building.amenities': 'Amenities',
+  'building.unverified': 'Not yet verified: {list}.',
+  'building.sources': 'Sources ({n})',
+  'building.sourceMeta': '{fields} · retrieved {date}',
+  'building.photoCredit': 'Photo: {author}, {license}',
+
+  // Data status
+  'status.verified': 'Verified',
+  'status.osm': 'OpenStreetMap',
+  'status.estimated': 'Estimated',
+  'status.unknown': 'Not yet verified',
+
+  // Amenities
+  'amenity.wifi': 'Wi-Fi',
+  'amenity.food': 'Food',
+  'amenity.atm': 'ATM',
+  'amenity.studySpace': 'Study space & lounges',
+  'amenity.printers': 'Printers',
+  'amenity.restrooms': 'Restrooms',
+  'amenity.elevator': 'Elevator',
+  'amenity.accessibleEntrance': 'Step-free entrance',
+  'amenity.waterFountain': 'Water fountain',
+  'amenity.vending': 'Vending machines',
+  'amenity.lockers': 'Lockers',
+  'amenity.yes': 'Yes',
+  'amenity.none': 'None',
 
   // Building list (keyboard fallback for the map)
   'list.title': 'All buildings',

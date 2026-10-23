@@ -93,6 +93,7 @@ export const ICON_PATHS = {
     '<path d="M3 5c3-1 6-.5 9 1.5V20c-3-2-6-2.5-9-1.5zM21 5c-3-1-6-.5-9 1.5V20c3-2 6-2.5 9-1.5z"/>',
   lounge:
     '<path d="M5 11V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"/><path d="M3 13a2 2 0 0 1 4 0v1h10v-1a2 2 0 0 1 4 0v5H3zM5 18v2M19 18v2"/>',
+  water: '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
   lockers: '<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M12 3v18M8 8h1M15 8h1"/>',
   laundry:
     '<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6.5h.01M11 6.5h.01"/>',

@@ -161,3 +161,18 @@ describe('search: courses, rooms, departments and facilities (fixture)', () => {
     expect(ids('프린터', 'facility', fixtureIndex)).toContain('b-eng');
   });
 });
+
+describe('search: real departments and offices', () => {
+  it('finds a department by its Korean or English name', () => {
+    const [first] = search(index, '기계공학과');
+    expect(first.entry.type).toBe('department');
+    expect(first.entry.buildingId).toBe('b-2');
+    expect(search(index, 'Mechanical Engineering')[0].entry.buildingId).toBe('b-2');
+  });
+
+  it('finds campus offices from the floor directory', () => {
+    const hit = search(index, '보건센터').find((r) => r.entry.type === 'facility');
+    expect(hit.entry.buildingId).toBe('b-7');
+    expect(hit.entry.highlight.type).toBe('directory');
+  });
+});

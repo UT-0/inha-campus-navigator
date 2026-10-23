@@ -28,6 +28,608 @@
       "title": "Campus map page footer",
       "retrieved": "2026-10-23",
       "used_for": "Address 22212 인천광역시 미추홀구 인하로 100; main phone 032-860-7114; 24-hour emergency phone 032-860-9119; campus-map content contact 총무팀 032-860-7093"
+    },
+    {
+      "id": "college-프런티어창의대학",
+      "url": "https://www.inha.ac.kr/kr/989/subview.do",
+      "title": "프런티어창의대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-공과대학",
+      "url": "https://www.inha.ac.kr/kr/990/subview.do",
+      "title": "공과대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-자연과학대학",
+      "url": "https://www.inha.ac.kr/kr/991/subview.do",
+      "title": "자연과학대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-경영대학",
+      "url": "https://www.inha.ac.kr/kr/992/subview.do",
+      "title": "경영대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-사범대학",
+      "url": "https://www.inha.ac.kr/kr/993/subview.do",
+      "title": "사범대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-사회과학대학",
+      "url": "https://www.inha.ac.kr/kr/994/subview.do",
+      "title": "사회과학대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-문과대학",
+      "url": "https://www.inha.ac.kr/kr/995/subview.do",
+      "title": "문과대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-의과대학",
+      "url": "https://www.inha.ac.kr/kr/996/subview.do",
+      "title": "의과대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-간호대학",
+      "url": "https://www.inha.ac.kr/kr/4142/subview.do",
+      "title": "간호대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-미래융합대학",
+      "url": "https://www.inha.ac.kr/kr/997/subview.do",
+      "title": "미래융합대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-예술체육대학",
+      "url": "https://www.inha.ac.kr/kr/998/subview.do",
+      "title": "예술체육대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-국제대학",
+      "url": "https://www.inha.ac.kr/kr/999/subview.do",
+      "title": "국제대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-AI융합대학",
+      "url": "https://www.inha.ac.kr/kr/3907/subview.do",
+      "title": "AI융합대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "college-바이오융합대학",
+      "url": "https://www.inha.ac.kr/kr/4097/subview.do",
+      "title": "바이오융합대학 소개 페이지",
+      "retrieved": "2026-10-23",
+      "used_for": "College office location and phone"
+    },
+    {
+      "id": "colleges-en",
+      "url": "https://www.inha.ac.kr/eng/3588/subview.do",
+      "title": "List of College (English site)",
+      "retrieved": "2026-10-23",
+      "used_for": "Official English names of colleges and departments (matched by homepage URL)"
+    },
+    {
+      "id": "dept-기계공학과",
+      "url": "https://mech.inha.ac.kr/mech/index.do",
+      "title": "기계공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-항공우주공학과",
+      "url": "https://aerospace.inha.ac.kr/aerospace/index.do",
+      "title": "항공우주공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-조선해양공학과",
+      "url": "https://naoe.inha.ac.kr/naoe/index.do",
+      "title": "조선해양공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-산업경영공학과",
+      "url": "https://ie.inha.ac.kr/ie/index.do",
+      "title": "산업경영공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-화학공학과",
+      "url": "https://chemeng.inha.ac.kr/chemeng/index.do",
+      "title": "화학공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-고분자공학과",
+      "url": "https://inhapoly.inha.ac.kr/inhapoly/index.do",
+      "title": "고분자공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-신소재공학과",
+      "url": "https://dmse.inha.ac.kr/dmse/index.do",
+      "title": "신소재공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-사회인프라공학과",
+      "url": "https://civil.inha.ac.kr/civil/index.do",
+      "title": "사회인프라공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-환경공학과",
+      "url": "https://environment.inha.ac.kr/environment/index.do",
+      "title": "환경공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-공간정보공학과",
+      "url": "https://geoinfo.inha.ac.kr/geoinfo/index.do",
+      "title": "공간정보공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-건축학부(건축공학·건축학)",
+      "url": "https://arch.inha.ac.kr/arch/index.do",
+      "title": "건축학부(건축공학·건축학) homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-에너지자원공학과",
+      "url": "https://eneres.inha.ac.kr/eneres/index.do",
+      "title": "에너지자원공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-전기전자공학부",
+      "url": "https://ee.inha.ac.kr/ee/index.do",
+      "title": "전기전자공학부 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-반도체시스템공학과",
+      "url": "https://sse.inha.ac.kr/sse/index.do",
+      "title": "반도체시스템공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-이차전지융합학과",
+      "url": "https://ibattery.inha.ac.kr/ibattery/index.do",
+      "title": "이차전지융합학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-수학과",
+      "url": "https://math.inha.ac.kr/math/index.do",
+      "title": "수학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-통계학과",
+      "url": "https://statistics.inha.ac.kr/statistics/index.do",
+      "title": "통계학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-물리학과",
+      "url": "https://physics.inha.ac.kr/physics/index.do",
+      "title": "물리학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-화학과",
+      "url": "https://chemistry.inha.ac.kr/chemistry/index.do",
+      "title": "화학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-해양과학과",
+      "url": "https://ocean.inha.ac.kr/ocean/index.do",
+      "title": "해양과학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-식품영양학과",
+      "url": "https://foodnutri.inha.ac.kr/foodnutri/index.do",
+      "title": "식품영양학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-경영학과",
+      "url": "https://biz.inha.ac.kr/biz/index.do",
+      "title": "경영학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-파이낸스경영학과",
+      "url": "https://gfiba.inha.ac.kr/gfiba/index.do",
+      "title": "파이낸스경영학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-아태물류학부",
+      "url": "https://apsl.inha.ac.kr/apsl/index.do",
+      "title": "아태물류학부 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-국제통상학과",
+      "url": "https://star.inha.ac.kr/star/index.do",
+      "title": "국제통상학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-국어교육과",
+      "url": "https://koreanedu.inha.ac.kr/koreanedu/index.do",
+      "title": "국어교육과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-영어교육과",
+      "url": "https://dele.inha.ac.kr/dele/index.do",
+      "title": "영어교육과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-사회교육과",
+      "url": "https://socialedu.inha.ac.kr/socialedu/index.do",
+      "title": "사회교육과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-교육학과",
+      "url": "https://education.inha.ac.kr/education/index.do",
+      "title": "교육학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-체육교육과",
+      "url": "https://physicaledu.inha.ac.kr/physicaledu/index.do",
+      "title": "체육교육과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-수학교육과",
+      "url": "https://mathed.inha.ac.kr/mathed/index.do",
+      "title": "수학교육과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-행정학과",
+      "url": "https://publicad.inha.ac.kr/publicad/index.do",
+      "title": "행정학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-정치외교학과",
+      "url": "https://political.inha.ac.kr/political/index.do",
+      "title": "정치외교학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-미디어커뮤니케이션학과",
+      "url": "https://comm.inha.ac.kr/comm/index.do",
+      "title": "미디어커뮤니케이션학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-경제학과",
+      "url": "https://econ.inha.ac.kr/econ/index.do",
+      "title": "경제학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-소비자학과",
+      "url": "https://consumer.inha.ac.kr/consumer/index.do",
+      "title": "소비자학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-아동심리학과",
+      "url": "https://child.inha.ac.kr/child/index.do",
+      "title": "아동심리학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-사회복지학과",
+      "url": "https://welfare.inha.ac.kr/welfare/index.do",
+      "title": "사회복지학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-한국어문학과",
+      "url": "https://korean.inha.ac.kr/korean/index.do",
+      "title": "한국어문학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-사학과",
+      "url": "https://history.inha.ac.kr/history/index.do",
+      "title": "사학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-철학과",
+      "url": "https://philosophy.inha.ac.kr/philosophy/index.do",
+      "title": "철학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-중국학과",
+      "url": "https://chinese.inha.ac.kr/chinese/index.do",
+      "title": "중국학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-일본언어문화학과",
+      "url": "https://japan.inha.ac.kr/japan/index.do",
+      "title": "일본언어문화학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-영미유럽인문융합학부 (영어영문학전공)",
+      "url": "https://ees.inha.ac.kr/ees/index.do",
+      "title": "영미유럽인문융합학부 (영어영문학전공) homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-문화콘텐츠문화경영학과",
+      "url": "https://culturecm.inha.ac.kr/culturecm/index.do",
+      "title": "문화콘텐츠문화경영학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-간호학과",
+      "url": "https://nursing.inha.ac.kr/nursing/index.do",
+      "title": "간호학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-조형예술학과",
+      "url": "https://finearts.inha.ac.kr/finearts/index.do",
+      "title": "조형예술학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-디자인융합학과",
+      "url": "https://design.inha.ac.kr/design/index.do",
+      "title": "디자인융합학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-스포츠과학과",
+      "url": "https://sport.inha.ac.kr/sport/index.do",
+      "title": "스포츠과학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-연극영화학과",
+      "url": "https://theatrefilm.inha.ac.kr/theatrefilm/index.do",
+      "title": "연극영화학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-의류디자인학과",
+      "url": "https://fashion.inha.ac.kr/fashion/index.do",
+      "title": "의류디자인학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-인공지능공학과",
+      "url": "https://doai.inha.ac.kr/doai/index.do",
+      "title": "인공지능공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-데이터사이언스학과",
+      "url": "https://datascience.inha.ac.kr/datascience/index.do",
+      "title": "데이터사이언스학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-스마트모빌리티공학과",
+      "url": "https://sme.inha.ac.kr/sme/index.do",
+      "title": "스마트모빌리티공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-디자인테크놀로지학과",
+      "url": "https://designtech.inha.ac.kr/designtech/index.do",
+      "title": "디자인테크놀로지학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-컴퓨터공학과",
+      "url": "https://cse.inha.ac.kr/cse/index.do",
+      "title": "컴퓨터공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-생명공학과",
+      "url": "https://bio.inha.ac.kr/bio/index.do",
+      "title": "생명공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-바이오제약공학과",
+      "url": "https://biopharm.inha.ac.kr/biopharm/index.do",
+      "title": "바이오제약공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-생명과학과",
+      "url": "https://biology.inha.ac.kr/biology/index.do",
+      "title": "생명과학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-첨단바이오의약학과",
+      "url": "https://biomedical.inha.ac.kr/biomedical/index.do",
+      "title": "첨단바이오의약학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-바이오식품공학과",
+      "url": "https://foodscience.inha.ac.kr/foodscience/index.do",
+      "title": "바이오식품공학과 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "dept-자유전공융합학부",
+      "url": "https://las.inha.ac.kr/las/index.do",
+      "title": "자유전공융합학부 homepage",
+      "retrieved": "2026-10-23",
+      "used_for": "Department office location and phone"
+    },
+    {
+      "id": "office-보건센터-학생회관 215호",
+      "url": "https://www.inha.ac.kr/eng/3758/subview.do",
+      "title": "보건센터",
+      "retrieved": "2026-10-23",
+      "used_for": "Office/facility location, phone, hours"
+    },
+    {
+      "id": "office-학생상담센터-정석학술정보관 5층 521호",
+      "url": "https://www.inha.ac.kr/kr/1079/subview.do",
+      "title": "학생상담센터",
+      "retrieved": "2026-10-23",
+      "used_for": "Office/facility location, phone, hours"
+    },
+    {
+      "id": "office-IT인프라팀 (무선인터넷 문의)-60주년기념관 1408호",
+      "url": "https://internet.inha.ac.kr/internet/index.do",
+      "title": "IT인프라팀 (무선인터넷 문의)",
+      "retrieved": "2026-10-23",
+      "used_for": "Office/facility location, phone, hours"
+    },
+    {
+      "id": "office-여학생 휴게실-5남 130호",
+      "url": "https://www.inha.ac.kr/kr/1076/subview.do",
+      "title": "여학생 휴게실",
+      "retrieved": "2026-10-23",
+      "used_for": "Office/facility location, phone, hours"
+    },
+    {
+      "id": "atm-en",
+      "url": "https://www.inha.ac.kr/eng/3735/subview.do",
+      "title": "ATM (English site)",
+      "retrieved": "2026-10-23",
+      "used_for": "ATM locations by building and floor"
+    },
+    {
+      "id": "cafeteria",
+      "url": "https://www.inha.ac.kr/kr/1072/subview.do",
+      "title": "식당안내 > 학생식당(학생회관)",
+      "retrieved": "2026-10-23",
+      "used_for": "Student cafeteria hours"
+    },
+    {
+      "id": "wifi-https://www.inha.ac.kr/kr/1067/subview.do",
+      "url": "https://www.inha.ac.kr/kr/1067/subview.do",
+      "title": "무선인터넷 서비스",
+      "retrieved": "2026-10-23",
+      "used_for": "Wi-Fi network name, coverage, login, help desk"
+    },
+    {
+      "id": "transport",
+      "url": "https://www.inha.ac.kr/kr/970/subview.do",
+      "title": "학교 오시는 길",
+      "retrieved": "2026-10-23",
+      "used_for": "Subway exits, bus lines, gates"
+    },
+    {
+      "id": "shuttle",
+      "url": "https://www.inha.ac.kr/kr/971/subview.do",
+      "title": "셔틀버스(무료)",
+      "retrieved": "2026-10-23",
+      "used_for": "Free shuttle bus operation and campus stop"
     }
   ]
 }
