@@ -16,6 +16,8 @@
     "format": "prettier --write .",
     "data:fetch-osm": "NODE_USE_ENV_PROXY=1 node scripts/fetch-osm.mjs",
     "data:build": "node scripts/build-campus.mjs",
+    "validate": "node scripts/validate-data.mjs",
+    "reports": "node scripts/make-reports.mjs && node scripts/photos-todo.mjs",
     "photos:fetch": "NODE_USE_ENV_PROXY=1 node scripts/fetch-photos.mjs",
     "photos:optimize": "node scripts/optimize-photos.mjs",
     "photos:todo": "node scripts/photos-todo.mjs",
