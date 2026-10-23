@@ -14,6 +14,7 @@ import { getLanguage, localize, t } from '../i18n/index.js';
 import { el } from '../utils/dom.js';
 import { resolveAssetUrl } from '../map/renderMap.js';
 import { createIcon } from './icons.js';
+import { reportUrl } from '../config.js';
 
 /**
  * @param {Object} options
@@ -286,6 +287,7 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
     }
 
     if (building.sources?.length) sections.push(sourcesSection(building));
+    sections.push(footer(building));
 
     container.replaceChildren(
       el(
@@ -441,6 +443,64 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
       ),
       building.osmNote ? el('p', { class: 'item-meta', text: building.osmNote }) : null,
     );
+  }
+
+  /** "Last verified" and the "Report a mistake" link. */
+  function footer(building) {
+    return el(
+      'div',
+      { class: 'building-footer' },
+      el('span', {
+        class: 'muted',
+        text: building.lastVerified
+          ? t('building.lastVerified', { date: building.lastVerified })
+          : t('building.notVerifiedOnSite'),
+      }),
+      el(
+        'a',
+        {
+          class: 'report-link',
+          href: reportUrl(
+            t('report.subjectBuilding', { name: building.name.en, id: building.id }),
+            reportBody(building),
+          ),
+          target: '_blank',
+          rel: 'noopener',
+        },
+        createIcon('flag', { size: 14 }),
+        t('report.link'),
+      ),
+    );
+  }
+
+  /** Pre-filled report: a short template plus the current data for reference. */
+  function reportBody(building) {
+    const amenities = Object.entries(building.amenities ?? {})
+      .map(([key, value]) => `${key}: ${value.status}`)
+      .join(', ');
+    const entrances = (building.entrances ?? []).map((id) => {
+      const node = campus.nodes.find((n) => n.id === id);
+      return `${id} (${node?.status ?? '?'})`;
+    });
+    return [
+      `**Building:** ${building.name.en} / ${building.name.ko} (\`${building.id}\`${building.number ? `, no. ${building.number}` : ''})`,
+      '',
+      '**What is wrong?**',
+      '',
+      '',
+      '**What should it be? (a source or photo helps)**',
+      '',
+      '',
+      '---',
+      'Current data, for reference:',
+      `- Category: ${building.category} (${building.categoryStatus ?? '?'})`,
+      `- Floors: ${building.floors?.above ?? '?'} (${building.floors?.status ?? '?'})`,
+      `- Departments: ${(building.departments ?? []).map((d) => `${d.en} ${d.office?.ko ?? ''}`.trim()).join('; ') || 'none'}`,
+      `- Amenities: ${amenities}`,
+      `- Entrances: ${entrances.join(', ') || 'none'}`,
+      `- Data updated: ${campus.meta.dataUpdated ?? '?'}`,
+      `- Page: ${window.location.origin}${window.location.pathname}`,
+    ].join('\n');
   }
 
   function section(title, ...content) {

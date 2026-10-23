@@ -1,6 +1,7 @@
 /**
  * Campus Info panel: essential campus-wide facts, each from an official
- * source (campus.json → info): emergency numbers, Wi-Fi, the cafeteria,
+ * source (campus.json → info), and the "About this map" page (purpose, data
+ * freshness, what the status labels mean, sources, privacy): emergency numbers, Wi-Fi, the cafeteria,
  * library, health and student support, transport and the shuttle. Topics
  * without a source are listed as "Not yet verified" instead of being left out.
  * Office locations are links that open the building on the map.
@@ -10,6 +11,7 @@ import { localize, t } from '../i18n/index.js';
 import { el } from '../utils/dom.js';
 import { buildPrefixTable, parseRoomCode } from '../utils/roomCode.js';
 import { createIcon } from './icons.js';
+import { reportUrl } from '../config.js';
 
 /**
  * @param {Object} options
@@ -81,6 +83,10 @@ export function createInfoPanel({ container, routeView, campus, openBuilding }) 
     routeView.hidden = open || Boolean(getState().selectedBuilding);
     if (!open) {
       container.replaceChildren();
+      return;
+    }
+    if (getState().infoPage === 'about') {
+      renderAbout();
       return;
     }
     const lang = getState().lang;
@@ -247,6 +253,186 @@ export function createInfoPanel({ container, routeView, campus, openBuilding }) 
         el('p', { class: 'muted info-intro', text: t('info.intro') }),
         ...sections,
         sourcesList(),
+        el(
+          'div',
+          { class: 'building-footer' },
+          el(
+            'button',
+            {
+              class: 'link-btn',
+              type: 'button',
+              onClick: () => setState({ infoPage: 'about' }),
+            },
+            createIcon('info', { size: 14 }),
+            t('about.open'),
+          ),
+          reportLink(t('report.subjectInfo'), t('report.bodyGeneral')),
+        ),
+      ),
+    );
+    heading.focus({ preventScroll: true });
+    container.closest('.sheet-content')?.scrollTo({ top: 0 });
+  }
+
+  function reportLink(subject, body) {
+    return el(
+      'a',
+      { class: 'report-link', href: reportUrl(subject, body), target: '_blank', rel: 'noopener' },
+      createIcon('flag', { size: 14 }),
+      t('report.link'),
+    );
+  }
+
+  /** About this map: purpose, data freshness, what the labels mean, sources, privacy. */
+  function renderAbout() {
+    const meta = campus.meta;
+    const official = (meta.sources ?? []).filter((s) => /inha\.ac\.kr/.test(s.url));
+    const photos = campus.buildings.filter((b) => b.photo?.src && b.photo.kind === 'commons');
+    const heading = el('h2', {
+      class: 'building-name',
+      id: 'info-title',
+      tabindex: '-1',
+      text: t('about.title'),
+    });
+    const statusRow = (status) =>
+      el(
+        'li',
+        {},
+        el('span', { class: 'status-tag', 'data-status': status, text: t(`status.${status}`) }),
+        ' ',
+        t(`about.status.${status}`),
+      );
+    container.replaceChildren(
+      el(
+        'article',
+        { class: 'info-panel', 'aria-labelledby': 'info-title' },
+        el(
+          'button',
+          {
+            class: 'btn btn-ghost btn-sm building-back',
+            type: 'button',
+            onClick: () => setState({ infoPage: 'info' }),
+          },
+          createIcon('back', { size: 16 }),
+          t('info.title'),
+        ),
+        heading,
+        el('p', { class: 'info-intro', text: t('about.purpose') }),
+        el('p', { class: 'muted', text: t('about.notOfficial') }),
+        section(
+          'history',
+          t('about.freshness'),
+          el(
+            'dl',
+            { class: 'info-list' },
+            row(t('about.dataUpdated'), meta.dataUpdated ?? '—'),
+            row(t('about.osmFetched'), meta.osmFetched ?? '—'),
+            row(
+              t('about.verifiedOnSite'),
+              t('about.verifiedOnSiteValue', {
+                n: campus.buildings.filter((b) => b.lastVerified).length,
+                total: campus.buildings.length,
+              }),
+            ),
+          ),
+        ),
+        section(
+          'check',
+          t('about.labels'),
+          el('p', { class: 'muted', text: t('about.labelsIntro') }),
+          el(
+            'ul',
+            { class: 'about-statuses' },
+            ['verified', 'osm', 'estimated', 'unknown'].map(statusRow),
+          ),
+        ),
+        section(
+          'layers',
+          t('about.sources'),
+          el(
+            'ul',
+            { class: 'info-offices' },
+            el(
+              'li',
+              { class: 'info-office' },
+              el('a', {
+                href: meta.attribution.url,
+                target: '_blank',
+                rel: 'noopener',
+                text: meta.attribution.text,
+              }),
+              el('span', {
+                class: 'item-meta',
+                text: t('about.osm', { license: meta.attribution.license }),
+              }),
+            ),
+            el(
+              'li',
+              { class: 'info-office' },
+              el('a', {
+                href: 'https://www.inha.ac.kr/',
+                target: '_blank',
+                rel: 'noopener',
+                text: t('about.officialSite'),
+              }),
+              el('span', { class: 'item-meta', text: t('about.official', { n: official.length }) }),
+            ),
+            el(
+              'li',
+              { class: 'info-office' },
+              el('a', {
+                href: 'https://commons.wikimedia.org/wiki/Category:Inha_University',
+                target: '_blank',
+                rel: 'noopener',
+                text: 'Wikimedia Commons',
+              }),
+              el('span', {
+                class: 'item-meta',
+                text: photos.length
+                  ? photos
+                      .map((b) => `${localize(b.name)}: ${b.photo.author}, ${b.photo.license}`)
+                      .join(' · ')
+                  : t('about.noPhotos'),
+              }),
+            ),
+          ),
+          el(
+            'details',
+            { class: 'building-sources' },
+            el('summary', { text: t('about.allOfficial', { n: official.length }) }),
+            el(
+              'ul',
+              {},
+              official.map((source) =>
+                el(
+                  'li',
+                  {},
+                  el('a', {
+                    href: source.url,
+                    target: '_blank',
+                    rel: 'noopener',
+                    text: source.title,
+                  }),
+                  el('span', {
+                    class: 'item-meta',
+                    text: t('about.retrieved', { date: source.retrieved }),
+                  }),
+                ),
+              ),
+            ),
+          ),
+        ),
+        section(
+          'target',
+          t('about.privacy'),
+          el('p', { class: 'muted', text: t('about.privacyText') }),
+        ),
+        el(
+          'div',
+          { class: 'building-footer' },
+          el('span', { class: 'muted', text: t('about.help') }),
+          reportLink(t('report.subjectInfo'), t('report.bodyGeneral')),
+        ),
       ),
     );
     heading.focus({ preventScroll: true });
@@ -294,7 +480,12 @@ export function createInfoPanel({ container, routeView, campus, openBuilding }) 
       setState({ infoOpen: false });
       return;
     }
-    if (changed.includes('infoOpen') || (state.infoOpen && changed.includes('lang'))) render();
+    if (
+      changed.includes('infoOpen') ||
+      (state.infoOpen && (changed.includes('lang') || changed.includes('infoPage')))
+    ) {
+      render();
+    }
   });
 
   container.addEventListener('keydown', (event) => {
@@ -305,7 +496,8 @@ export function createInfoPanel({ container, routeView, campus, openBuilding }) 
   });
 
   return {
-    open: () => setState({ selectedBuilding: null, highlight: null, infoOpen: true }),
+    open: (page = 'info') =>
+      setState({ selectedBuilding: null, highlight: null, infoOpen: true, infoPage: page }),
     close,
   };
 }

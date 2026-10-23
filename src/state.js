@@ -36,6 +36,7 @@
  * @property {boolean} accessible           Step-free routes only (no stairs, step-free entrances).
  * @property {string|null} routeTarget      Place found by "nearest" (or the kind searched).
  * @property {boolean} infoOpen             Whether the campus Info panel is open.
+ * @property {'info'|'about'} infoPage      Which page of it.
  */
 
 /** @type {AppState} */
@@ -56,6 +57,7 @@ const state = {
   accessible: false,
   routeTarget: null,
   infoOpen: false,
+  infoPage: 'info',
 };
 
 /** @type {Set<(state: AppState, changed: string[]) => void>} */

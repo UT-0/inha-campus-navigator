@@ -29,6 +29,7 @@ import { createRouteLayer } from './map/routeLayer.js';
 import { createRoutePanel } from './ui/routePanel.js';
 import { createBuildingPanel } from './ui/buildingPanel.js';
 import { createInfoPanel } from './ui/infoPanel.js';
+import { createMyClasses } from './ui/myClasses.js';
 import { createBuildingList } from './ui/buildingList.js';
 import { createSearchBar } from './ui/searchBar.js';
 import { createSettings } from './ui/settings.js';
@@ -363,6 +364,21 @@ async function start() {
     campus,
     courses,
     actions,
+  });
+  createMyClasses({
+    container: document.getElementById('my-classes'),
+    campus,
+    routeTo: (buildingId, room) => {
+      if (getState().from) {
+        setState({ to: buildingId });
+        actions.findRoute();
+      } else {
+        openBuilding(buildingId, { type: 'roomCode', value: JSON.stringify(room) });
+        showToast(t('classes.chooseStart'));
+      }
+    },
+    openRoom: (buildingId, room) =>
+      openBuilding(buildingId, { type: 'roomCode', value: JSON.stringify(room) }),
   });
   infoPanel = createInfoPanel({
     container: document.getElementById('info-view'),

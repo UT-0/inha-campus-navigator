@@ -36,6 +36,47 @@ export default {
   'search.inBuilding': '{building}',
 
   // Route panel
+
+  // My classes
+  'classes.title': 'My classes',
+  'classes.next': 'Next class',
+  'classes.now': 'Now',
+  'classes.inMinutes': 'in {time}',
+  'classes.minutes': '{n} min',
+  'classes.hours': '{n} h',
+  'classes.route': 'Route',
+  'classes.show': 'Show',
+  'classes.empty':
+    'Add your classes to get a one-tap route to the next one. They are saved only on this device.',
+  'classes.unknownRoom':
+    'Room code not recognised: start with a building name or number, e.g. “2남 212호”.',
+  'classes.remove': 'Remove {name}',
+  'classes.add': 'Add a class',
+  'classes.name': 'Course name',
+  'classes.room': 'Room',
+  'classes.roomPlaceholder': 'e.g. 2남 212호, 하이테크 1012',
+  'classes.roomHelp': 'Write the room as on your timetable.',
+  'classes.dayLabel': 'Day',
+  'classes.start': 'Starts',
+  'classes.end': 'Ends',
+  'classes.cancel': 'Cancel',
+  'classes.save': 'Save',
+  'classes.privacy': 'Saved only in this browser. Nothing is uploaded.',
+  'classes.added': '{name} added',
+  'classes.notSaved': 'Couldn’t save on this device (private browsing?).',
+  'classes.chooseStart': 'Choose where you are, then tap Route again.',
+  'classes.errorName': 'Enter the course name.',
+  'classes.errorRoom': 'Enter the room.',
+  'classes.errorDay': 'Choose a day.',
+  'classes.errorTime': 'The class must end after it starts.',
+  'classes.day.1': 'Mon',
+  'classes.day.2': 'Tue',
+  'classes.day.3': 'Wed',
+  'classes.day.4': 'Thu',
+  'classes.day.5': 'Fri',
+  'classes.day.6': 'Sat',
+  'classes.day.0': 'Sun',
+
   'route.title': 'Plan a walk',
   'route.useLocation': 'Use my location',
   'route.accessible': 'Step-free route',
@@ -196,6 +237,45 @@ export default {
   'filters.services': 'Services',
   'filters.none': 'None mapped yet',
   'filters.more': 'and {n} more',
+
+  // Report a mistake, About
+  'building.lastVerified': 'Last verified on campus: {date}',
+  'building.notVerifiedOnSite': 'Not yet verified on campus',
+  'report.link': 'Report a mistake',
+  'report.subjectBuilding': 'Data: {name} ({id})',
+  'report.subjectInfo': 'Data: campus info',
+  'report.bodyGeneral':
+    '**What is wrong?**\n\n\n**What should it be? (a source or photo helps)**\n\n',
+  'about.open': 'About this map & sources',
+  'about.title': 'About this map',
+  'about.purpose':
+    'A walking map of Inha University’s Yonghyeon campus for students: find buildings, department offices and rooms, and the shortest walk between them.',
+  'about.notOfficial':
+    'This is a student project, not an official Inha University service. Check important details with the university.',
+  'about.freshness': 'Data freshness',
+  'about.dataUpdated': 'Data last updated',
+  'about.osmFetched': 'Map data (OpenStreetMap) fetched',
+  'about.verifiedOnSite': 'Checked on campus',
+  'about.verifiedOnSiteValue': '{n} of {total} buildings',
+  'about.labels': 'What the labels mean',
+  'about.labelsIntro':
+    'Every fact has a source. Things we could not confirm are marked instead of hidden:',
+  'about.status.verified': 'from an official Inha page, or checked on campus.',
+  'about.status.osm': 'mapped by OpenStreetMap volunteers, not yet confirmed officially.',
+  'about.status.estimated': 'worked out by us (e.g. a guessed entrance) — please check.',
+  'about.status.unknown': 'we don’t know yet.',
+  'about.sources': 'Sources',
+  'about.osm': 'Map, paths, entrances and many places. {license}.',
+  'about.officialSite': 'Inha University website (inha.ac.kr)',
+  'about.official':
+    'Building names and numbers, department offices, campus offices, Wi-Fi, cafeteria and transport: {n} pages, each with the date it was read.',
+  'about.noPhotos': 'No photos yet.',
+  'about.allOfficial': 'All official pages ({n})',
+  'about.retrieved': 'read {date}',
+  'about.privacy': 'Privacy',
+  'about.privacyText':
+    'Your location (if you use it) and your classes stay on this device. The app has no accounts and doesn’t send your data anywhere.',
+  'about.help': 'Found something wrong or missing?',
 
   // Info panel
   'info.open': 'Campus info',

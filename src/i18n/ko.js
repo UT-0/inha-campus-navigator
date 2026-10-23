@@ -35,6 +35,47 @@ export default {
   'search.inBuilding': '{building}',
 
   // Route panel
+
+  // My classes
+  'classes.title': '내 수업',
+  'classes.next': '다음 수업',
+  'classes.now': '진행 중',
+  'classes.inMinutes': '{time} 후',
+  'classes.minutes': '{n}분',
+  'classes.hours': '{n}시간',
+  'classes.route': '길찾기',
+  'classes.show': '보기',
+  'classes.empty':
+    '수업을 추가하면 다음 수업 강의실까지 바로 길을 찾을 수 있습니다. 이 기기에만 저장됩니다.',
+  'classes.unknownRoom':
+    '강의실 코드를 알아보지 못했습니다. 건물 이름이나 번호로 시작해 주세요 (예: 2남 212호).',
+  'classes.remove': '{name} 삭제',
+  'classes.add': '수업 추가',
+  'classes.name': '과목명',
+  'classes.room': '강의실',
+  'classes.roomPlaceholder': '예: 2남 212호, 하이테크 1012',
+  'classes.roomHelp': '시간표에 적힌 대로 입력하세요.',
+  'classes.dayLabel': '요일',
+  'classes.start': '시작',
+  'classes.end': '종료',
+  'classes.cancel': '취소',
+  'classes.save': '저장',
+  'classes.privacy': '이 브라우저에만 저장되며 어디에도 업로드되지 않습니다.',
+  'classes.added': '{name} 추가됨',
+  'classes.notSaved': '이 기기에 저장하지 못했습니다 (비공개 모드인가요?).',
+  'classes.chooseStart': '현재 위치를 고른 뒤 다시 길찾기를 누르세요.',
+  'classes.errorName': '과목명을 입력하세요.',
+  'classes.errorRoom': '강의실을 입력하세요.',
+  'classes.errorDay': '요일을 고르세요.',
+  'classes.errorTime': '종료 시간이 시작 시간보다 늦어야 합니다.',
+  'classes.day.1': '월',
+  'classes.day.2': '화',
+  'classes.day.3': '수',
+  'classes.day.4': '목',
+  'classes.day.5': '금',
+  'classes.day.6': '토',
+  'classes.day.0': '일',
+
   'route.title': '길 찾기',
   'route.useLocation': '내 위치 사용',
   'route.accessible': '계단 없는 경로',
@@ -193,6 +234,45 @@ export default {
   'filters.services': '생활 서비스',
   'filters.none': '아직 지도에 표시된 곳이 없습니다',
   'filters.more': '외 {n}곳',
+
+  // Report a mistake, About
+  'building.lastVerified': '현장 확인: {date}',
+  'building.notVerifiedOnSite': '아직 현장에서 확인하지 않음',
+  'report.link': '오류 제보',
+  'report.subjectBuilding': '데이터: {name} ({id})',
+  'report.subjectInfo': '데이터: 캠퍼스 안내',
+  'report.bodyGeneral':
+    '**무엇이 틀렸나요?**\n\n\n**올바른 내용은? (출처나 사진이 있으면 좋아요)**\n\n',
+  'about.open': '이 지도와 출처 정보',
+  'about.title': '이 지도에 대하여',
+  'about.purpose':
+    '인하대학교 용현캠퍼스를 걸어 다니는 학생을 위한 지도입니다. 건물, 학과 사무실과 강의실을 찾고 가장 짧은 길을 안내합니다.',
+  'about.notOfficial':
+    '학생 프로젝트이며 인하대학교 공식 서비스가 아닙니다. 중요한 정보는 학교에 확인하세요.',
+  'about.freshness': '데이터 최신성',
+  'about.dataUpdated': '데이터 갱신일',
+  'about.osmFetched': '지도 데이터(OpenStreetMap) 수집일',
+  'about.verifiedOnSite': '현장 확인',
+  'about.verifiedOnSiteValue': '{total}개 건물 중 {n}개',
+  'about.labels': '표시의 의미',
+  'about.labelsIntro':
+    '모든 정보에는 출처가 있습니다. 확인하지 못한 내용은 숨기지 않고 표시합니다:',
+  'about.status.verified': '인하대 공식 페이지 또는 현장에서 확인.',
+  'about.status.osm': 'OpenStreetMap 자원봉사자가 그린 정보로, 공식 확인은 아직입니다.',
+  'about.status.estimated': '저희가 추정한 값 (예: 출입구 위치) — 확인이 필요합니다.',
+  'about.status.unknown': '아직 모름.',
+  'about.sources': '출처',
+  'about.osm': '지도, 길, 출입구와 여러 장소. {license}.',
+  'about.officialSite': '인하대학교 홈페이지 (inha.ac.kr)',
+  'about.official':
+    '건물 이름과 번호, 학과 사무실, 교내 부서, 와이파이, 학생식당, 교통 정보: 페이지 {n}개, 각각 확인한 날짜 포함.',
+  'about.noPhotos': '아직 사진이 없습니다.',
+  'about.allOfficial': '공식 페이지 전체 ({n})',
+  'about.retrieved': '{date} 확인',
+  'about.privacy': '개인정보',
+  'about.privacyText':
+    '내 위치(사용하는 경우)와 수업 정보는 이 기기에만 남습니다. 계정이 없으며 내 정보를 어디에도 보내지 않습니다.',
+  'about.help': '틀리거나 빠진 정보가 있나요?',
 
   // Info panel
   'info.open': '캠퍼스 안내',
