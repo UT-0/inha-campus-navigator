@@ -27,7 +27,10 @@ export function createBuildingPanel({ container, routeView, campus, courses, act
   let renderedId = null;
 
   function close() {
+    const hadFocus = container.contains(document.activeElement);
     setState({ selectedBuilding: null, highlight: null });
+    // Don't leave keyboard focus on a removed element.
+    if (hadFocus) document.getElementById('sheet-content')?.focus({ preventScroll: true });
   }
 
   function isHighlighted(type, value) {

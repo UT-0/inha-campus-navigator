@@ -178,6 +178,10 @@ export default {
   'toast.toSet': 'Going to {name}',
   'toast.invalidLink': 'Some buildings in the link weren’t found',
 
+  // Bottom sheet (phones)
+  'sheet.expand': 'Expand panel',
+  'sheet.collapse': 'Collapse panel',
+
   // Error screen
   'error.title': 'Couldn’t load the campus map',
   'error.text':

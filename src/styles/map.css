@@ -663,8 +663,8 @@
   height: 20px;
   padding: 0 5px;
   border-radius: var(--radius-pill);
-  background: var(--color-accent);
-  color: #fff;
+  background: var(--badge-color, var(--color-accent));
+  color: var(--color-bg); /* dark text on the light dark-mode badges, white-ish otherwise */
   font-size: var(--font-size-xs);
 }
 
@@ -700,6 +700,13 @@
 }
 
 @media (max-width: 899.98px) {
+  /* Keep the top of the map free on phones: show the banner above the scale bar. */
+  .sample-banner {
+    top: auto;
+    bottom: calc(var(--map-inset-bottom) + 44px);
+    max-width: calc(100% - 2 * var(--map-inset-side) - 52px);
+  }
+
   .map-btn {
     width: 40px;
     height: 40px;
@@ -825,4 +832,13 @@
   50% {
     transform: scale(1.6);
   }
+}
+
+/* Dark mode markers are lighter, so their letters switch to dark text. */
+:root[data-theme='dark'] .route-marker-letter {
+  fill: #0a1120;
+}
+
+:root[data-theme='dark'] .legend-marker {
+  color: #0a1120;
 }

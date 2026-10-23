@@ -57,13 +57,19 @@
         <h2 class="sr-only" id="sheet-title" data-i18n="a11y.panel">
           Route planner and building information
         </h2>
-        <div class="sheet-handle" id="sheet-handle" aria-hidden="true">
-          <span class="sheet-grabber"></span>
-        </div>
+        <button
+          class="sheet-handle"
+          id="sheet-handle"
+          type="button"
+          aria-controls="sheet-content"
+          aria-expanded="false"
+        >
+          <span class="sheet-grabber" aria-hidden="true"></span>
+        </button>
         <div class="sheet-content" id="sheet-content" tabindex="-1">
           <div class="view" id="route-view">
             <div id="route-panel"></div>
-            <div id="route-result" aria-live="polite"></div>
+            <div id="route-result"></div>
             <div id="building-list"></div>
           </div>
           <div class="view" id="building-view" hidden></div>

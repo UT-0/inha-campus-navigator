@@ -175,6 +175,10 @@ export default {
   'toast.toSet': '도착: {name}',
   'toast.invalidLink': '링크의 일부 건물을 찾을 수 없습니다',
 
+  // Bottom sheet (phones)
+  'sheet.expand': '패널 펼치기',
+  'sheet.collapse': '패널 접기',
+
   // Error screen
   'error.title': '캠퍼스 지도를 불러올 수 없습니다',
   'error.text': '캠퍼스 데이터가 없거나 올바르지 않습니다. campus.json을 확인한 뒤 새로고침하세요.',

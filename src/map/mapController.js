@@ -211,7 +211,7 @@ export function createMapController({ campus, onBuildingActivate, getPadding }) 
   });
 
   svg.setAttribute('tabindex', '0');
-  svg.removeAttribute('role');
+  svg.setAttribute('role', 'group');
   svg.querySelector('title')?.remove();
   applyLanguage();
   applyBuildingClasses();

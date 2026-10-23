@@ -16,11 +16,11 @@
   --color-primary-hover: #12397a;
   --color-primary-soft: #e6edf9;
   --color-on-primary: #ffffff;
-  --color-accent: #1f6fff; /* bright accent for routes and interactive states */
-  --color-accent-hover: #1259d9;
+  --color-accent: #1660e8; /* bright accent for interactive states (5.4:1 with white text) */
+  --color-accent-hover: #0f4fc7;
   --color-accent-soft: #e3edff;
   --color-on-accent: #ffffff;
-  --color-focus: #1f6fff;
+  --color-focus: #1660e8;
 
   /* ---- Neutrals ---- */
   --color-bg: #f3f5fa;
@@ -55,8 +55,8 @@
   --map-route: #1f6fff;
   --map-route-casing: #ffffff;
   --map-route-active: #ff8a00;
-  --map-marker-start: #17a35a;
-  --map-marker-end: #e0364a;
+  --map-marker-start: #12884a;
+  --map-marker-end: #d42e43;
 
   /* ---- Building categories: fill (light tint) + stroke (darker) ---- */
   --cat-academic: #dbe5ff;
@@ -64,7 +64,7 @@
   --cat-library: #ece0ff;
   --cat-library-stroke: #7445bf;
   --cat-dormitory: #ffe5cf;
-  --cat-dormitory-stroke: #b9620f;
+  --cat-dormitory-stroke: #a8560a;
   --cat-admin: #e2e6ee;
   --cat-admin-stroke: #4b5970;
   --cat-sports: #d1f0ee;
@@ -72,7 +72,7 @@
   --cat-food: #ffdfe3;
   --cat-food-stroke: #bf3249;
   --cat-other: #fff1bf;
-  --cat-other-stroke: #957300;
+  --cat-other-stroke: #8a6a00;
 
   /* ---- Spacing (4 / 8 px scale) ---- */
   --space-1: 4px;
@@ -138,10 +138,10 @@
   --color-primary-hover: #a9c6ff;
   --color-primary-soft: #1b2a47;
   --color-on-primary: #0b1426;
-  --color-accent: #4b8dff;
-  --color-accent-hover: #6aa1ff;
+  --color-accent: #6aa1ff; /* light accent with dark text in dark mode (7:1) */
+  --color-accent-hover: #8cb6ff;
   --color-accent-soft: #1a2c4f;
-  --color-on-accent: #ffffff;
+  --color-on-accent: #07111f;
   --color-focus: #7aaeff;
 
   --color-bg: #0a1120;
