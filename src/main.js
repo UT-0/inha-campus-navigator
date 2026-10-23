@@ -442,11 +442,11 @@ async function start() {
       routeLayer.highlight(points);
       if (points) map.flyToPoints(points, { margin: 80, maxScale: points.length > 1 ? 3 : 2 });
     }
-    if (changed.includes('lang')) showSampleBanner(campus);
+    if (changed.includes('lang')) showPreviewBanner();
     if (changed.includes('accessible')) writeStorage(ACCESSIBLE_KEY, state.accessible);
   });
 
-  showSampleBanner(campus);
+  showPreviewBanner();
   document.getElementById('map-loading').classList.add('is-hidden');
 
   // ---------- Shared links: ?from=…&to=… ----------
@@ -495,15 +495,17 @@ function announce(message) {
   }, 50);
 }
 
-/** Shows the "sample data" banner while campus.json is flagged as placeholder. */
-function showSampleBanner(campus) {
+/** Shows a banner while previewing the Map Editor's draft (?preview=1). */
+function showPreviewBanner() {
   const banner = document.getElementById('sample-banner');
   const preview = readRouteParams().preview;
-  banner.hidden = campus._placeholder !== true && !preview;
-  banner.replaceChildren(
-    createIcon('info', { size: 14 }),
-    el('span', { text: t(preview ? 'app.previewData' : 'app.sampleData') }),
-  );
+  banner.hidden = !preview;
+  if (preview) {
+    banner.replaceChildren(
+      createIcon('info', { size: 14 }),
+      el('span', { text: t('app.previewData') }),
+    );
+  }
 }
 
 /**

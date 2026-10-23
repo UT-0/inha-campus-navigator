@@ -7,7 +7,6 @@ export default {
   // App
   'app.title': '인하 캠퍼스 내비게이터',
   'app.loading': '캠퍼스 지도를 불러오는 중…',
-  'app.sampleData': '샘플 데이터 — 실제 캠퍼스 배치가 아닙니다',
 
   // Accessibility
   'a11y.skipToPanel': '경로 찾기로 건너뛰기',
@@ -351,6 +350,8 @@ export default {
   'status.osm': 'OpenStreetMap',
   'status.estimated': '추정',
   'status.unknown': '확인 전',
+  'status.osmHint': 'OpenStreetMap 정보 (공식 확인 전)',
+  'status.estimatedHint': '추정값 — 현장 확인이 필요합니다',
 
   // Amenities
   'amenity.wifi': '와이파이',
@@ -412,7 +413,6 @@ export default {
   'editor.newCampus': '빈 캠퍼스로 시작',
   'editor.confirmNew': '모든 건물, 노드, 길, 장소, 구역을 삭제할까요? (실행 취소할 수 있습니다.)',
   'editor.restoreDraft': '지난번에 저장하지 않은 편집 내용을 복원할까요?',
-  'editor.placeholderFlag': '샘플 데이터 (“샘플 데이터” 배너 표시)',
   'editor.image': '참고 이미지',
   'editor.loadImage': '이미지 불러오기…',
   'editor.opacity': '불투명도',

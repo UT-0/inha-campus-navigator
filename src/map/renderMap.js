@@ -270,7 +270,7 @@ function drawBuildings(layer, campus) {
  *
  * Outdoor POIs are drawn at their real location. Amenities inside a building
  * are not drawn at exact points: each building gets one badge per group
- * (food, money…) in a row just below its label.
+ * (food, money…) in a row to the right of its number badge.
  */
 function drawPois(layer, campus) {
   const scaled = [];
@@ -334,8 +334,9 @@ function drawPois(layer, campus) {
           'data-y': y,
         },
         GROUP_ICONS[group] ?? items[0].type,
-        (i - (list.length - 1) / 2) * 24,
-        30,
+        // In a row to the right of the number badge, clear of the name below it.
+        24 + i * 24,
+        0,
       );
     });
   }

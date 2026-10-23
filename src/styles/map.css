@@ -1142,3 +1142,14 @@
     animation: none;
   }
 }
+
+/* Buildings without an official number: a small dot instead of a badge. */
+.label-building.is-unnumbered .label-badge {
+  stroke-width: 2;
+}
+
+/* Lowest zoom: footpaths and steps are too small to read. */
+.map[data-lod='low'] .road-footway,
+.map[data-lod='low'] .road-steps {
+  display: none;
+}

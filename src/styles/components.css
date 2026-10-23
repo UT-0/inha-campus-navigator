@@ -1960,3 +1960,16 @@ a.item-title:hover {
   margin-top: var(--space-2);
   font-size: var(--font-size-sm);
 }
+
+.status-info {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+  color: var(--color-text-subtle);
+  vertical-align: middle;
+  cursor: help;
+}
+
+.status-info[data-status='estimated'] {
+  color: var(--color-warning-text);
+}

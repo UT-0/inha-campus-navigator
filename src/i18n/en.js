@@ -7,7 +7,6 @@ export default {
   // App
   'app.title': 'Inha Campus Navigator',
   'app.loading': 'Loading campus map…',
-  'app.sampleData': 'Sample data — not the real campus layout',
 
   // Accessibility
   'a11y.skipToPanel': 'Skip to route planner',
@@ -354,6 +353,8 @@ export default {
   'status.osm': 'OpenStreetMap',
   'status.estimated': 'Estimated',
   'status.unknown': 'Not yet verified',
+  'status.osmHint': 'From OpenStreetMap, not yet confirmed officially',
+  'status.estimatedHint': 'Estimated — please check on campus',
 
   // Amenities
   'amenity.wifi': 'Wi-Fi',
@@ -416,7 +417,6 @@ export default {
   'editor.newCampus': 'New empty campus',
   'editor.confirmNew': 'Remove all buildings, nodes, paths, places and areas? (You can undo this.)',
   'editor.restoreDraft': 'Restore the unsaved Map Editor draft from your last session?',
-  'editor.placeholderFlag': 'Sample data (shows the “sample data” banner)',
   'editor.image': 'Reference image',
   'editor.loadImage': 'Load image…',
   'editor.opacity': 'Opacity',

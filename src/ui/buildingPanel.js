@@ -600,6 +600,15 @@ function amenityDetail(key, amenity) {
  * @param {'verified'|'osm'|'estimated'|'unknown'} status
  */
 function statusTag(status) {
+  if (status === 'osm' || status === 'estimated') {
+    // Shown normally, with a subtle info icon explaining where it comes from.
+    const hint = t(`status.${status}Hint`);
+    return el(
+      'span',
+      { class: 'status-info', 'data-status': status, title: hint, 'aria-label': hint, role: 'img' },
+      createIcon('info', { size: 13 }),
+    );
+  }
   return el('span', { class: 'status-tag', 'data-status': status, text: t(`status.${status}`) });
 }
 

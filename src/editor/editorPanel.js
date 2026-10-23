@@ -261,11 +261,6 @@ export function createEditorPanel(container, api) {
           });
         }),
       ),
-      checkbox(t('editor.placeholderFlag'), campus._placeholder === true, (checked) =>
-        edit((c) => {
-          c._placeholder = checked;
-        }),
-      ),
     );
   }
 

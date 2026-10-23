@@ -13,6 +13,7 @@ import { formatDistance } from '../routing/directions.js';
 import { NEAREST_KINDS } from '../routing/router.js';
 import { createCombobox } from './combobox.js';
 import { createIcon } from './icons.js';
+import { CATEGORIES } from '../map/widgets.js';
 
 /**
  * @typedef {Object} RouteActions
@@ -86,16 +87,42 @@ export function createRoutePanel({
     }
     const n = building.name ?? {};
     const s = building.shortName ?? {};
-    return bestScore(q, [n.en, n.ko, s.en, s.ko]);
+    const names = bestScore(q, [n.en, n.ko, s.en, s.ko, ...(building.aliases ?? [])]);
+    // Typing a department ("컴퓨터공학") finds the building its office is in.
+    const departments = bestScore(
+      q,
+      (building.departments ?? []).flatMap((d) => [d.ko, d.en]),
+    );
+    return Math.max(names, departments - 5);
   }
 
   function buildingOptions(query) {
-    if (!query.trim()) return [...campus.buildings].sort(byNumber).map(toOption);
+    if (!query.trim()) {
+      // Grouped by category, numbered buildings first within each group.
+      return [...campus.buildings]
+        .sort(
+          (a, b) =>
+            CATEGORIES.indexOf(a.category) - CATEGORIES.indexOf(b.category) || byNumber(a, b),
+        )
+        .map((b) => ({ ...toOption(b), group: t(`category.${b.category ?? 'other'}`) }));
+    }
     return campus.buildings
       .map((building) => ({ building, score: scoreBuilding(building, query) }))
       .filter((x) => x.score >= 40)
       .sort((a, b) => b.score - a.score || byNumber(a.building, b.building))
-      .map((x) => toOption(x.building));
+      .map((x) => {
+        const option = toOption(x.building);
+        // Found through a department: say which office is there.
+        const department = (x.building.departments ?? []).find(
+          (d) => bestScore(query, [d.ko, d.en]) >= 40,
+        );
+        if (department && bestScore(query, [x.building.name.en, x.building.name.ko]) < 40) {
+          option.sublabel = [localize(department), department.floorLabel]
+            .filter(Boolean)
+            .join(' · ');
+        }
+        return option;
+      });
   }
 
   // ---------- Rendering ----------
@@ -528,5 +555,6 @@ const NEAREST_CHIPS = [
 ];
 
 function byNumber(a, b) {
-  return (parseInt(a.number, 10) || 0) - (parseInt(b.number, 10) || 0);
+  // Buildings without a number go last.
+  return (parseInt(a.number, 10) || 999) - (parseInt(b.number, 10) || 999);
 }
