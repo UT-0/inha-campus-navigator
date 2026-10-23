@@ -408,6 +408,12 @@ export default {
   'editor.file': '파일',
   'editor.import': 'JSON 불러오기',
   'editor.export': 'JSON 내보내기',
+  'editor.exportEdits': '수정 내용 내보내기',
+  'editor.exportEditsHint':
+    '변경한 부분만 저장합니다. data-raw/edits/에 넣으면 데이터를 다시 만들 때마다 적용됩니다',
+  'editor.noEdits': '아직 내보낼 변경 사항이 없습니다.',
+  'editor.editsExported':
+    '저장했습니다. 파일을 data-raw/edits/에 넣고 npm run data:build를 실행하세요.',
   'editor.validate': '검사',
   'editor.preview': '앱에서 미리 보기',
   'editor.newCampus': '빈 캠퍼스로 시작',

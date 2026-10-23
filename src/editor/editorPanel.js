@@ -247,6 +247,9 @@ export function createEditorPanel(container, api) {
         'div',
         { class: 'ep-buttons' },
         filePicker(t('editor.import'), 'upload', 'application/json,.json', importJson),
+        button(t('editor.exportEdits'), 'download', api.exportEdits, {
+          title: t('editor.exportEditsHint'),
+        }),
         button(t('editor.export'), 'download', () => exportJson(campus)),
         button(t('editor.validate'), 'check', api.validate),
         button(t('editor.preview'), 'link', api.previewInApp),

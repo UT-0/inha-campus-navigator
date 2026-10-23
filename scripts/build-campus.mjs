@@ -19,7 +19,7 @@
  * Run: npm run data:build
  */
 import { existsSync } from 'node:fs';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { createProjection } from '../src/utils/projection.js';
 import {
   indexOsm,
@@ -37,6 +37,7 @@ import {
   writeDescriptions,
 } from './lib/official-details.mjs';
 import { buildAmenities } from './lib/amenities.mjs';
+import { applyEdits } from '../src/utils/campusEdits.js';
 
 const ROOT = new URL('../', import.meta.url);
 const SIMPLIFY_METERS = 0.5;
@@ -528,12 +529,26 @@ const campus = {
   context,
 };
 
+// ---------------------------------------------------------------------------
+// 8. Corrections from the Map Editor (data-raw/edits/*.json, in name order)
+// ---------------------------------------------------------------------------
+
+const editsDir = new URL('data-raw/edits/', ROOT);
+const edits = [];
+if (existsSync(editsDir)) {
+  for (const file of (await readdir(editsDir)).filter((f) => f.endsWith('.json')).sort()) {
+    const result = applyEdits(campus, JSON.parse(await readFile(new URL(file, editsDir), 'utf8')));
+    edits.push({ file, ...result });
+    console.log(`edits ${file}: ${result.applied} applied, ${result.skipped.length} skipped`);
+  }
+}
+
 await writeFile(new URL('src/data/campus.json', ROOT), `${JSON.stringify(campus)}\n`);
 await writeFile(new URL('src/data/courses.json', ROOT), '[]\n');
 // Details for VERIFY.md and DATA-REPORT.md (estimated links, dropped paths…).
 await writeFile(
   new URL('data-raw/build-report.json', ROOT),
-  `${JSON.stringify({ built: today, graph: walk.report, unresolved, amenities: amenities.report }, null, 2)}\n`,
+  `${JSON.stringify({ built: today, graph: walk.report, unresolved, amenities: amenities.report, edits }, null, 2)}\n`,
 );
 console.log(
   `campus.json: ${buildings.length} buildings, ${areas.length} areas, ${roads.length} roads, ${context.length} context buildings, ${walk.nodes.length} nodes, ${walk.edges.length} edges; viewBox ${viewBox.join(' ')}`,

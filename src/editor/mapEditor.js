@@ -41,6 +41,7 @@ import { createIcon } from '../ui/icons.js';
 import { POI_GROUPS } from '../map/widgets.js';
 import { createEditorPanel } from './editorPanel.js';
 import { DRAFT_KEY } from './draft.js';
+import { diffCampus } from '../utils/campusEdits.js';
 
 const HISTORY_LIMIT = 80;
 /** Click tolerance in screen pixels when snapping to an existing node. */
@@ -66,6 +67,9 @@ export function startEditor(initialCampus) {
   document.getElementById('app').hidden = true;
   document.title = `${t('editor.title')} · ${t('app.title')}`;
 
+  // What the data build produced: Map Editor edits are exported as changes to it.
+  const baseCampus = structuredClone(initialCampus);
+  ensureShape(baseCampus);
   let campus = structuredClone(initialCampus);
   const draft = readStorage(DRAFT_KEY, null);
   if (
@@ -899,6 +903,24 @@ export function startEditor(initialCampus) {
         c.meta.viewBox = [0, 0, width, height];
       });
       setupCamera();
+    },
+    /** Downloads only what changed, for data-raw/edits/ (survives rebuilding the data). */
+    exportEdits() {
+      const edits = diffCampus(baseCampus, campus);
+      if (Object.keys(edits).length === 0) {
+        say(t('editor.noEdits'));
+        return;
+      }
+      const stamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, '');
+      const data = { created: new Date().toISOString().slice(0, 10), ...edits };
+      const blob = new Blob([`${JSON.stringify(data, null, 2)}\n`], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = el('a', { href: url, download: `campus-edits-${stamp}.json` });
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      say(t('editor.editsExported'));
     },
     previewInApp() {
       writeStorage(DRAFT_KEY, campus);

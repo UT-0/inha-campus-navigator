@@ -412,6 +412,12 @@ export default {
   'editor.file': 'File',
   'editor.import': 'Import JSON',
   'editor.export': 'Export JSON',
+  'editor.exportEdits': 'Export edits',
+  'editor.exportEditsHint':
+    'Only your changes, for data-raw/edits/ — they are re-applied every time the data is rebuilt',
+  'editor.noEdits': 'No changes to export yet.',
+  'editor.editsExported':
+    'Edits saved. Put the file in data-raw/edits/ and run npm run data:build.',
   'editor.validate': 'Validate',
   'editor.preview': 'Preview in app',
   'editor.newCampus': 'New empty campus',

@@ -27,6 +27,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - run: npm run validate
       # The base path must match the repository name: https://<user>.github.io/<repo>/
       - run: npm run build
         env:
